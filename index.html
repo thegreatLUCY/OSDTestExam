@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ÖSD ZA1 – Modellsatz & Übungstest</title>
+    <script>
+      try {
+        const storedTheme = localStorage.getItem("osd-a1-theme");
+        const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    </script>
+    <link rel="stylesheet" href="styles.css?v=24">
+    <script src="app.js?v=24" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="ÖSD ZA1 Startseite">
+        <span class="brand-mark">A1</span>
+        <span>
+          <strong>ÖSD ZA1 Modellsatz</strong>
+          <small>Lesen · Hören · Schreiben · Sprechen</small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <label class="select-label" for="examSelect">Testsatz</label>
+        <select id="examSelect" aria-label="Testsatz wählen"></select>
+        <button class="theme-toggle" id="themeToggle" type="button" data-action="toggle-theme" aria-label="Dunkles Design aktivieren" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span>
+          <span class="theme-toggle-text">Dunkel</span>
+        </button>
+        <button class="ghost-btn" type="button" data-action="print">Drucken</button>
+        <button class="danger-btn" type="button" data-action="reset-all">Zurücksetzen</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <aside class="side-panel" aria-label="Practice navigation">
+        <section class="score-panel">
+          <span class="eyebrow">Current score</span>
+          <strong id="scoreValue">0 / 0</strong>
+          <div class="meter" aria-hidden="true"><span id="scoreMeter"></span></div>
+          <p id="progressText">Choose an exam sample to begin.</p>
+        </section>
+
+        <nav class="section-nav" id="sectionNav" aria-label="Exam sections"></nav>
+
+        <section class="mini-note">
+          <strong>Prüfungsrhythmus</strong>
+          <p>Lesen 25 Min · Hören ca. 25 Min · Schreiben 20 Min · Sprechen ca. 10 Min.</p>
+        </section>
+      </aside>
+
+      <section class="workspace" id="app" tabindex="-1"></section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
