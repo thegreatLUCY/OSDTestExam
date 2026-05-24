@@ -29,7 +29,7 @@ python3 -m http.server 8096
 Open:
 
 ```text
-http://localhost:8096/?v=26
+http://localhost:8096/?v=27
 ```
 
 If `8096` is busy, inspect first:
@@ -48,7 +48,7 @@ Main files:
 
 - `index.html`
   - App shell.
-  - Loads `styles.css?v=26` and `app.js?v=26`.
+  - Loads `styles.css?v=27` and `app.js?v=27`.
   - Contains early theme boot script to prevent the wrong theme from flashing.
 - `styles.css`
   - Layout, exam paper styling, cards, dark theme variables, print rules.
@@ -67,7 +67,7 @@ Main files:
     - `za1-ms-a1.mp3`
     - `za1-ms-a2.mp3`
     - `za1-ms-a3.mp3`
-  - Transcripts live under `assets/audio/official/transcripts/`.
+  - Official transcripts are embedded in `app.js`.
 - `assets/img/practice/exam-*`
   - Downloaded/replaced practice images.
 - `assets/audio/generated/`
@@ -298,7 +298,7 @@ Practice audio:
 
 - `assets/audio/generated/exam-5-task-1.mp3` through `exam-12-task-3.mp3`
 
-The old synthetic WAV files and generator script were removed. Übungssatz 5-8 transcripts are collected in `assets/audio/practice-transcripts/exams-5-8.md`. Übungssatz 9-12 transcripts are collected in `assets/audio/practice-transcripts/exams-9-12.md`.
+Practice transcripts are embedded in `app.js` next to each listening task; separate practice transcript markdown files were removed to avoid duplication.
 
 OpenRouter TTS workflow:
 
@@ -389,19 +389,19 @@ Live browser verification on `http://localhost:8096/?v=17` showed:
 
 ## Cache Versioning
 
-Current cache query version in `index.html` is `v=26`.
+Current cache query version in `index.html` is `v=27`.
 
 When changing `app.js` or `styles.css`, bump both references in `index.html`, for example:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=26">
-<script src="app.js?v=26" defer></script>
+<link rel="stylesheet" href="styles.css?v=27">
+<script src="app.js?v=27" defer></script>
 ```
 
 Then test with:
 
 ```text
-http://localhost:8096/?v=26
+http://localhost:8096/?v=27
 ```
 
 ## Important Workflow Notes

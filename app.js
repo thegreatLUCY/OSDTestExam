@@ -2897,7 +2897,7 @@ function renderPageHead(title, description, minutes) {
 
 function renderOverview(exam) {
   app.innerHTML = `
-    ${renderPageHead("ÖSD ZA1 – kompletter Test", "Der erste Eintrag ist der offizielle ÖSD-ZA1-Modellsatz mit Originaltexten, Originalaudio und dem offiziellen Lösungsschlüssel. Danach folgen vier Übungssätze mit genau gleichem Aufbau.", null)}
+    ${renderPageHead("ÖSD ZA1 – kompletter Test", "Der erste Eintrag ist der offizielle ÖSD-ZA1-Modellsatz mit Originaltexten, Originalaudio und dem offiziellen Lösungsschlüssel. Danach folgen zwölf Übungssätze mit gleichem Prüfungsaufbau.", null)}
     <div class="overview-grid">
       ${exams.map((item) => `
         <article class="exam-card ${item.id === exam.id ? "active" : ""}" data-exam="${item.id}" tabindex="0" role="button" aria-label="${item.title} öffnen">
