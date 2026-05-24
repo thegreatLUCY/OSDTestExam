@@ -1,6 +1,6 @@
 # Codex CLI Handoff - OSD German A1 Practice Site
 
-Date: 2026-05-23
+Date: 2026-05-24
 
 This handoff is for continuing the OSD/ÖSD German A1 exam practice website work in Codex CLI.
 
@@ -29,7 +29,7 @@ python3 -m http.server 8096
 Open:
 
 ```text
-http://localhost:8096/?v=24
+http://localhost:8096/?v=26
 ```
 
 If `8096` is busy, inspect first:
@@ -48,7 +48,7 @@ Main files:
 
 - `index.html`
   - App shell.
-  - Loads `styles.css?v=24` and `app.js?v=24`.
+  - Loads `styles.css?v=26` and `app.js?v=26`.
   - Contains early theme boot script to prevent the wrong theme from flashing.
 - `styles.css`
   - Layout, exam paper styling, cards, dark theme variables, print rules.
@@ -74,6 +74,11 @@ Main files:
   - Manually supplied practice listening MP3 files.
 - `assets/img/scripts/fetch_photos.py`
   - Source image search/download script for practice images.
+- `scripts/generate-openrouter-tts.mjs`
+  - Local-only OpenRouter TTS generator for practice listening MP3s.
+  - Reads transcripts from `app.js`.
+  - Writes MP3 files to the existing `assets/audio/generated/exam-*-task-*.mp3` paths.
+  - Requires `OPENROUTER_API_KEY`; never put the key in browser code.
 
 ## Current Exam Inventory
 
@@ -95,6 +100,30 @@ Exam IDs in `app.js`:
 - `exam-4`
   - Übungssatz 4.
   - Theme: Unterwegs und Einkaufen.
+- `exam-5`
+  - Übungssatz 5.
+  - Theme: Post, Bank und Erledigungen.
+- `exam-6`
+  - Übungssatz 6.
+  - Theme: Gesundheit und Wohnen.
+- `exam-7`
+  - Übungssatz 7.
+  - Theme: Lernen und Arbeit.
+- `exam-8`
+  - Übungssatz 8.
+  - Theme: Freizeit und Besuch.
+- `exam-9`
+  - Übungssatz 9.
+  - Theme: Amt, Bank und Fundbüro.
+- `exam-10`
+  - Übungssatz 10.
+  - Theme: Reise, Wetter und Gepäck.
+- `exam-11`
+  - Übungssatz 11.
+  - Theme: Wohnen, Nachbarn und Reparaturen.
+- `exam-12`
+  - Übungssatz 12.
+  - Theme: Arbeit, Kurs und digitale Termine.
 
 ## What Was Built Or Fixed
 
@@ -230,6 +259,14 @@ Practice images:
 - `assets/img/practice/exam-2/`
 - `assets/img/practice/exam-3/`
 - `assets/img/practice/exam-4/`
+- `assets/img/practice/exam-5/`
+- `assets/img/practice/exam-6/`
+- `assets/img/practice/exam-7/`
+- `assets/img/practice/exam-8/`
+- `assets/img/practice/exam-9/`
+- `assets/img/practice/exam-10/`
+- `assets/img/practice/exam-11/`
+- `assets/img/practice/exam-12/`
 
 Most sets have:
 
@@ -257,7 +294,31 @@ Practice audio:
 - `assets/audio/generated/exam-4-task-2.mp3`
 - `assets/audio/generated/exam-4-task-3.mp3`
 
-Übungssatz 1-4 audio is manually supplied MP3 audio. The old synthetic WAV files and generator script were removed.
+Übungssatz 1-6 audio is manually supplied MP3 audio. Übungssatz 7-12 audio was generated with OpenRouter TTS. All MP3 paths for Übungssatz 5-12 are currently present:
+
+- `assets/audio/generated/exam-5-task-1.mp3` through `exam-12-task-3.mp3`
+
+The old synthetic WAV files and generator script were removed. Übungssatz 5-8 transcripts are collected in `assets/audio/practice-transcripts/exams-5-8.md`. Übungssatz 9-12 transcripts are collected in `assets/audio/practice-transcripts/exams-9-12.md`.
+
+OpenRouter TTS workflow:
+
+```bash
+OPENROUTER_API_KEY=sk-or-... node scripts/generate-openrouter-tts.mjs --exams 9-12
+```
+
+Defaults:
+
+- endpoint: `https://openrouter.ai/api/v1/audio/speech`
+- model: `openai/gpt-4o-mini-tts-2025-12-15`
+- voice: `nova`
+- speed: `0.92`
+
+The script skips existing MP3 files unless `--force` is passed. Use `--dry-run` to preview without calling the API.
+
+Important generator behavior:
+
+- Numbered Hören texts are generated segment-by-segment so every `Text 1`, `Text 2`, etc. is spoken.
+- Aufgabe 2 Notizblatt audio is generated as three segments: first reading, "Sie hören den Text jetzt zum zweiten Mal.", second reading. This avoids the TTS provider shortening/reusing repeated text.
 
 ## Verification Already Completed
 
@@ -265,8 +326,23 @@ Commands that passed:
 
 ```bash
 node --check app.js
+node --check scripts/generate-openrouter-tts.mjs
+node scripts/generate-openrouter-tts.mjs --exams 8-12 --dry-run
 python3 -m py_compile assets/img/scripts/fetch_photos.py
 ```
+
+Latest validation for Übungssatz 9-12:
+
+- Übungssatz 9-12 Lesen:
+  - `16/16` correct per set.
+  - `30/30` points per set.
+- Übungssatz 9-12 Hören:
+  - `16/16` correct per set.
+  - `30/30` points per set.
+- Übungssatz 9-12 Schreiben form:
+  - `10/10` expected fields correct per set.
+
+Asset-reference check showed all referenced images exist. Expected missing audio files are pending manual recordings for exams that have not yet been supplied.
 
 An isolated scoring harness was also run against practice sets 1-4. Result:
 
@@ -313,19 +389,19 @@ Live browser verification on `http://localhost:8096/?v=17` showed:
 
 ## Cache Versioning
 
-Current cache query version in `index.html` is `v=24`.
+Current cache query version in `index.html` is `v=26`.
 
 When changing `app.js` or `styles.css`, bump both references in `index.html`, for example:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=24">
-<script src="app.js?v=24" defer></script>
+<link rel="stylesheet" href="styles.css?v=26">
+<script src="app.js?v=26" defer></script>
 ```
 
 Then test with:
 
 ```text
-http://localhost:8096/?v=24
+http://localhost:8096/?v=26
 ```
 
 ## Important Workflow Notes

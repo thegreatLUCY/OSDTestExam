@@ -81,6 +81,134 @@ SCENES = {
         "l1-E": "language school classroom",
         "l1-F": "hotel room bed",
     },
+    "exam-5": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "post office counter parcel",
+        "l3-2": "atm cash machine bank",
+        "l3-3": "laundromat washing machines",
+        "l3-4": "bakery bread counter",
+        "l3-5": "public library books computer",
+        "l3-6": "shoe repair shop",
+        # Hören A1 photo tiles A..F
+        "l1-A": "post office parcel counter",
+        "l1-B": "bank atm machine",
+        "l1-C": "laundromat washing machine",
+        "l1-D": "bakery coffee bread",
+        "l1-E": "library books desk",
+        "l1-F": "children playground",
+    },
+    "exam-6": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "dentist office patient",
+        "l3-2": "apartment viewing room",
+        "l3-3": "plumber fixing sink",
+        "l3-4": "pharmacy medicine counter",
+        "l3-5": "moving furniture truck",
+        "l3-6": "yoga class beginners",
+        # Hören A1 photo tiles A..F
+        "l1-A": "dentist office chair",
+        "l1-B": "apartment building entrance",
+        "l1-C": "pharmacy medicine",
+        "l1-D": "plumber sink repair",
+        "l1-E": "yoga class mat",
+        "l1-F": "moving boxes furniture",
+    },
+    "exam-7": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "office job interview",
+        "l3-2": "computer class adults",
+        "l3-3": "kindergarten classroom children",
+        "l3-4": "copy machine office",
+        "l3-5": "cafeteria lunch tray",
+        "l3-6": "people language exchange conversation",
+        # Hören A1 photo tiles A..F
+        "l1-A": "office job interview",
+        "l1-B": "computer class laptop",
+        "l1-C": "kindergarten children classroom",
+        "l1-D": "copy machine printer",
+        "l1-E": "canteen lunch tray",
+        "l1-F": "city tram stop",
+    },
+    "exam-8": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "cinema theater seats",
+        "l3-2": "zoo animals family",
+        "l3-3": "hairdresser salon",
+        "l3-4": "restaurant pizza table",
+        "l3-5": "museum art gallery",
+        "l3-6": "train ticket station",
+        # Hören A1 photo tiles A..F
+        "l1-A": "cinema theater",
+        "l1-B": "zoo animals",
+        "l1-C": "hairdresser salon",
+        "l1-D": "restaurant table reservation",
+        "l1-E": "museum tour gallery",
+        "l1-F": "train station platform",
+    },
+    "exam-9": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "city hall service counter",
+        "l3-2": "lost and found keys bag",
+        "l3-3": "bank teller customer",
+        "l3-4": "copy machine office",
+        "l3-5": "health insurance form office",
+        "l3-6": "language school office",
+        # Hören A1 photo tiles A..F
+        "l1-A": "city hall office counter",
+        "l1-B": "lost keys found office",
+        "l1-C": "bank teller counter",
+        "l1-D": "photocopy machine office",
+        "l1-E": "tram stop replacement bus",
+        "l1-F": "language class adults",
+    },
+    "exam-10": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "train station delayed platform",
+        "l3-2": "airport bus stop",
+        "l3-3": "luggage locker station",
+        "l3-4": "hotel reception desk",
+        "l3-5": "rain weather hiking jacket",
+        "l3-6": "tourist information city map",
+        # Hören A1 photo tiles A..F
+        "l1-A": "train station platform delay",
+        "l1-B": "airport bus outside terminal",
+        "l1-C": "hotel reception desk",
+        "l1-D": "luggage lockers train station",
+        "l1-E": "heavy rain street umbrella",
+        "l1-F": "bicycle rental shop",
+    },
+    "exam-11": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "apartment door keys lock",
+        "l3-2": "laundry room washing machines",
+        "l3-3": "radiator heating repair",
+        "l3-4": "neighbors party apartment",
+        "l3-5": "courtyard flea market",
+        "l3-6": "community garden courtyard",
+        # Hören A1 photo tiles A..F
+        "l1-A": "water pipe repair basement",
+        "l1-B": "locksmith opening door",
+        "l1-C": "broken washing machine",
+        "l1-D": "elevator out of service",
+        "l1-E": "loud music apartment party",
+        "l1-F": "community garden plants",
+    },
+    "exam-12": {
+        # Lesen A3 picture tiles 1..6
+        "l3-1": "parcel locker pickup code",
+        "l3-2": "online video meeting computer",
+        "l3-3": "printer scanner documents",
+        "l3-4": "job interview office",
+        "l3-5": "mobile phone shop sim card",
+        "l3-6": "volunteer soup kitchen",
+        # Hören A1 photo tiles A..F
+        "l1-A": "package delivery boxes",
+        "l1-B": "computer course adults laptop",
+        "l1-C": "job center appointment office",
+        "l1-D": "mobile phone sim card shop",
+        "l1-E": "volunteer food kitchen",
+        "l1-F": "office printer machine",
+    },
 }
 
 
