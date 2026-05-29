@@ -36,7 +36,7 @@ python3 -m http.server 8096
 Open:
 
 ```text
-http://localhost:8096/?v=27
+http://localhost:8096/?v=30
 ```
 
 No package install is required for the app itself.

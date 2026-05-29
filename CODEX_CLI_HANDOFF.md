@@ -29,7 +29,7 @@ python3 -m http.server 8096
 Open:
 
 ```text
-http://localhost:8096/?v=27
+http://localhost:8096/?v=30
 ```
 
 If `8096` is busy, inspect first:
@@ -48,7 +48,7 @@ Main files:
 
 - `index.html`
   - App shell.
-  - Loads `styles.css?v=27` and `app.js?v=27`.
+  - Loads `styles.css?v=30` and `app.js?v=30`.
   - Contains early theme boot script to prevent the wrong theme from flashing.
 - `styles.css`
   - Layout, exam paper styling, cards, dark theme variables, print rules.
@@ -389,19 +389,19 @@ Live browser verification on `http://localhost:8096/?v=17` showed:
 
 ## Cache Versioning
 
-Current cache query version in `index.html` is `v=27`.
+Current cache query version in `index.html` is `v=30`.
 
 When changing `app.js` or `styles.css`, bump both references in `index.html`, for example:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=27">
-<script src="app.js?v=27" defer></script>
+<link rel="stylesheet" href="styles.css?v=30">
+<script src="app.js?v=30" defer></script>
 ```
 
 Then test with:
 
 ```text
-http://localhost:8096/?v=27
+http://localhost:8096/?v=30
 ```
 
 ## Important Workflow Notes

@@ -572,7 +572,13 @@ const practiceExams = [
     ], {
       task1: "assets/img/practice/exam-1/speaking-1.jpg",
       task2: "assets/img/practice/exam-1/speaking-2.jpg",
-      task3: "assets/img/practice/exam-1/speaking-3.jpg"
+      task3: "assets/img/practice/exam-1/speaking-3.jpg",
+      sprachenSample: 5,
+      hobbysSample: 3,
+      berufSample: 4,
+      sportSample: 2,
+      familieSample: 1,
+      lieblingsessenSample: 6
     })
   }),
   practiceExam({
@@ -757,7 +763,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie rufen beim Arzt an. Fragen Sie nach einem Termin und sagen Sie, was weh tut.",
       "Beschreiben Sie ein Bild: Zwei Personen sprechen in einem Büro."
-    ])
+    ], { sprachenSample: 2, hobbysSample: 6, berufSample: 1, sportSample: 5, familieSample: 4, lieblingsessenSample: 3 })
   }),
   practiceExam({
     id: "exam-3",
@@ -939,7 +945,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie möchten ein Hotelzimmer reservieren. Fragen Sie nach Preis, Frühstück und Anreisezeit.",
       "Beschreiben Sie ein Bild: Eine Familie sitzt im Park und isst."
-    ])
+    ], { sprachenSample: 4, hobbysSample: 2, berufSample: 6, sportSample: 1, familieSample: 6, lieblingsessenSample: 5 })
   }),
   practiceExam({
     id: "exam-4",
@@ -1121,7 +1127,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie sind im Handyshop. Fragen Sie nach einer SIM-Karte, Internet und dem Preis.",
       "Beschreiben Sie ein Bild: Menschen kaufen auf einem Markt ein."
-    ])
+    ], { sprachenSample: 1, hobbysSample: 5, berufSample: 2, sportSample: 4, familieSample: 3, lieblingsessenSample: 2 })
   }),
   practiceExam({
     id: "exam-5",
@@ -1303,7 +1309,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie sind bei der Post. Fragen Sie nach einem Paket, dem Preis und den Öffnungszeiten.",
       "Beschreiben Sie ein Bild: Eine Person steht am Bankschalter."
-    ])
+    ], { sprachenSample: 6, hobbysSample: 1, berufSample: 5, sportSample: 3, familieSample: 2, lieblingsessenSample: 4 })
   }),
   practiceExam({
     id: "exam-6",
@@ -1485,7 +1491,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie rufen beim Installateur an. Sagen Sie, was kaputt ist, und fragen Sie nach einem Termin.",
       "Beschreiben Sie ein Bild: Eine Person ist in der Apotheke."
-    ])
+    ], { sprachenSample: 3, hobbysSample: 4, berufSample: 3, sportSample: 6, familieSample: 5, lieblingsessenSample: 1 })
   }),
   practiceExam({
     id: "exam-7",
@@ -1667,7 +1673,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie möchten sich für einen Computerkurs anmelden. Fragen Sie nach Zeit, Preis und Raum.",
       "Beschreiben Sie ein Bild: Personen sitzen in einem Kursraum."
-    ])
+    ], { sprachenSample: 6, hobbysSample: 2, berufSample: 1, sportSample: 5, familieSample: 3, lieblingsessenSample: 5 })
   }),
   practiceExam({
     id: "exam-8",
@@ -1849,7 +1855,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie möchten im Restaurant einen Tisch reservieren. Fragen Sie nach Uhrzeit, Personen und Terrasse.",
       "Beschreiben Sie ein Bild: Eine Familie ist im Zoo."
-    ])
+    ], { sprachenSample: 1, hobbysSample: 3, berufSample: 4, sportSample: 2, familieSample: 6, lieblingsessenSample: 2 })
   }),
   practiceExam({
     id: "exam-9",
@@ -2031,7 +2037,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie sind im Fundbüro. Fragen Sie nach Ihrer verlorenen Tasche, der Abholzeit und den Dokumenten.",
       "Beschreiben Sie ein Bild: Menschen warten in einem Amt."
-    ])
+    ], { sprachenSample: 3, hobbysSample: 6, berufSample: 2, sportSample: 4, familieSample: 5, lieblingsessenSample: 1 })
   }),
   practiceExam({
     id: "exam-10",
@@ -2213,7 +2219,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie sind am Bahnhof. Ihr Zug hat Verspätung. Fragen Sie nach einem neuen Ticket, dem Gleis und der Ankunftszeit.",
       "Beschreiben Sie ein Bild: Reisende warten mit Koffern am Bahnhof."
-    ])
+    ], { sprachenSample: 5, hobbysSample: 1, berufSample: 6, sportSample: 1, familieSample: 2, lieblingsessenSample: 4 })
   }),
   practiceExam({
     id: "exam-11",
@@ -2395,7 +2401,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie rufen die Hausverwaltung an. Melden Sie eine kaputte Heizung und fragen Sie nach einem Termin.",
       "Beschreiben Sie ein Bild: Eine Person steht mit einem Schlüssel vor einer Wohnungstür."
-    ])
+    ], { sprachenSample: 2, hobbysSample: 4, berufSample: 3, sportSample: 6, familieSample: 4, lieblingsessenSample: 6 })
   }),
   practiceExam({
     id: "exam-12",
@@ -2577,7 +2583,7 @@ const practiceExams = [
     speaking: practiceSpeaking([
       "Sie haben einen Termin im Jobcenter. Fragen Sie nach dem Raum, den Unterlagen und einem neuen Termin.",
       "Beschreiben Sie ein Bild: Eine Person holt ein Paket an einer Paketstation ab."
-    ])
+    ], { sprachenSample: 4, hobbysSample: 5, berufSample: 5, sportSample: 3, familieSample: 1, lieblingsessenSample: 3 })
   })
 ];
 
@@ -2603,6 +2609,91 @@ function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample })
   };
 }
 
+const speakingTask1TopicSamples = {
+  sprachen: [
+    "Ich spreche Arabisch.\nIch lerne Deutsch seit sechs Monaten.\nIch spreche auch ein bisschen Englisch.",
+    "Meine Muttersprache ist Türkisch.\nIch spreche zu Hause Türkisch.\nIm Kurs lerne ich Deutsch.",
+    "Ich spreche Spanisch und Englisch.\nDeutsch lerne ich in der Schule.\nDeutsch ist interessant.",
+    "Ich spreche Kurdisch.\nMit meinen Freunden spreche ich Deutsch.\nIch möchte noch besser sprechen.",
+    "Ich spreche Russisch.\nIch verstehe auch ein wenig Deutsch.\nJeden Tag übe ich neue Wörter.",
+    "Ich spreche Französisch.\nIch lerne Deutsch für die Arbeit.\nDer Deutschkurs macht mir Spaß."
+  ],
+  hobbys: [
+    "Ich höre gern Musik.\nIch höre jeden Abend Musik.\nDas macht mich ruhig.",
+    "Ich koche gern.\nAm Wochenende koche ich oft.\nMeine Familie isst gern mit mir.",
+    "Ich lese gern Bücher.\nIch lese oft im Bus.\nEinfache Geschichten finde ich interessant.",
+    "Ich treffe gern Freunde.\nWir gehen oft ins Café.\nWir sprechen viel und lachen.",
+    "Ich sehe gern Filme.\nAm Abend sehe ich oft einen Film.\nKomödien mag ich sehr.",
+    "Ich spiele gern Computerspiele.\nIch spiele oft nach der Schule.\nDas macht Spaß."
+  ],
+  beruf: [
+    "Ich bin Student.\nIch studiere Informatik.\nIch arbeite auch als Apotheker.\nMein Beruf macht mir Spaß.",
+    "Ich arbeite im Büro.\nIch arbeite von Montag bis Freitag.\nMeine Kollegen sind nett.",
+    "Ich habe noch keinen Beruf.\nIch bin Schüler.\nIch lerne Deutsch und Englisch.",
+    "Ich bin Apotheker.\nIch arbeite in einer Apotheke.\nIch helfe gern Menschen.\nMeine Arbeit ist interessant.",
+    "Ich arbeite als Verkäufer.\nIch arbeite jeden Tag mit Kunden.\nMeine Kollegen sind freundlich.",
+    "Ich bin Ingenieur.\nIch arbeite in einer Firma.\nMeine Arbeit macht Spaß."
+  ],
+  sport: [
+    "Ich mache gern Sport.\nIch spiele Fußball.\nIch trainiere dreimal pro Woche.",
+    "Ich gehe gern spazieren.\nIch gehe auch ins Fitnessstudio.\nSport ist gesund.",
+    "Ich mache nicht viel Sport.\nAber ich schwimme manchmal.\nDas macht Spaß.",
+    "Ich fahre gern Fahrrad.\nAm Wochenende fahre ich oft im Park.\nDas ist gesund.",
+    "Ich gehe gern schwimmen.\nIm Sommer schwimme ich oft.\nDas macht mir Spaß.",
+    "Ich mache gern Sport.\nIch spiele Fußball.\nIch trainiere dreimal pro Woche."
+  ],
+  familie: [
+    "Meine Familie ist klein.\nIch habe eine Mutter und einen Bruder.\nWir wohnen zusammen.",
+    "Meine Familie ist groß.\nIch habe zwei Schwestern und einen Bruder.\nAm Sonntag essen wir zusammen.",
+    "Ich bin verheiratet.\nMeine Frau und ich wohnen in Wien.\nWir haben ein Kind.",
+    "Meine Eltern leben in Syrien.\nIch telefoniere oft mit ihnen.\nIch vermisse meine Familie.",
+    "Ich habe keine Kinder.\nIch wohne allein.\nMeine Freunde sind sehr wichtig für mich.",
+    "Ich lebe mit meinem Mann.\nWir haben zwei Kinder.\nAm Wochenende spielen wir zusammen."
+  ],
+  lieblingsessen: [
+    "Mein Lieblingsessen ist Pizza.\nIch esse Pizza gern am Wochenende.\nDazu trinke ich Wasser.",
+    "Ich esse gern Reis mit Hähnchen.\nMeine Mutter kocht das sehr gut.\nDas Essen schmeckt mir.",
+    "Mein Lieblingsessen ist Pasta.\nIch esse sie oft mit Tomatensoße.\nDas ist einfach und lecker.",
+    "Ich mag Gemüse und Suppe.\nAm Abend esse ich gern etwas Warmes.\nDas ist gesund.",
+    "Ich esse gern Fisch.\nIm Sommer esse ich Fisch mit Salat.\nDas schmeckt sehr gut.",
+    "Mein Lieblingsessen ist Kuchen.\nIch esse Kuchen gern mit Kaffee.\nAber ich esse nicht jeden Tag Kuchen."
+  ]
+};
+
+function modelLinesToHtml(text) {
+  return text
+    .trim()
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("<br>");
+}
+
+function getSpeakingTopicSample(topic, sampleNumber) {
+  const samples = speakingTask1TopicSamples[topic] || [];
+  return samples[sampleNumber - 1] || samples[0] || "";
+}
+
+function practiceSpeakingTask1Model({
+  sprachenSample = 1,
+  hobbysSample = 1,
+  sportSample = 1,
+  familieSample = 1,
+  berufSample = 1,
+  lieblingsessenSample = 1
+} = {}) {
+  return [
+    ["Sprachen", "sprachen", sprachenSample],
+    ["Hobbys", "hobbys", hobbysSample],
+    ["Sport", "sport", sportSample],
+    ["Familie", "familie", familieSample],
+    ["Beruf", "beruf", berufSample],
+    ["Lieblingsessen", "lieblingsessen", lieblingsessenSample]
+  ]
+    .map(([label, topic, sampleNumber]) => `<strong>${label}</strong><br>${modelLinesToHtml(getSpeakingTopicSample(topic, sampleNumber))}`)
+    .join("<br><br>");
+}
+
 function practiceSpeaking([roleText, pictureText], images = {}) {
   return {
     minutes: 10,
@@ -2612,7 +2703,7 @@ function practiceSpeaking([roleText, pictureText], images = {}) {
         prompt: "Wählen Sie 4 Themen aus und sprechen Sie zu jedem Thema ein paar Sätze.",
         image: images.task1,
         cards: ["Sprachen", "Hobbys", "Sport", "Familie", "Beruf", "Lieblingsessen"],
-        model: "Beispiel: „Ich heiße … Ich komme aus … Ich spreche … Mein Hobby ist … Meine Familie …“"
+        model: practiceSpeakingTask1Model(images)
       },
       {
         title: "Aufgabe 2: Über etwas sprechen (Situationen beschreiben)",
