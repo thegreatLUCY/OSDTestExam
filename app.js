@@ -387,6 +387,57 @@ function practiceExam({ id, title, theme, reading, listening, writing, speaking 
   return { id, official: false, title, theme, reading, listening, writing, speaking };
 }
 
+const speakingTask1TopicSamples = {
+  sprachen: [
+    "Ich spreche Arabisch.\nIch lerne Deutsch seit sechs Monaten.\nIch spreche auch ein bisschen Englisch.",
+    "Meine Muttersprache ist Türkisch.\nIch spreche zu Hause Türkisch.\nIm Kurs lerne ich Deutsch.",
+    "Ich spreche Spanisch und Englisch.\nDeutsch lerne ich in der Schule.\nDeutsch ist interessant.",
+    "Ich spreche Kurdisch.\nMit meinen Freunden spreche ich Deutsch.\nIch möchte noch besser sprechen.",
+    "Ich spreche Russisch.\nIch verstehe auch ein wenig Deutsch.\nJeden Tag übe ich neue Wörter.",
+    "Ich spreche Französisch.\nIch lerne Deutsch für die Arbeit.\nDer Deutschkurs macht mir Spaß."
+  ],
+  hobbys: [
+    "Ich höre gern Musik.\nIch höre jeden Abend Musik.\nDas macht mich ruhig.",
+    "Ich koche gern.\nAm Wochenende koche ich oft.\nMeine Familie isst gern mit mir.",
+    "Ich lese gern Bücher.\nIch lese oft im Bus.\nEinfache Geschichten finde ich interessant.",
+    "Ich treffe gern Freunde.\nWir gehen oft ins Café.\nWir sprechen viel und lachen.",
+    "Ich sehe gern Filme.\nAm Abend sehe ich oft einen Film.\nKomödien mag ich sehr.",
+    "Ich spiele gern Computerspiele.\nIch spiele oft nach der Schule.\nDas macht Spaß."
+  ],
+  beruf: [
+    "Ich bin Student.\nIch studiere Informatik.\nIch arbeite auch als Apotheker.\nMein Beruf macht mir Spaß.",
+    "Ich arbeite im Büro.\nIch arbeite von Montag bis Freitag.\nMeine Kollegen sind nett.",
+    "Ich habe noch keinen Beruf.\nIch bin Schüler.\nIch lerne Deutsch und Englisch.",
+    "Ich bin Apotheker.\nIch arbeite in einer Apotheke.\nIch helfe gern Menschen.\nMeine Arbeit ist interessant.",
+    "Ich arbeite als Verkäufer.\nIch arbeite jeden Tag mit Kunden.\nMeine Kollegen sind freundlich.",
+    "Ich bin Ingenieur.\nIch arbeite in einer Firma.\nMeine Arbeit macht Spaß."
+  ],
+  sport: [
+    "Ich mache gern Sport.\nIch spiele Fußball.\nIch trainiere dreimal pro Woche.",
+    "Ich gehe gern spazieren.\nIch gehe auch ins Fitnessstudio.\nSport ist gesund.",
+    "Ich mache nicht viel Sport.\nAber ich schwimme manchmal.\nDas macht Spaß.",
+    "Ich fahre gern Fahrrad.\nAm Wochenende fahre ich oft im Park.\nDas ist gesund.",
+    "Ich gehe gern schwimmen.\nIm Sommer schwimme ich oft.\nDas macht mir Spaß.",
+    "Ich mache gern Sport.\nIch spiele Fußball.\nIch trainiere dreimal pro Woche."
+  ],
+  familie: [
+    "Meine Familie ist klein.\nIch habe eine Mutter und einen Bruder.\nWir wohnen zusammen.",
+    "Meine Familie ist groß.\nIch habe zwei Schwestern und einen Bruder.\nAm Sonntag essen wir zusammen.",
+    "Ich bin verheiratet.\nMeine Frau und ich wohnen in Wien.\nWir haben ein Kind.",
+    "Meine Eltern leben in Syrien.\nIch telefoniere oft mit ihnen.\nIch vermisse meine Familie.",
+    "Ich habe keine Kinder.\nIch wohne allein.\nMeine Freunde sind sehr wichtig für mich.",
+    "Ich lebe mit meinem Mann.\nWir haben zwei Kinder.\nAm Wochenende spielen wir zusammen."
+  ],
+  lieblingsessen: [
+    "Mein Lieblingsessen ist Pizza.\nIch esse Pizza gern am Wochenende.\nDazu trinke ich Wasser.",
+    "Ich esse gern Reis mit Hähnchen.\nMeine Mutter kocht das sehr gut.\nDas Essen schmeckt mir.",
+    "Mein Lieblingsessen ist Pasta.\nIch esse sie oft mit Tomatensoße.\nDas ist einfach und lecker.",
+    "Ich mag Gemüse und Suppe.\nAm Abend esse ich gern etwas Warmes.\nDas ist gesund.",
+    "Ich esse gern Fisch.\nIm Sommer esse ich Fisch mit Salat.\nDas schmeckt sehr gut.",
+    "Mein Lieblingsessen ist Kuchen.\nIch esse Kuchen gern mit Kaffee.\nAber ich esse nicht jeden Tag Kuchen."
+  ]
+};
+
 const practiceExams = [
   practiceExam({
     id: "exam-1",
@@ -2608,57 +2659,6 @@ function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample })
     ]
   };
 }
-
-const speakingTask1TopicSamples = {
-  sprachen: [
-    "Ich spreche Arabisch.\nIch lerne Deutsch seit sechs Monaten.\nIch spreche auch ein bisschen Englisch.",
-    "Meine Muttersprache ist Türkisch.\nIch spreche zu Hause Türkisch.\nIm Kurs lerne ich Deutsch.",
-    "Ich spreche Spanisch und Englisch.\nDeutsch lerne ich in der Schule.\nDeutsch ist interessant.",
-    "Ich spreche Kurdisch.\nMit meinen Freunden spreche ich Deutsch.\nIch möchte noch besser sprechen.",
-    "Ich spreche Russisch.\nIch verstehe auch ein wenig Deutsch.\nJeden Tag übe ich neue Wörter.",
-    "Ich spreche Französisch.\nIch lerne Deutsch für die Arbeit.\nDer Deutschkurs macht mir Spaß."
-  ],
-  hobbys: [
-    "Ich höre gern Musik.\nIch höre jeden Abend Musik.\nDas macht mich ruhig.",
-    "Ich koche gern.\nAm Wochenende koche ich oft.\nMeine Familie isst gern mit mir.",
-    "Ich lese gern Bücher.\nIch lese oft im Bus.\nEinfache Geschichten finde ich interessant.",
-    "Ich treffe gern Freunde.\nWir gehen oft ins Café.\nWir sprechen viel und lachen.",
-    "Ich sehe gern Filme.\nAm Abend sehe ich oft einen Film.\nKomödien mag ich sehr.",
-    "Ich spiele gern Computerspiele.\nIch spiele oft nach der Schule.\nDas macht Spaß."
-  ],
-  beruf: [
-    "Ich bin Student.\nIch studiere Informatik.\nIch arbeite auch als Apotheker.\nMein Beruf macht mir Spaß.",
-    "Ich arbeite im Büro.\nIch arbeite von Montag bis Freitag.\nMeine Kollegen sind nett.",
-    "Ich habe noch keinen Beruf.\nIch bin Schüler.\nIch lerne Deutsch und Englisch.",
-    "Ich bin Apotheker.\nIch arbeite in einer Apotheke.\nIch helfe gern Menschen.\nMeine Arbeit ist interessant.",
-    "Ich arbeite als Verkäufer.\nIch arbeite jeden Tag mit Kunden.\nMeine Kollegen sind freundlich.",
-    "Ich bin Ingenieur.\nIch arbeite in einer Firma.\nMeine Arbeit macht Spaß."
-  ],
-  sport: [
-    "Ich mache gern Sport.\nIch spiele Fußball.\nIch trainiere dreimal pro Woche.",
-    "Ich gehe gern spazieren.\nIch gehe auch ins Fitnessstudio.\nSport ist gesund.",
-    "Ich mache nicht viel Sport.\nAber ich schwimme manchmal.\nDas macht Spaß.",
-    "Ich fahre gern Fahrrad.\nAm Wochenende fahre ich oft im Park.\nDas ist gesund.",
-    "Ich gehe gern schwimmen.\nIm Sommer schwimme ich oft.\nDas macht mir Spaß.",
-    "Ich mache gern Sport.\nIch spiele Fußball.\nIch trainiere dreimal pro Woche."
-  ],
-  familie: [
-    "Meine Familie ist klein.\nIch habe eine Mutter und einen Bruder.\nWir wohnen zusammen.",
-    "Meine Familie ist groß.\nIch habe zwei Schwestern und einen Bruder.\nAm Sonntag essen wir zusammen.",
-    "Ich bin verheiratet.\nMeine Frau und ich wohnen in Wien.\nWir haben ein Kind.",
-    "Meine Eltern leben in Syrien.\nIch telefoniere oft mit ihnen.\nIch vermisse meine Familie.",
-    "Ich habe keine Kinder.\nIch wohne allein.\nMeine Freunde sind sehr wichtig für mich.",
-    "Ich lebe mit meinem Mann.\nWir haben zwei Kinder.\nAm Wochenende spielen wir zusammen."
-  ],
-  lieblingsessen: [
-    "Mein Lieblingsessen ist Pizza.\nIch esse Pizza gern am Wochenende.\nDazu trinke ich Wasser.",
-    "Ich esse gern Reis mit Hähnchen.\nMeine Mutter kocht das sehr gut.\nDas Essen schmeckt mir.",
-    "Mein Lieblingsessen ist Pasta.\nIch esse sie oft mit Tomatensoße.\nDas ist einfach und lecker.",
-    "Ich mag Gemüse und Suppe.\nAm Abend esse ich gern etwas Warmes.\nDas ist gesund.",
-    "Ich esse gern Fisch.\nIm Sommer esse ich Fisch mit Salat.\nDas schmeckt sehr gut.",
-    "Mein Lieblingsessen ist Kuchen.\nIch esse Kuchen gern mit Kaffee.\nAber ich esse nicht jeden Tag Kuchen."
-  ]
-};
 
 function modelLinesToHtml(text) {
   return text
