@@ -22,24 +22,33 @@ The goal is to make repeated exam practice feel close to the real paper/audio wo
   - `Sprechen`: introduction topics, picture description, role-play prompt.
 - Automatic scoring for reading, listening, and the writing form task.
 - Manual/self-check support for writing email and speaking.
+- AI speaking tutor on practice-exam `Sprechen` tasks (requires the local server below): record German, get an A1-level correction, mistakes, and English translation. Two modes — a **guided** loop that walks each task's cards one by one (Aufgaben 1-3, with 12 topic cards on Aufgabe 1), and a **free-chat** Aufgabe 4 ("Freies Gespräch", extra practice) that holds a simple A1 conversation.
 - Light/dark theme, printable pages, persistent local progress.
 - Practice MP3 audio for all practice exams.
 
 ## Run Locally
 
-From the project root:
+The static site can be served with any static server, but the **AI speaking tutor needs the bundled Node server** (it holds the API key and proxies the AI calls). Use the Node server for the full experience:
 
 ```bash
-python3 -m http.server 8096
+node server.mjs
 ```
 
 Open:
 
 ```text
-http://localhost:8096/?v=32
+http://localhost:8096/?v=36
 ```
 
-No package install is required for the app itself.
+The Node server serves the static files **and** the `POST /api/speaking-feedback` endpoint on the same port (8096), so there is no CORS setup. It uses only built-in Node modules — no `npm install`.
+
+To use the speaking tutor, add your OpenRouter key to a gitignored `.env` file in the project root:
+
+```text
+OPENROUTER_API_KEY=sk-or-your-key-here
+```
+
+The same key powers transcription (`openai/whisper-1`) and the tutor chat (`google/gemini-2.5-flash-lite`). Without the server (e.g. plain `python3 -m http.server`), everything else works but the speaking tutor will show a connection error.
 
 ## Project Structure
 

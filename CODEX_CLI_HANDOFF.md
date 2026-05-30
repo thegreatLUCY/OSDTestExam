@@ -1,461 +1,457 @@
-# Codex CLI Handoff - OSD German A1 Practice Site
+# Coding Agent Handoff: ÖSD ZA1 German A1 Practice Trainer
 
-Date: 2026-05-24
+Last reviewed: 2026-05-29  
+Current cache version: `v=36`  
+Primary app files: `index.html`, `styles.css`, `app.js`, `server.mjs`
 
-This handoff is for continuing the OSD/ÖSD German A1 exam practice website work in Codex CLI.
+## Project Purpose
 
-## Critical Guardrails
+This project is a static browser-based trainer for the ÖSD Zertifikat A1 / ZA1 German exam format.
 
-- Work only in this fork:
-  `/Users/robeirtoma/Downloads/OSD GERMAN A1 fork`
-- Do not touch the original project folder:
-  `/Users/robeirtoma/Documents/OSD GERMAN A1`
-- Do not use or modify the original live server on:
-  `http://localhost:8095/`
-- The fork has been served separately on:
-  `http://localhost:8096/`
+It was built so learners can practice the full exam flow repeatedly in one place:
 
-The user was very explicit about this boundary. Treat the original folder as read-only background history and avoid opening/editing it unless the user explicitly changes the instruction.
+- `Lesen`: reading comprehension tasks with automatic scoring.
+- `Hören`: listening tasks with audio, transcripts, and automatic scoring.
+- `Schreiben`: a form task with automatic scoring and an email task with self-check/model answer.
+- `Sprechen`: three speaking tasks with prompts, images, self-recording, notes, and model answers.
 
-## How To Run
+The app is intentionally simple to run and deploy. There is no frontend framework and no build step. It is plain HTML, CSS, JavaScript, and static assets.
 
-From the fork:
+## Core Scope And Rule
+
+The app contains two kinds of exams:
+
+1. `Offizieller ÖSD ZA1 Modellsatz`
+   - This is the reference set.
+   - It should stay as close as possible to the official ÖSD model material.
+   - Do not casually edit this section.
+
+2. `Übungssatz 1-12`
+   - These are practice exams authored for training.
+   - Most user-requested edits are intended for these practice exams only.
+   - The official model set should be used as the structural reference for flow, scoring shape, and UI behavior.
+
+Important working rule from the project owner:
+
+> Changes requested for `Übungssatz` exams should not modify the official ÖSD model set unless explicitly requested.
+
+## Current Running URL
+
+Run locally from the repository root with the bundled Node server (built-in modules only, no `npm install`):
 
 ```bash
-cd "/Users/robeirtoma/Downloads/OSD GERMAN A1 fork"
-python3 -m http.server 8096
+node server.mjs
 ```
 
 Open:
 
 ```text
-http://localhost:8096/?v=32
+http://localhost:8096/?v=36
 ```
 
-If `8096` is busy, inspect first:
+`server.mjs` serves the static site **and** the `POST /api/speaking-feedback` endpoint on the same port, so there is no CORS setup. `python3 -m http.server 8096` still works for everything except the AI speaking tutor (which needs the API endpoint).
 
-```bash
-lsof -i :8096
+If the browser still shows an older broken/static shell, hard refresh. `index.html` currently loads:
+
+```html
+<link rel="stylesheet" href="styles.css?v=36">
+<script src="app.js?v=36" defer></script>
 ```
 
-Do not kill processes unless the user approves or clearly asks.
+When changing `app.js` or `styles.css`, bump both query strings in `index.html`. Also update the README and this handoff if the public run URL is documented there.
 
-## Project Shape
+## Repository Layout
 
-This is a static HTML/CSS/JS app. There is no package manager or build step.
+```text
+.
+├── index.html
+├── styles.css
+├── app.js
+├── README.md
+├── CODEX_CLI_HANDOFF.md
+├── assets/
+│   ├── audio/
+│   │   ├── official/
+│   │   ├── generated/
+│   │   └── scripts/
+│   ├── img/
+│   │   ├── official/
+│   │   ├── practice/
+│   │   └── scripts/
+│   └── pdf/
+├── docs/screenshots/
+└── scripts/
+```
 
-Main files:
+Important paths:
 
-- `index.html`
-  - App shell.
-  - Loads `styles.css?v=32` and `app.js?v=32`.
-  - Contains early theme boot script to prevent the wrong theme from flashing.
-- `styles.css`
-  - Layout, exam paper styling, cards, dark theme variables, print rules.
-- `app.js`
-  - All exam data.
-  - Rendering.
-  - Scoring.
-  - State management.
-  - Theme toggle.
-- `assets/pdf/osd-za1-official-sample-2024.pdf`
-  - Official model set PDF.
-- `assets/img/official/page-01.png` through `page-16.png`
-  - Rendered official PDF pages used in the official reference view.
-- `assets/audio/official/`
-  - Official listening audio:
-    - `za1-ms-a1.mp3`
-    - `za1-ms-a2.mp3`
-    - `za1-ms-a3.mp3`
-  - Official transcripts are embedded in `app.js`.
-- `assets/img/practice/exam-*`
-  - Downloaded/replaced practice images.
-- `assets/audio/generated/`
-  - Manually supplied practice listening MP3 files.
-- `assets/img/scripts/fetch_photos.py`
-  - Source image search/download script for practice images.
-- `scripts/generate-openrouter-tts.mjs`
-  - Local-only OpenRouter TTS generator for practice listening MP3s.
-  - Reads transcripts from `app.js`.
-  - Writes MP3 files to the existing `assets/audio/generated/exam-*-task-*.mp3` paths.
-  - Requires `OPENROUTER_API_KEY`; never put the key in browser code.
+- `app.js`: all exam data, scoring logic, rendering, state handling, and event handlers.
+- `index.html`: static shell and cache-busted script/style references.
+- `styles.css`: full visual design and responsive layout.
+- `assets/audio/official/`: official ÖSD audio files.
+- `assets/audio/generated/`: practice exam MP3 files, named `exam-N-task-M.mp3`.
+- `assets/img/official/`: official PDF page images.
+- `assets/img/practice/exam-N/`: practice exam task images.
+- `assets/pdf/osd-za1-official-sample-2024.pdf`: official reference PDF.
+- `scripts/generate-openrouter-tts.mjs`: OpenRouter-compatible TTS generator for practice audio.
+- `assets/img/scripts/fetch_photos.py`: image-fetch helper used for practice images.
 
-## Current Exam Inventory
+## App Architecture
 
-Exam IDs in `app.js`:
+The app is a single-page static application.
 
-- `exam-official`
-  - Official ÖSD ZA1 model set.
-  - Uses official PDF/page images and official MP3 audio.
-- `exam-1`
-  - Übungssatz 1.
-  - Theme: Ankommen in Wien.
-  - Sprechen uses custom images: `speaking-1.jpg`, `speaking-2.jpg`, `speaking-3.jpg`.
-- `exam-2`
-  - Übungssatz 2.
-  - Theme: Termine und Alltag.
-- `exam-3`
-  - Übungssatz 3.
-  - Theme: Familie und Freizeit.
-- `exam-4`
-  - Übungssatz 4.
-  - Theme: Unterwegs und Einkaufen.
-- `exam-5`
-  - Übungssatz 5.
-  - Theme: Post, Bank und Erledigungen.
-- `exam-6`
-  - Übungssatz 6.
-  - Theme: Gesundheit und Wohnen.
-- `exam-7`
-  - Übungssatz 7.
-  - Theme: Lernen und Arbeit.
-- `exam-8`
-  - Übungssatz 8.
-  - Theme: Freizeit und Besuch.
-- `exam-9`
-  - Übungssatz 9.
-  - Theme: Amt, Bank und Fundbüro.
-- `exam-10`
-  - Übungssatz 10.
-  - Theme: Reise, Wetter und Gepäck.
-- `exam-11`
-  - Übungssatz 11.
-  - Theme: Wohnen, Nachbarn und Reparaturen.
-- `exam-12`
-  - Übungssatz 12.
-  - Theme: Arbeit, Kurs und digitale Termine.
+Data and rendering live together in `app.js`:
 
-## What Was Built Or Fixed
+- `sections`: navigation labels.
+- `sourceLinks`: official source metadata.
+- `officialTranscripts`: official audio transcripts.
+- `officialReference`: official PDF/audio links.
+- `officialExam`: the official ÖSD model set.
+- `speakingTask1TopicSamples`: model-answer samples for Sprechen Aufgabe 1.
+- `practiceExams`: the twelve authored practice exams.
+- `exams`: `[officialExam, ...practiceExams]`.
+- render functions: `renderOverview`, `renderAutoSection`, `renderWriting`, `renderSpeaking`, etc.
+- scoring functions: `sectionScore`, `taskPoints`, `formScore`, `autoScore`.
+- state functions: `loadState`, `saveState`, `freshState`, `loadTheme`, `applyTheme`.
 
-### Fork/server separation
+State is stored in browser `localStorage`:
 
-- The user rejected changes to the original project and asked for all work to happen only in the fork.
-- The fork was run on `8096`.
-- The original live version on `8095` must remain untouched.
+- Main key: `osd-a1-practice-v4`
+- Theme key: `osd-a1-theme`
 
-### Übungssatz 2
+There is no backend. All scoring, rendering, audio playback, and local recording happen in the browser.
 
-- Added realistic ÖSD-style paper sections:
-  - Lesen Aufgabe 1 Anzeigen sheet.
-  - Lesen Aufgabe 3 Bilder sheet.
-  - Hören Aufgabe 1 Fotos sheet.
-- Added inline listening transcripts.
-- Listening audio was later replaced by manually supplied MP3 files.
-- Removed answer leaks such as visible `Bild 1: ...` labels.
-- Corrected Lesen Aufgabe 3 item E to:
-  `Ich suche Arbeit am Samstagvormittag im Café.`
-- Corrected Hören Aufgabe 2 instruction to refer to the Notizblatt.
-- Improved Schreiben so scored fields are grounded in the prompt.
+## Exam Data Logic
 
-### Dark theme
-
-- Added a persistent light/dark theme toggle.
-- Storage key:
-  `osd-a1-theme`
-- Added `:root[data-theme="dark"]` variables.
-- Converted many hard-coded light surfaces to variables.
-- Added print safeguards so dark mode does not break printed sheets.
-- Adjusted mobile header layout so the theme controls do not overflow.
-
-### Übungssatz 3
-
-- Added Anzeigen sheet, Bilder/Fotos sheets, and transcripts.
-- Added image scenes to `assets/img/scripts/fetch_photos.py`.
-- Downloaded Openverse images for the set.
-- Resized a very large image and corrected it back to JPEG format.
-- Listening audio was later replaced by manually supplied MP3 files.
-
-### Official Modellsatz correction
-
-The official Lesen Aufgabe 3 answer registration was wrong because rows B-E were not in the same order as the official PDF.
-
-Correct official answer mapping:
-
-- A = 5
-- B = 4
-- C = 1
-- D = 6
-- E = 3
-
-The row order was corrected in `app.js`:
-
-- A: hospital phone ban
-- B: Gasthaus
-- C: no smoking office
-- D: dog leash
-- E: airport bus
-
-Official Hören Aufgabe 3 was checked and was already correct:
-
-- Asien
-- Afrika
-- Europa
-- Amerika
-- Afrika
-
-### Übungssatz 4
-
-The audit showed Satz 4 was weaker than the others:
-
-- No paper-style sheets.
-- Visible answer leaks in labels.
-- Missing transcript keys.
-- Writing form was too thin.
-
-Fixes:
-
-- Added Anzeigen sheet.
-- Added Bilder/Fotos sheets.
-- Added inline transcripts.
-- Added image scenes to `assets/img/scripts/fetch_photos.py`.
-- Downloaded images.
-- Replaced the double-negative reading item:
-  `Braucht man keinen Ausweis?`
-  with:
-  `Muss man einen Ausweis mitbringen?`
-- Listening audio was later replaced by manually supplied MP3 files.
-- Expanded the writing form to 10 grounded fields:
-  - Name
-  - Geburtsdatum
-  - Adresse
-  - Telefon
-  - E-Mail
-  - Ziel
-  - Datum
-  - Abfahrt
-  - Personen
-  - Bezahlung
-
-### Writing scoring robustness
-
-`app.js` form scoring now accepts both the displayed answer and any accepted variants:
+Each practice exam is created with:
 
 ```js
-const accepted = [field.answer, ...(field.accepted || [])]
+practiceExam({
+  id,
+  title,
+  theme,
+  reading,
+  listening,
+  writing,
+  speaking
+})
 ```
 
-This applies to scoring and review rendering.
+The structure is consistent across practice exams:
 
-Übungssatz 1 writing was expanded to 10 fields:
+- `reading.tasks`: three tasks.
+- `listening.tasks`: three tasks.
+- `writing.tasks`: generated by `practiceWriting(...)`.
+- `speaking.tasks`: generated by `practiceSpeaking(...)`.
 
-- Familienname
-- Vorname
-- Geburtsdatum
-- Straße
-- Hausnummer
-- PLZ
-- Ort
-- Telefon
-- E-Mail
-- Muttersprache
+The helper functions keep the practice exams aligned:
 
-The prompt now includes `Muttersprache Arabisch`.
+- `practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample })`
+  - Creates the form task and email task.
+  - Form fields can include accepted answers for auto-scoring.
 
-## Assets Currently Present
+- `practiceSpeaking([roleText, pictureText], images = {})`
+  - Creates three speaking tasks.
+  - Task 1 is the self-introduction topic-card task.
+  - Task 2 is image description.
+  - Task 3 is a role-play prompt.
 
-Practice images:
+### Sprechen Aufgabe 1 Model Answers
 
-- `assets/img/practice/exam-1/`
-- `assets/img/practice/exam-2/`
-- `assets/img/practice/exam-3/`
-- `assets/img/practice/exam-4/`
-- `assets/img/practice/exam-5/`
-- `assets/img/practice/exam-6/`
-- `assets/img/practice/exam-7/`
-- `assets/img/practice/exam-8/`
-- `assets/img/practice/exam-9/`
-- `assets/img/practice/exam-10/`
-- `assets/img/practice/exam-11/`
-- `assets/img/practice/exam-12/`
+`speakingTask1TopicSamples` holds six model samples for each topic:
 
-Most sets have:
+- `Sprachen`
+- `Hobbys`
+- `Sport`
+- `Familie`
+- `Beruf`
+- `Lieblingsessen`
 
-- `l1-A.jpg` through `l1-F.jpg`
-- `l3-1.jpg` through `l3-6.jpg`
-- `manifest.json`
+Each sample is short A1-level German, usually three or four simple sentences.
 
-Note: `exam-1` has a slightly different legacy image layout:
+Each practice exam passes sample indexes into `practiceSpeaking`, for example:
 
-- It uses `pharmacy.jpg` for some references.
-- It does not fully mirror the later `l1-*` and `l3-*` naming pattern.
+```js
+{
+  sprachenSample: 5,
+  hobbysSample: 3,
+  berufSample: 4,
+  sportSample: 2,
+  familieSample: 1,
+  lieblingsessenSample: 6
+}
+```
 
-Practice audio:
+`practiceSpeakingTask1Model(...)` renders all six topic blocks into the model answer for Sprechen Aufgabe 1.
 
-- `assets/audio/generated/exam-1-task-1.mp3`
-- `assets/audio/generated/exam-1-task-2.mp3`
-- `assets/audio/generated/exam-1-task-3.mp3`
-- `assets/audio/generated/exam-2-task-1.mp3`
-- `assets/audio/generated/exam-2-task-2.mp3`
-- `assets/audio/generated/exam-2-task-3.mp3`
-- `assets/audio/generated/exam-3-task-1.mp3`
-- `assets/audio/generated/exam-3-task-2.mp3`
-- `assets/audio/generated/exam-3-task-3.mp3`
-- `assets/audio/generated/exam-4-task-1.mp3`
-- `assets/audio/generated/exam-4-task-2.mp3`
-- `assets/audio/generated/exam-4-task-3.mp3`
+Important implementation detail:
 
-Übungssatz 1-6 audio is manually supplied MP3 audio. Übungssatz 7-12 audio was generated with OpenRouter TTS. All MP3 paths for Übungssatz 5-12 are currently present:
+`speakingTask1TopicSamples` must be declared before `practiceExams`. The practice exam array calls `practiceSpeaking(...)` while `app.js` is loading, so the sample table must already exist. A previous runtime break happened because the sample table was below `practiceExams`; syntax checks passed, but the browser app failed to initialize.
 
-- `assets/audio/generated/exam-5-task-1.mp3` through `exam-12-task-3.mp3`
+## Scoring Logic
 
-Practice transcripts are embedded in `app.js` next to each listening task; separate practice transcript markdown files were removed to avoid duplication.
+Automatic scoring is implemented for:
 
-OpenRouter TTS workflow:
+- Reading tasks.
+- Listening tasks.
+- Writing Aufgabe 1 form task.
+
+Writing Aufgabe 2 and all speaking tasks are self-check/manual practice surfaces.
+
+The ÖSD-style points conversion uses:
+
+```js
+const OSD6 = { 0: 0, 1: 0, 2: 2, 3: 4, 4: 6, 5: 8, 6: 10 };
+```
+
+`taskPoints(...)` converts correct answers into task points. `autoScore(...)` combines:
+
+- `lesen`: max 30
+- `hoeren`: max 30
+- writing form: max 5
+
+The displayed automatic score is out of 65 because writing email and speaking require manual/self evaluation.
+
+## Audio Workflow
+
+Practice audio files are referenced from:
+
+```text
+assets/audio/generated/
+```
+
+Naming convention:
+
+```text
+exam-1-task-1.mp3
+exam-1-task-2.mp3
+exam-1-task-3.mp3
+...
+exam-12-task-3.mp3
+```
+
+The app expects exactly these filenames unless `app.js` is changed.
+
+The project originally experimented with Python text-to-speech. That generated-TTS approach was removed from the active workflow because the output sounded too robotic. Current practice audio is either manually supplied or generated through OpenRouter-compatible TTS.
+
+Current TTS script:
+
+```text
+scripts/generate-openrouter-tts.mjs
+```
+
+Usage examples:
 
 ```bash
 OPENROUTER_API_KEY=sk-or-... node scripts/generate-openrouter-tts.mjs --exams 9-12
+node scripts/generate-openrouter-tts.mjs --exams 8-12 --dry-run
+node scripts/generate-openrouter-tts.mjs --exams 12 --tasks 2 --force
 ```
 
-Defaults:
+The script reads transcripts from `app.js` and writes MP3s into `assets/audio/generated/`. It skips existing files unless `--force` is passed.
 
-- endpoint: `https://openrouter.ai/api/v1/audio/speech`
-- model: `openai/gpt-4o-mini-tts-2025-12-15`
-- voice: `nova`
-- speed: `0.92`
+Do not commit `.env`. It is ignored by Git and may contain the OpenRouter API key.
 
-The script skips existing MP3 files unless `--force` is passed. Use `--dry-run` to preview without calling the API.
+## AI Speaking Tutor (practice exams only)
 
-Important generator behavior:
+Every `Sprechen` task in the twelve practice exams has an AI tutor panel. The official model set is intentionally excluded (gated by `!currentExam().official` in `renderSpeakingTask`).
 
-- Numbered Hören texts are generated segment-by-segment so every `Text 1`, `Text 2`, etc. is spoken.
-- Aufgabe 2 Notizblatt audio is generated as three segments: first reading, "Sie hören den Text jetzt zum zweiten Mal.", second reading. This avoids the TTS provider shortening/reusing repeated text.
+Common flow:
 
-## Verification Already Completed
+1. The learner records German with the existing `MediaRecorder` flow (webm blob).
+2. On `stop`, `app.js` auto-sends the audio (base64) to `POST /api/speaking-feedback` — only when a `[data-feedback="<recordId>"]` panel exists (practice exams).
+3. `server.mjs` calls OpenRouter twice with the **same** `OPENROUTER_API_KEY`:
+   - `POST /audio/transcriptions` with `model: openai/whisper-1` (speech → transcript).
+   - `POST /chat/completions` with `model: google/gemini-2.5-flash-lite`, a friendly-A1-tutor system prompt, asking for strict JSON.
+4. The browser shows: transcript, corrected A1 sentence, mistakes, English translation.
 
-Commands that passed:
+### Two tutor modes (request field `mode`)
+
+- **`guided`** (Aufgaben 1-3): walks the task's own `cards` one at a time. The request sends the current `cardTopic`; the panel shows "Karte N / total" and auto-advances after each correction. When the cards run out it shows a "done" message + a `restart-cards` button. The next prompt is the next card, driven client-side via `speakingCardProgress` — the model does **not** invent topics here.
+- **`chat`** (Aufgabe 4, "Freies Gespräch – Extra-Übung"): a free A1 conversation. Starts from a fixed `opener` on the task; each answer is corrected and the model's `nextQuestion` becomes the next prompt, tracked client-side via `chatPrevQuestion` and sent back as `previousQuestion` for continuity. Aufgabe 4 has `mode: "chat"`, no `cards`, no image; it is **not** part of the official exam.
+
+### Aufgabe 1 cards
+
+Aufgabe 1 now has **12 topic cards**: Name, Alter, Land, Wohnort, Familie, Beruf, Sprachen, Hobbys, Sport, Lieblingsessen, Tagesablauf, Wochenende. `speakingTask1TopicSamples` holds 6 A1 model-answer variants per topic; each exam passes 12 `*Sample` indexes (evenly distributed, each variant used twice across the 12 exams). `practiceSpeakingTask1Model` renders all 12 blocks in the Modelllösung.
+
+Key files / functions:
+
+- `server.mjs`: `transcribeAudio`, `getTutorFeedback` (mode/cardTopic/previousQuestion aware), `parseTutorJson`, `handleSpeakingFeedback`, static file server.
+- `app.js`: `renderTutorPanel(recordId, task)`, `renderCurrentCard`, `updateCurrentCardDisplay`, `currentCardIndex`, `speakingTaskFromRecordId`, `blobToBase64`, `requestSpeakingFeedback`, `showSpeakingFeedback`, the `restart-cards` action, plus the `mediaRecorder` `stop` hook. Transient state: `speakingCardProgress`, `chatPrevQuestion`.
+- `styles.css`: `.ai-tutor*`, `.ai-current-*`, and `.ai-block*` rules.
+
+Configurable env vars (optional, sensible defaults): `OPENROUTER_STT_MODEL`, `OPENROUTER_CHAT_MODEL`, `OPENROUTER_BASE_URL`, `PORT`.
+
+Notes:
+
+- API keys must stay server-side. Never move the OpenRouter call into browser JS.
+- Tutor state (card progress, last question, feedback) is transient (in-memory/DOM, not persisted to `localStorage`); navigating away resets it.
+- Whisper transcription is served by OpenRouter (no separate OpenAI key needed). This was confirmed against OpenRouter's `POST /api/v1/audio/transcriptions` endpoint, which accepts base64 `input_audio` with `format: "webm"`.
+
+## Image Workflow
+
+Official images live in:
+
+```text
+assets/img/official/
+```
+
+Practice images live in:
+
+```text
+assets/img/practice/exam-N/
+```
+
+Common image patterns:
+
+- `l1-A.jpg` through `l1-F.jpg`: Hören/Lesen image-matching sets.
+- `l3-1.jpg` through `l3-6.jpg`: Aufgabe 3 image option sets.
+- `speaking-1.jpg`, `speaking-2.jpg`, `speaking-3.jpg`: speaking task support images where present.
+- `manifest.json`: image source/metadata notes for practice sets.
+
+If replacing an image manually, prefer preserving the filename. If the filename changes, update all references in `app.js`.
+
+The helper:
+
+```text
+assets/img/scripts/fetch_photos.py
+```
+
+was used to fetch practice images from image APIs while preserving expected filenames.
+
+## Major Completed Work
+
+The project now includes:
+
+- Official ÖSD ZA1 model set with PDF, images, official audio, and transcripts.
+- Twelve complete practice exams.
+- Manual MP3 replacements for earlier exams.
+- OpenRouter-generated MP3s for later practice exams.
+- Practice images for the expanded exam set.
+- README with screenshots.
+- Speaking task image support.
+- Sprechen Aufgabe 1 model answers for all six cards across Übungssatz 1-12.
+- Cache-busting query version updated to `v=32`.
+
+Important content fixes already made:
+
+- Hören Aufgabe 1 image-answer mappings were shuffled for practice exams so answers are not in obvious order.
+- Distractor image `F` is intentionally a no-text/no-match image.
+- Duplicate option labels in Hören Aufgabe 2 and Aufgabe 3 were fixed.
+- Practice exam audio paths were aligned to `assets/audio/generated/exam-N-task-M.mp3`.
+- Old standalone transcript markdown files were removed to reduce clutter.
+- Python-generated robotic audio was removed from the active asset/workflow.
+- Official ÖSD model set was kept as the reference and not modified for practice-specific edits.
+
+Recent high-risk fix:
+
+- Commit `aa1c33a` moved `speakingTask1TopicSamples` above `practiceExams` to fix a browser initialization failure.
+- Commit `f70a07d` bumped cache references after the runtime fix.
+
+## Verification Commands
+
+Basic JavaScript syntax:
 
 ```bash
 node --check app.js
 node --check scripts/generate-openrouter-tts.mjs
-node scripts/generate-openrouter-tts.mjs --exams 8-12 --dry-run
+```
+
+Image helper syntax:
+
+```bash
 python3 -m py_compile assets/img/scripts/fetch_photos.py
 ```
 
-Latest validation for Übungssatz 9-12:
+Check that all referenced static assets exist:
 
-- Übungssatz 9-12 Lesen:
-  - `16/16` correct per set.
-  - `30/30` points per set.
-- Übungssatz 9-12 Hören:
-  - `16/16` correct per set.
-  - `30/30` points per set.
-- Übungssatz 9-12 Schreiben form:
-  - `10/10` expected fields correct per set.
-
-Asset-reference check showed all referenced images exist. Expected missing audio files are pending manual recordings for exams that have not yet been supplied.
-
-An isolated scoring harness was also run against practice sets 1-4. Result:
-
-- Übungssatz 1-4 Lesen:
-  - `16/16` correct.
-  - `30/30` points.
-- Übungssatz 1-4 Hören:
-  - `16/16` correct.
-  - `30/30` points.
-- Übungssatz 1-4 Schreiben form:
-  - `10/10` expected fields correct.
-  - `5/5` points.
-- No scoring issues were reported by the harness.
-
-Live browser verification on `http://localhost:8096/?v=17` showed:
-
-- Exams 1-4 reading:
-  - Anzeigen sheet present.
-  - Image sheet present.
-  - 6 images present.
-  - Images loaded successfully.
-  - No answer-label leaks found.
-  - No horizontal overflow.
-- Exams 1-4 listening:
-  - 3 audio players present.
-  - Audio sources loaded successfully.
-  - Photo sheet present.
-  - 6 images present.
-  - Images loaded successfully.
-  - Notizblatt present.
-  - No transcript-key leaks found.
-  - No horizontal overflow.
-- Browser console/page errors:
-  - none observed.
-
-## Known Caveats
-
-- The practice sets are ÖSD-style practice sets, not official ÖSD materials.
-- Only the `exam-official` set uses official ÖSD PDF/audio.
-- Practice listening audio is manually supplied MP3 audio and should be treated as training audio, not official sample audio.
-- Some practice images are downloaded CC/Openverse-style placeholders. The user may replace images manually. If they do, preserve the same filenames and paths so `app.js` references keep working.
-- Some UI strings are still English, for example score labels. This has not been fully German-localized yet.
-- There may be a `__pycache__` folder from Python compilation. It is not important to the app.
-
-## Cache Versioning
-
-Current cache query version in `index.html` is `v=32`.
-
-When changing `app.js` or `styles.css`, bump both references in `index.html`, for example:
-
-```html
-<link rel="stylesheet" href="styles.css?v=32">
-<script src="app.js?v=32" defer></script>
+```bash
+node -e 'const fs=require("fs"); const code=fs.readFileSync("app.js","utf8"); const refs=[...code.matchAll(/"(assets\/(?:img|audio|pdf)\/[^"]+)"/g)].map(m=>m[1]); const missing=[...new Set(refs)].filter(p=>!fs.existsSync(p)); console.log(missing.length?missing.join("\n"):"all referenced assets present"); process.exit(missing.length?1:0);'
 ```
 
-Then test with:
+Check Sprechen Aufgabe 1 sample distribution:
+
+```bash
+node -e 'const fs=require("fs"); const src=fs.readFileSync("app.js","utf8"); const names=["sprachenSample","hobbysSample","sportSample","familieSample","berufSample","lieblingsessenSample"]; const result={}; for (const name of names){ const arr=[...src.matchAll(new RegExp(name+":\\s*(\\d+)","g"))].map(m=>Number(m[1])); result[name]={total:arr.length,counts:Object.fromEntries([1,2,3,4,5,6].map(n=>[n,arr.filter(x=>x===n).length]))}; } console.log(JSON.stringify(result,null,2)); if (Object.values(result).some(r=>r.total!==12 || Object.values(r.counts).some(c=>c!==2))) process.exit(1);'
+```
+
+Recommended browser smoke test:
+
+1. Start `python3 -m http.server 8096`.
+2. Open `http://localhost:8096/?v=32`.
+3. Confirm:
+   - test dropdown is populated,
+   - score shows `0 / 65`,
+   - section nav renders,
+   - overview cards render,
+   - selecting a practice exam and opening `Sprechen` works,
+   - `Modelllösung zeigen` in Sprechen Aufgabe 1 shows all six topic blocks.
+
+If browser automation is available, use it. A plain `node --check` is not enough to catch initialization-order bugs.
+
+## Deployment Notes
+
+The GitHub remote is:
 
 ```text
-http://localhost:8096/?v=32
+https://github.com/thegreatLUCY/OSDTestExam.git
 ```
 
-## Important Workflow Notes
+GitHub Pages may serve cached HTML for several minutes after a push. If a user sees a static shell with:
 
-- Prefer editing with `apply_patch`.
-- Do not overwrite user-replaced images.
-- If replacing an image, use the same target filename unless intentionally changing `app.js`.
-- Before changing an exam, inspect the relevant data block in `app.js`.
-- After changing an exam, run:
+- empty testsatz dropdown,
+- score `0 / 0`,
+- no section nav,
+- no overview cards,
 
-```bash
-node --check app.js
-```
+then `app.js` failed to initialize or the browser/CDN is still serving an older bundle. Check the live HTML for the current query string and hard refresh.
 
-- After changing scripts, run:
+## Guardrails For Future Agents
 
-```bash
-python3 -m py_compile assets/img/scripts/fetch_photos.py
-```
+- Do not edit the official ÖSD model set unless the user explicitly asks.
+- Most content changes should target `practiceExams`.
+- Preserve practice audio filenames unless updating `app.js`.
+- Preserve image filenames unless updating `app.js`.
+- Keep `.env` out of Git.
+- Bump cache query strings after changing `app.js` or `styles.css`.
+- Run an actual app-load smoke test after changing data declarations or render helpers.
+- Be careful moving constants: many exam objects are created at script load time.
+- Do not reintroduce robotic Python-generated TTS as the default audio workflow.
 
-- After changing UI/CSS, open the site on `8096` and check:
-  - official set still works,
-  - target Übungssatz renders,
-  - no answer leaks,
-  - no horizontal overflow,
-  - images/audio load,
-  - dark theme still works,
-  - print/paper sections remain readable.
+## Good Improvement Opportunities
 
-## Suggested Next Work
+The project works, but a future agent can improve maintainability:
 
-- Human visual QA for Übungssatz 3 and 4 images.
-- Replace any weak images while preserving paths.
-- Localize remaining English UI strings into German if desired.
-- Add a dedicated answer-key/review mode.
-- Improve printable worksheets.
-- Add a short learner progress/save summary if the user wants repeated practice tracking.
+1. Split `app.js` into data and runtime modules.
+   - Exam data is large and mixed with rendering logic.
+   - A split would reduce the chance of declaration-order bugs.
 
-## User Expectations
+2. Add a small automated browser smoke test.
+   - It should load `index.html`, assert that the dropdown has 13 exams, and assert that the overview and Sprechen model answer render.
 
-The user is looking for a precise ÖSD A1-style trainer, not a generic German quiz shell.
+3. Add a reusable asset-reference checker script.
+   - The one-line command above should become `scripts/check-assets.mjs`.
 
-The important standard is:
+4. Add data validation for exams.
+   - Validate each exam has 3 listening tasks, 3 speaking tasks, expected audio paths, answer keys, and image references.
 
-- reading tasks should look and behave like ÖSD A1 Lesen:
-  - situations to ads,
-  - short text yes/no,
-  - notices/images matching;
-- listening tasks should look and behave like ÖSD A1 Hören:
-  - picture matching,
-  - Notizblatt completion,
-  - interview/matrix task;
-- writing should be grounded in realistic form/email prompts;
-- official materials should be used directly where available;
-- invented practice content is acceptable only when it follows the real exam structure closely.
+5. Consider extracting practice exam content into JSON.
+   - This would make future content changes less risky.
+   - The current JS data format is flexible but easy to break.
 
-When unsure, compare any new practice set against Übungssatz 1 and the official Modellsatz before declaring it done.
+6. Improve deployment/cache handling.
+   - A small version constant or build-time hash would be less error-prone than manually updating query strings in multiple files.
+
+7. Improve self-check UX for writing and speaking.
+   - Manual scoring rubrics could be more visible and structured.
+
+8. Improve accessibility of interactive task controls.
+   - The app is usable, but keyboard/focus states and ARIA details can be tightened.
+
+## Mental Model
+
+Think of this project as an exam-content engine, not a generic language-learning app.
+
+The official model set defines the target shape. The twelve practice exams reuse that shape with varied authored content, static images, and MP3 audio. The app should help learners rehearse the ÖSD ZA1 process: read, listen, write, speak, check answers, and repeat.
+
+The main engineering priority is keeping the content reliable and the workflow simple. Avoid broad refactors unless they directly reduce risk in exam data editing or verification.

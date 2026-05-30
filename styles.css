@@ -1178,3 +1178,399 @@ button:disabled {
     break-inside: avoid;
   }
 }
+
+/* ---- AI speaking tutor ---------------------------------------------------- */
+.ai-tutor {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+}
+
+.ai-tutor-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ai-tutor-head strong {
+  color: var(--gold);
+}
+
+.ai-tutor-current {
+  margin-top: 10px;
+}
+
+.ai-current-label {
+  margin: 0 0 2px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ai-current-card {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ai-current-done {
+  margin: 0 0 8px;
+  color: var(--green);
+}
+
+.ai-tutor-status {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.ai-tutor-status.error {
+  color: var(--red);
+}
+
+.ai-tutor-result {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.ai-block {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.ai-block-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.ai-block p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.ai-block ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.45;
+}
+
+.ai-corrected {
+  border-left: 3px solid var(--green);
+}
+
+.ai-mistakes {
+  border-left: 3px solid var(--gold);
+}
+
+/* ---- AI writing checker (Schreiben Aufgabe 2) ----- */
+.ai-writing {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+}
+
+.ai-writing-status {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.ai-writing-status.error {
+  color: var(--red);
+}
+
+.ai-writing-result {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.ai-writing-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.ai-writing-item {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.ai-writing-item.ai-ok {
+  border-left: 3px solid var(--green);
+}
+
+.ai-writing-item.ai-missing {
+  border-left: 3px solid var(--red);
+}
+
+.ai-writing-icon {
+  font-weight: 700;
+  width: 1em;
+}
+
+.ai-writing-item.ai-ok .ai-writing-icon {
+  color: var(--green);
+}
+
+.ai-writing-item.ai-missing .ai-writing-icon {
+  color: var(--red);
+}
+
+.ai-writing-overall {
+  margin: 0;
+  color: var(--ink);
+}
+
+/* ---- Vocabulary: top-bar button + toggle ----- */
+.vocab-btn .vocab-count {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--green);
+  color: var(--on-accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  min-width: 1.4em;
+  text-align: center;
+}
+
+.translate-toggle.is-on {
+  background: var(--green);
+  color: var(--on-accent);
+  border-color: var(--green);
+}
+
+body.translate-mode #app {
+  cursor: help;
+}
+
+/* ---- Translation popover ----- */
+.translate-popover {
+  position: fixed;
+  z-index: 1000;
+  min-width: 240px;
+  max-width: 320px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font-size: 0.92rem;
+}
+
+.translate-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.translate-word {
+  color: var(--green);
+  font-size: 1.05rem;
+}
+
+.translate-close {
+  background: transparent;
+  border: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 0 4px;
+}
+
+.translate-en {
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+
+.translate-examples {
+  margin: 0 0 6px;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.translate-examples li + li {
+  margin-top: 2px;
+}
+
+.translate-status {
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+.link-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--green);
+  text-decoration: underline;
+  font: inherit;
+}
+
+/* ---- Vocab modal ----- */
+.vocab-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 45, 0.45);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.vocab-modal {
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: min(560px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vocab-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.vocab-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.vocab-tab {
+  background: transparent;
+  border: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--muted);
+  font: inherit;
+  border-bottom: 2px solid transparent;
+}
+
+.vocab-tab.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--green);
+}
+
+.vocab-modal-body {
+  padding: 16px 18px;
+  overflow: auto;
+}
+
+/* ---- Flashcards ----- */
+.flash-progress {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.flash-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 18px;
+  background: var(--panel-soft);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  min-height: 140px;
+}
+
+.flash-word {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.flash-en {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.flash-examples {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.flash-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.flash-actions button {
+  flex: 1;
+}
+
+.flash-again { border-left: 3px solid var(--red); }
+.flash-good  { border-left: 3px solid var(--gold); }
+.flash-easy  { border-left: 3px solid var(--green); }
+
+.flash-done {
+  margin: 0 0 10px;
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* ---- Alle Wörter list ----- */
+.vocab-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.vocab-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+}

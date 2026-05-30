@@ -435,6 +435,54 @@ const speakingTask1TopicSamples = {
     "Ich mag Gemüse und Suppe.\nAm Abend esse ich gern etwas Warmes.\nDas ist gesund.",
     "Ich esse gern Fisch.\nIm Sommer esse ich Fisch mit Salat.\nDas schmeckt sehr gut.",
     "Mein Lieblingsessen ist Kuchen.\nIch esse Kuchen gern mit Kaffee.\nAber ich esse nicht jeden Tag Kuchen."
+  ],
+  name: [
+    "Ich heiße Sara.\nMein Familienname ist Ahmadi.\nMan nennt mich Sari.",
+    "Mein Name ist Marco.\nMein Vorname ist Marco, mein Nachname Rossi.\nIch komme aus Italien.",
+    "Ich heiße Ling.\nMein Nachname ist Wang.\nMeine Freunde sagen Ling zu mir.",
+    "Mein Name ist Omar.\nIch buchstabiere: O-M-A-R.\nIch freue mich, Sie kennenzulernen.",
+    "Ich heiße Anna.\nMein Familienname ist Novak.\nIch bin neu hier.",
+    "Mein Name ist David.\nMein Nachname ist Schmidt.\nAlle nennen mich Dave."
+  ],
+  alter: [
+    "Ich bin 25 Jahre alt.\nMein Geburtstag ist im Mai.\nIch bin noch jung.",
+    "Ich bin 30 Jahre alt.\nIch habe im Juli Geburtstag.\nIch fühle mich gut.",
+    "Ich bin 19 Jahre alt.\nIch bin noch Student.\nMein Geburtstag ist im Winter.",
+    "Ich bin 42 Jahre alt.\nIch habe zwei Kinder.\nMein Geburtstag ist im März.",
+    "Ich bin 28 Jahre alt.\nIch wohne schon lange hier.\nMein Geburtstag ist im Herbst.",
+    "Ich bin 35 Jahre alt.\nMein Geburtstag ist im Dezember.\nDann feiere ich mit der Familie."
+  ],
+  land: [
+    "Ich komme aus Syrien.\nMeine Heimatstadt ist Aleppo.\nJetzt lebe ich in Österreich.",
+    "Ich komme aus der Türkei.\nIch bin in Istanbul geboren.\nDeutschland ist jetzt mein Zuhause.",
+    "Ich komme aus Spanien.\nMeine Familie lebt in Madrid.\nIch besuche sie im Sommer.",
+    "Ich komme aus dem Iran.\nIch bin in Teheran geboren.\nIch lebe seit zwei Jahren in Wien.",
+    "Ich komme aus Indien.\nMeine Heimat ist sehr groß.\nHier ist das Wetter kälter.",
+    "Ich komme aus der Ukraine.\nMeine Stadt heißt Kyjiw.\nJetzt wohne ich in Österreich."
+  ],
+  wohnort: [
+    "Ich wohne in Wien.\nMeine Adresse ist Hauptstraße 10.\nDie Stadt ist groß und schön.",
+    "Ich wohne in Graz.\nIch habe eine kleine Wohnung.\nDas Zentrum ist nah.",
+    "Ich wohne in Linz.\nMein Haus ist neben dem Park.\nIch wohne gern dort.",
+    "Ich wohne in Salzburg.\nMeine Wohnung ist im dritten Stock.\nDie Berge sind sehr schön.",
+    "Ich wohne in einem Dorf.\nEs ist ruhig und klein.\nMeine Nachbarn sind nett.",
+    "Ich wohne im Zentrum.\nAlles ist in der Nähe.\nIch gehe oft zu Fuß."
+  ],
+  tagesablauf: [
+    "Ich stehe um sieben Uhr auf.\nIch frühstücke und gehe zum Kurs.\nAm Abend lese ich ein Buch.",
+    "Ich wache früh auf.\nAm Vormittag arbeite ich.\nNach dem Essen mache ich eine Pause.",
+    "Ich stehe um halb acht auf.\nIch trinke Kaffee und fahre zur Arbeit.\nAm Abend koche ich.",
+    "Am Morgen mache ich Sport.\nDann gehe ich in die Schule.\nAm Abend treffe ich Freunde.",
+    "Ich stehe spät auf.\nAm Nachmittag lerne ich Deutsch.\nIn der Nacht schlafe ich gut.",
+    "Ich beginne den Tag um sechs Uhr.\nIch arbeite bis zum Nachmittag.\nDann gehe ich spazieren."
+  ],
+  wochenende: [
+    "Am Wochenende schlafe ich lange.\nIch treffe meine Freunde.\nWir gehen ins Café.",
+    "Am Samstag kaufe ich ein.\nAm Sonntag besuche ich meine Familie.\nWir essen zusammen.",
+    "Am Wochenende mache ich Sport.\nIch spiele Fußball im Park.\nDanach ruhe ich mich aus.",
+    "Am Samstag putze ich die Wohnung.\nAm Sonntag sehe ich einen Film.\nDas ist entspannend.",
+    "Am Wochenende gehe ich spazieren.\nManchmal fahre ich in die Berge.\nDie Natur ist schön.",
+    "Am Wochenende koche ich gern.\nIch lade Freunde ein.\nWir reden und lachen viel."
   ]
 };
 
@@ -615,7 +663,7 @@ const practiceExams = [
       emailPrompt:
         "Ihre Nachbarin schreibt Ihnen. Antworten Sie und schreiben Sie circa 30 Wörter: warum Sie schreiben, wann Sie Zeit haben, und fragen Sie, ob sie kommen kann.",
       checklist: ["Anrede", "Grund genannt", "Tag/Uhrzeit genannt", "Frage am Ende", "Gruß"],
-      sample: "Liebe Frau Weber,\nich bin Ihr neuer Nachbar. Ich möchte Sie gern zu Kaffee und Kuchen einladen. Am Samstag um 16 Uhr habe ich Zeit. Können Sie kommen?\nViele Grüße\nOmar"
+      sample: "Liebe Frau Weber,\nich bin Ihr neuer Nachbar Omar. Ich wohne jetzt in Wohnung 5 im ersten Stock. Ich möchte Sie gern zu Kaffee und Kuchen einladen. Am Samstag um 16 Uhr habe ich Zeit. Können Sie kommen? Ich freue mich sehr.\nViele Grüße\nOmar"
     }),
     speaking: practiceSpeaking([
       "Sie sind am Bahnhof. Fragen Sie nach einer Fahrkarte nach Salzburg, der Uhrzeit und dem Preis.",
@@ -629,7 +677,15 @@ const practiceExams = [
       berufSample: 4,
       sportSample: 2,
       familieSample: 1,
-      lieblingsessenSample: 6
+      lieblingsessenSample: 6,
+      nameSample: 1,
+      alterSample: 2,
+      landSample: 3,
+      wohnortSample: 4,
+      tagesablaufSample: 5,
+      wochenendeSample: 6,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe einen Supermarkt.“<br><strong>Wie viele Personen?</strong> „Eine Person, eine Frau.“<br><strong>Wo?</strong> „Sie steht vor dem Obst.“<br><strong>Was machen sie?</strong> „Sie kauft Äpfel und Bananen und legt sie in den Einkaufskorb.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich möchte eine Fahrkarte nach Salzburg. Wann fährt der nächste Zug? Was kostet die Fahrkarte?“<br><strong>Reaktion:</strong> „Aha, gut. Dann nehme ich bitte eine Karte um 9 Uhr.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“"
     })
   }),
   practiceExam({
@@ -663,11 +719,11 @@ const practiceExams = [
             "Sportclub Süd: Schwimmen und Fitness, Probetraining kostenlos."
           ],
           rows: [
-            ["A", "Sie sind krank und brauchen heute Vormittag einen Arzt.", 1],
-            ["B", "Sie möchten abends Deutsch lernen.", 2],
-            ["C", "Sie suchen Arbeit am Samstag.", 3],
+            ["A", "Sie suchen Arbeit am Samstag.", 3],
+            ["B", "Sie möchten schwimmen und Sport machen.", 6],
+            ["C", "Sie sind krank und brauchen heute Vormittag einen Arzt.", 1],
             ["D", "Ihr Laptop funktioniert schlecht.", 5],
-            ["E", "Sie möchten schwimmen und Sport machen.", 6]
+            ["E", "Sie möchten abends Deutsch lernen.", 2]
           ],
           prefix: "r1"
         }),
@@ -809,12 +865,14 @@ const practiceExams = [
       ],
       emailPrompt: "Sie sind krank und können morgen nicht arbeiten. Schreiben Sie Ihrem Chef circa 30 Wörter: Sie sind krank, Sie gehen zum Arzt, Sie kommen am Freitag wieder.",
       checklist: ["Anrede", "Grund (krank)", "Arzt genannt", "Rückkehr genannt", "Gruß"],
-      sample: "Sehr geehrter Herr Berger,\nich bin krank und kann morgen leider nicht arbeiten. Ich gehe morgen früh zum Arzt. Am Freitag komme ich wieder ins Büro.\nMit freundlichen Grüßen\nLena Ali"
+      sample: "Sehr geehrter Herr Berger,\nich bin heute Morgen krank geworden und kann morgen leider nicht ins Büro kommen. Ich habe Fieber und Halsschmerzen. Morgen früh gehe ich zum Arzt. Am Freitag komme ich wieder zur Arbeit. Vielen Dank für Ihr Verständnis.\nMit freundlichen Grüßen\nLena Ali"
     }),
     speaking: practiceSpeaking([
       "Sie rufen beim Arzt an. Fragen Sie nach einem Termin und sagen Sie, was weh tut.",
       "Beschreiben Sie ein Bild: Zwei Personen sprechen in einem Büro."
-    ], { sprachenSample: 2, hobbysSample: 6, berufSample: 1, sportSample: 5, familieSample: 4, lieblingsessenSample: 3 })
+    ], { sprachenSample: 2, hobbysSample: 6, berufSample: 1, sportSample: 5, familieSample: 4, lieblingsessenSample: 3, nameSample: 2, alterSample: 3, landSample: 4, wohnortSample: 5, tagesablaufSample: 6, wochenendeSample: 1,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe ein Büro.“<br><strong>Wie viele Personen?</strong> „Zwei Personen, ein Mann und eine Frau.“<br><strong>Wo?</strong> „Sie stehen am Schreibtisch.“<br><strong>Was machen sie?</strong> „Sie sprechen über die Arbeit. Auf dem Tisch sind ein Computer und Papiere.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag, hier ist Frau Ali.“<br><strong>Wunsch / Frage:</strong> „Mein Kopf tut sehr weh. Ich brauche bitte einen Termin. Wann haben Sie Zeit?“<br><strong>Reaktion:</strong> „Ja, morgen um 10 Uhr passt mir gut.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiederhören!“" })
   }),
   practiceExam({
     id: "exam-3",
@@ -991,12 +1049,14 @@ const practiceExams = [
       ],
       emailPrompt: "Sie laden einen Freund zu Ihrem Geburtstag ein. Schreiben Sie circa 30 Wörter: wann die Party ist, wo sie ist, was er mitbringen soll.",
       checklist: ["Anrede", "Tag und Uhrzeit", "Ort", "Bitte etwas mitbringen", "Gruß"],
-      sample: "Lieber Ben,\nich feiere am Samstag um 17 Uhr meinen Geburtstag im Jugendzentrum Nord. Bitte bring etwas zu trinken mit. Ich freue mich auf dich!\nViele Grüße\nJulia"
+      sample: "Lieber Ben,\nich feiere am Samstag um 17 Uhr meinen Geburtstag im Jugendzentrum Nord. Es kommen viele Freunde aus dem Deutschkurs. Bitte bring etwas zu trinken mit. Wir essen, tanzen und haben viel Spaß. Ich freue mich sehr auf dich!\nViele Grüße\nJulia"
     }),
     speaking: practiceSpeaking([
       "Sie möchten ein Hotelzimmer reservieren. Fragen Sie nach Preis, Frühstück und Anreisezeit.",
       "Beschreiben Sie ein Bild: Eine Familie sitzt im Park und isst."
-    ], { sprachenSample: 4, hobbysSample: 2, berufSample: 6, sportSample: 1, familieSample: 6, lieblingsessenSample: 5 })
+    ], { sprachenSample: 4, hobbysSample: 2, berufSample: 6, sportSample: 1, familieSample: 6, lieblingsessenSample: 5, nameSample: 3, alterSample: 4, landSample: 5, wohnortSample: 6, tagesablaufSample: 1, wochenendeSample: 2,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe einen Park.“<br><strong>Wie viele Personen?</strong> „Vier Personen, eine Familie mit zwei Kindern.“<br><strong>Wo?</strong> „Sie sitzen auf einer Decke unter einem Baum.“<br><strong>Was machen sie?</strong> „Sie essen zusammen ein Picknick. Das Wetter ist sonnig.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich möchte ein Doppelzimmer reservieren. Was kostet eine Nacht? Ist das Frühstück inklusive?“<br><strong>Reaktion:</strong> „Sehr gut. Ich komme am Freitag um 18 Uhr an.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiederhören!“" })
   }),
   practiceExam({
     id: "exam-4",
@@ -1173,12 +1233,14 @@ const practiceExams = [
       ],
       emailPrompt: "Sie können morgen nicht zum Deutschkurs kommen. Schreiben Sie circa 30 Wörter: warum nicht, wann Sie wieder kommen, und fragen Sie nach den Hausaufgaben.",
       checklist: ["Anrede", "Grund", "Rückkehr genannt", "Frage nach Hausaufgaben", "Gruß"],
-      sample: "Sehr geehrte Frau Novak,\nentschuldigen Sie bitte, ich kann morgen nicht zum Deutschkurs kommen. Ich habe einen Termin im Krankenhaus. Am Mittwoch bin ich wieder da. Was sind die Hausaufgaben?\nViele Grüße\nSamir Youssef"
+      sample: "Sehr geehrte Frau Novak,\nleider kann ich morgen nicht zum Deutschkurs kommen. Ich habe einen wichtigen Termin im Krankenhaus. Am Mittwoch bin ich wieder im Kurs. Können Sie mir bitte sagen, welche Hausaufgaben wir machen müssen? Vielen Dank im Voraus.\nViele Grüße\nSamir Youssef"
     }),
     speaking: practiceSpeaking([
       "Sie sind im Handyshop. Fragen Sie nach einer SIM-Karte, Internet und dem Preis.",
       "Beschreiben Sie ein Bild: Menschen kaufen auf einem Markt ein."
-    ], { sprachenSample: 1, hobbysSample: 5, berufSample: 2, sportSample: 4, familieSample: 3, lieblingsessenSample: 2 })
+    ], { sprachenSample: 1, hobbysSample: 5, berufSample: 2, sportSample: 4, familieSample: 3, lieblingsessenSample: 2, nameSample: 4, alterSample: 5, landSample: 6, wohnortSample: 1, tagesablaufSample: 2, wochenendeSample: 3,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe einen Markt im Freien.“<br><strong>Wie viele Personen?</strong> „Viele Personen, ungefähr zehn.“<br><strong>Wo?</strong> „Sie sind zwischen den Marktständen.“<br><strong>Was machen sie?</strong> „Sie kaufen Obst und Gemüse. Eine Frau verkauft Tomaten, ein Mann bezahlt mit Geld.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich brauche eine SIM-Karte. Wie viel Internet bekomme ich pro Monat? Was kostet das?“<br><strong>Reaktion:</strong> „Okay, das ist günstig. Ich nehme die Karte mit zehn Gigabyte.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“" })
   }),
   practiceExam({
     id: "exam-5",
@@ -1211,11 +1273,11 @@ const practiceExams = [
             "Schuhservice: Schuhe und Schlüssel, Abholung am nächsten Tag."
           ],
           rows: [
-            ["A", "Sie müssen ein Paket abholen.", 1],
-            ["B", "Sie möchten ein Konto eröffnen.", 2],
-            ["C", "Ihre Waschmaschine ist kaputt.", 3],
-            ["D", "Sie brauchen am Morgen frisches Brot.", 4],
-            ["E", "Sie möchten ein Buch ausleihen.", 5]
+            ["A", "Sie brauchen am Morgen frisches Brot.", 4],
+            ["B", "Sie müssen ein Paket abholen.", 1],
+            ["C", "Sie möchten ein Buch ausleihen.", 5],
+            ["D", "Ihre Waschmaschine ist kaputt.", 3],
+            ["E", "Sie möchten ein Konto eröffnen.", 2]
           ],
           prefix: "r1"
         }),
@@ -1355,12 +1417,14 @@ const practiceExams = [
       ],
       emailPrompt: "Sie möchten Ihrer Freundin schreiben, dass Sie am Samstag in die Stadt gehen. Schreiben Sie circa 30 Wörter: wohin Sie gehen, wann Sie Zeit haben, und fragen Sie, ob sie mitkommen möchte.",
       checklist: ["Anrede", "Ort genannt", "Tag/Uhrzeit genannt", "Frage", "Gruß"],
-      sample: "Liebe Sara,\nich gehe am Samstag in die Stadt. Ich muss zur Post und zur Bank. Um 10 Uhr habe ich Zeit. Möchtest du mitkommen?\nLiebe Grüße\nNadia"
+      sample: "Liebe Sara,\nam Samstag gehe ich in die Stadt. Ich muss bei der Post ein Paket abholen und dann auf die Bank. Um 10 Uhr habe ich Zeit. Wir können danach zusammen einen Kaffee trinken. Möchtest du mitkommen? Bitte sag mir Bescheid.\nLiebe Grüße\nNadia"
     }),
     speaking: practiceSpeaking([
       "Sie sind bei der Post. Fragen Sie nach einem Paket, dem Preis und den Öffnungszeiten.",
       "Beschreiben Sie ein Bild: Eine Person steht am Bankschalter."
-    ], { sprachenSample: 6, hobbysSample: 1, berufSample: 5, sportSample: 3, familieSample: 2, lieblingsessenSample: 4 })
+    ], { sprachenSample: 6, hobbysSample: 1, berufSample: 5, sportSample: 3, familieSample: 2, lieblingsessenSample: 4, nameSample: 5, alterSample: 6, landSample: 1, wohnortSample: 2, tagesablaufSample: 3, wochenendeSample: 4,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe eine Bank.“<br><strong>Wie viele Personen?</strong> „Eine Person, ein Mann.“<br><strong>Wo?</strong> „Er steht am Bankschalter.“<br><strong>Was machen sie?</strong> „Er spricht mit der Bankangestellten und hat seine Karte in der Hand.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich möchte dieses Paket nach Italien schicken. Was kostet das? Wann hat die Post am Samstag offen?“<br><strong>Reaktion:</strong> „Aha, gut. Dann komme ich am Samstag um zehn Uhr.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“" })
   }),
   practiceExam({
     id: "exam-6",
@@ -1393,11 +1457,11 @@ const practiceExams = [
             "Yoga am Abend: Anfänger, Dienstag 19 Uhr."
           ],
           rows: [
-            ["A", "Sie haben Zahnschmerzen und brauchen einen frühen Termin.", 1],
-            ["B", "Sie suchen eine kleine Wohnung.", 2],
+            ["A", "Sie suchen eine kleine Wohnung.", 2],
+            ["B", "Sie möchten einen ruhigen Sportkurs beginnen.", 6],
             ["C", "In Ihrer Küche ist der Wasserhahn kaputt.", 3],
-            ["D", "Sie brauchen am Abend ein Medikament.", 4],
-            ["E", "Sie möchten einen ruhigen Sportkurs beginnen.", 6]
+            ["D", "Sie haben Zahnschmerzen und brauchen einen frühen Termin.", 1],
+            ["E", "Sie brauchen am Abend ein Medikament.", 4]
           ],
           prefix: "r1"
         }),
@@ -1436,11 +1500,11 @@ const practiceExams = [
           },
           options: ["Bild 1", "Bild 2", "Bild 3", "Bild 4", "Bild 5", "Bild 6"],
           rows: [
-            ["A", "Ich muss zum Zahnarzt, mein Zahn tut weh.", 1],
-            ["B", "Wir sehen am Montag eine neue Wohnung an.", 2],
+            ["A", "Heute Abend mache ich Yoga.", 6],
+            ["B", "Ich muss zum Zahnarzt, mein Zahn tut weh.", 1],
             ["C", "Der Wasserhahn in der Küche ist kaputt.", 3],
             ["D", "Ich brauche ein Medikament aus der Apotheke.", 4],
-            ["E", "Heute Abend mache ich Yoga.", 6]
+            ["E", "Wir sehen am Montag eine neue Wohnung an.", 2]
           ],
           prefix: "r3"
         })
@@ -1535,14 +1599,17 @@ const practiceExams = [
         ["Uhrzeit", "17 Uhr", ["17 uhr", "17", "17:00"]],
         ["Personen", "1", ["1", "eine person"]]
       ],
-      emailPrompt: "Sie sind krank und können heute nicht zum Yogakurs kommen. Schreiben Sie circa 30 Wörter: was Sie haben, wann Sie wieder kommen, und fragen Sie nach dem nächsten Termin.",
-      checklist: ["Anrede", "Grund genannt", "Rückkehr genannt", "Frage nach Termin", "Gruß"],
-      sample: "Sehr geehrte Frau Steiner,\nich bin heute krank und kann leider nicht zum Yogakurs kommen. Ich habe Fieber. Nächste Woche komme ich wieder. Wann ist der nächste Termin?\nViele Grüße\nBilal"
+      emailPrompt: "Sie möchten Ihre Mitgliedschaft im Sportstudio ändern. Schreiben Sie einen Brief von mindestens 30 Wörtern an das Studio: erklären Sie, warum Sie schreiben, was Sie ändern möchten, ab wann, und bitten Sie um eine schriftliche Bestätigung.",
+      checklist: ["Formelle Anrede", "Grund / Anliegen", "Änderung beschrieben", "Bitte um Bestätigung", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\nich bin seit Januar Mitglied in Ihrem Sportstudio. Ich möchte meine Mitgliedschaft ab dem 1. März auf das kleine Paket ändern, weil ich weniger Zeit für Sport habe. Bitte schicken Sie mir eine schriftliche Bestätigung. Vielen Dank im Voraus.\nMit freundlichen Grüßen,\nBilal Aydin",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie rufen beim Installateur an. Sagen Sie, was kaputt ist, und fragen Sie nach einem Termin.",
       "Beschreiben Sie ein Bild: Eine Person ist in der Apotheke."
-    ], { sprachenSample: 3, hobbysSample: 4, berufSample: 3, sportSample: 6, familieSample: 5, lieblingsessenSample: 1 })
+    ], { sprachenSample: 3, hobbysSample: 4, berufSample: 3, sportSample: 6, familieSample: 5, lieblingsessenSample: 1, nameSample: 6, alterSample: 1, landSample: 2, wohnortSample: 3, tagesablaufSample: 4, wochenendeSample: 5,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe eine Apotheke.“<br><strong>Wie viele Personen?</strong> „Eine Person, eine Frau.“<br><strong>Wo?</strong> „Sie steht am Apothekenschalter.“<br><strong>Was machen sie?</strong> „Sie kauft Medikamente. Die Apothekerin gibt ihr eine Packung.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag, hier ist Herr Becker.“<br><strong>Wunsch / Frage:</strong> „Meine Dusche ist kaputt. Das Wasser ist immer kalt. Können Sie bitte kommen? Wann haben Sie Zeit?“<br><strong>Reaktion:</strong> „Morgen am Vormittag passt mir sehr gut.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiederhören!“" })
   }),
   practiceExam({
     id: "exam-7",
@@ -1575,11 +1642,11 @@ const practiceExams = [
             "Sprach-Tandem: Deutsch sprechen, Freitag, kostenlos."
           ],
           rows: [
-            ["A", "Sie suchen eine Arbeit im Büro.", 1],
-            ["B", "Sie möchten E-Mails am Computer schreiben lernen.", 2],
-            ["C", "Sie suchen einen Kindergartenplatz.", 3],
-            ["D", "Sie müssen Dokumente kopieren.", 4],
-            ["E", "Sie möchten kostenlos Deutsch sprechen üben.", 6]
+            ["A", "Sie suchen einen Kindergartenplatz.", 3],
+            ["B", "Sie müssen Dokumente kopieren.", 4],
+            ["C", "Sie suchen eine Arbeit im Büro.", 1],
+            ["D", "Sie möchten kostenlos Deutsch sprechen üben.", 6],
+            ["E", "Sie möchten E-Mails am Computer schreiben lernen.", 2]
           ],
           prefix: "r1"
         }),
@@ -1717,14 +1784,17 @@ const practiceExams = [
         ["Raum", "Raum 4", ["raum 4", "4"]],
         ["Bezahlung", "bar", ["bar"]]
       ],
-      emailPrompt: "Sie bewerben sich für eine Arbeit im Büro. Schreiben Sie circa 30 Wörter: wer Sie sind, wann Sie arbeiten können, und fragen Sie nach einem Termin.",
-      checklist: ["Anrede", "Person vorgestellt", "Arbeitszeit genannt", "Frage nach Termin", "Gruß"],
-      sample: "Sehr geehrte Damen und Herren,\nich heiße Maria Lopez und suche eine Arbeit im Büro. Ich kann am Vormittag arbeiten. Haben Sie nächste Woche einen Termin für ein Gespräch?\nMit freundlichen Grüßen\nMaria Lopez"
+      emailPrompt: "Sie bewerben sich für eine Stelle als Bürokraft. Schreiben Sie einen Brief von mindestens 30 Wörtern: stellen Sie sich kurz vor, sagen Sie, wann Sie arbeiten können, warum Sie sich bewerben, und fragen Sie nach einem Vorstellungstermin.",
+      checklist: ["Formelle Anrede", "Person vorgestellt", "Arbeitszeit genannt", "Frage nach Vorstellungstermin", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\nich heiße Maria Lopez und bewerbe mich für die Stelle als Bürokraft. Ich habe schon zwei Jahre Berufserfahrung im Büro und arbeite gerne mit Menschen. Ich kann ab Montag, dem 1. April, am Vormittag arbeiten. Wann haben Sie einen Termin für ein Vorstellungsgespräch?\nMit freundlichen Grüßen,\nMaria Lopez",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie möchten sich für einen Computerkurs anmelden. Fragen Sie nach Zeit, Preis und Raum.",
       "Beschreiben Sie ein Bild: Personen sitzen in einem Kursraum."
-    ], { sprachenSample: 6, hobbysSample: 2, berufSample: 1, sportSample: 5, familieSample: 3, lieblingsessenSample: 5 })
+    ], { sprachenSample: 6, hobbysSample: 2, berufSample: 1, sportSample: 5, familieSample: 3, lieblingsessenSample: 5, nameSample: 1, alterSample: 2, landSample: 3, wohnortSample: 4, tagesablaufSample: 5, wochenendeSample: 6,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe einen Kursraum.“<br><strong>Wie viele Personen?</strong> „Acht Personen und eine Lehrerin.“<br><strong>Wo?</strong> „Sie sitzen an Tischen, die Lehrerin steht vor der Tafel.“<br><strong>Was machen sie?</strong> „Die Lehrerin schreibt an die Tafel; die Personen schreiben in ihre Hefte und lernen Deutsch.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich möchte mich für den Computerkurs anmelden. Wann beginnt der Kurs? Was kostet er? In welchem Raum ist er?“<br><strong>Reaktion:</strong> „Super, ich nehme den Kurs am Dienstag.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“" })
   }),
   practiceExam({
     id: "exam-8",
@@ -1757,11 +1827,11 @@ const practiceExams = [
             "Bahnticket Aktion: Wochenendticket für zwei Personen."
           ],
           rows: [
-            ["A", "Sie möchten am Samstag mit Kindern einen Film sehen.", 1],
-            ["B", "Sie möchten Tiere sehen.", 2],
-            ["C", "Sie brauchen einen Termin zum Haare schneiden.", 3],
-            ["D", "Sie möchten einen Tisch für das Abendessen reservieren.", 4],
-            ["E", "Sie möchten am Mittwoch kostenlos ins Museum.", 5]
+            ["A", "Sie möchten Tiere sehen.", 2],
+            ["B", "Sie möchten einen Tisch für das Abendessen reservieren.", 4],
+            ["C", "Sie möchten am Mittwoch kostenlos ins Museum.", 5],
+            ["D", "Sie möchten am Samstag mit Kindern einen Film sehen.", 1],
+            ["E", "Sie brauchen einen Termin zum Haare schneiden.", 3]
           ],
           prefix: "r1"
         }),
@@ -1800,11 +1870,11 @@ const practiceExams = [
           },
           options: ["Bild 1", "Bild 2", "Bild 3", "Bild 4", "Bild 5", "Bild 6"],
           rows: [
-            ["A", "Wir sehen heute einen Film im Kino.", 1],
+            ["A", "Wir essen heute Pizza im Restaurant.", 4],
             ["B", "Die Kinder möchten Tiere sehen.", 2],
-            ["C", "Ich habe um 17 Uhr einen Termin beim Friseur.", 3],
-            ["D", "Wir essen heute Pizza im Restaurant.", 4],
-            ["E", "Im Museum ist heute der Eintritt frei.", 5]
+            ["C", "Im Museum ist heute der Eintritt frei.", 5],
+            ["D", "Wir sehen heute einen Film im Kino.", 1],
+            ["E", "Ich habe um 17 Uhr einen Termin beim Friseur.", 3]
           ],
           prefix: "r3"
         })
@@ -1899,14 +1969,17 @@ const practiceExams = [
         ["Terrasse", "Ja", ["ja"]],
         ["Bezahlung", "Karte", ["karte", "mit karte"]]
       ],
-      emailPrompt: "Sie laden eine Freundin ins Kino ein. Schreiben Sie circa 30 Wörter: welchen Film Sie sehen möchten, wann Sie gehen, und fragen Sie, ob sie Zeit hat.",
-      checklist: ["Anrede", "Film/Kino genannt", "Tag/Uhrzeit genannt", "Frage", "Gruß"],
-      sample: "Liebe Anna,\nich möchte am Samstag ins Kino Central gehen. Der Familienfilm beginnt um 16 Uhr. Hast du Zeit und möchtest du mitkommen?\nLiebe Grüße\nAmir"
+      emailPrompt: "Sie möchten einen Deutschkurs besuchen. Schreiben Sie einen Brief von mindestens 30 Wörtern an die Sprachschule: wer Sie sind, welchen Kurs Sie möchten, wann Sie Zeit haben, und fragen Sie nach Preis und Beginn.",
+      checklist: ["Formelle Anrede", "Person vorgestellt", "Kurs gewünscht", "Frage nach Preis / Beginn", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\nich heiße Anton Klein und möchte einen Deutschkurs auf Niveau A1 besuchen. Ich habe am Abend Zeit, von Montag bis Donnerstag ab 18 Uhr. Wann beginnt der nächste Kurs? Wie viel kostet der Kurs pro Monat? Ich freue mich auf Ihre Antwort.\nMit freundlichen Grüßen,\nAnton Klein",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie möchten im Restaurant einen Tisch reservieren. Fragen Sie nach Uhrzeit, Personen und Terrasse.",
       "Beschreiben Sie ein Bild: Eine Familie ist im Zoo."
-    ], { sprachenSample: 1, hobbysSample: 3, berufSample: 4, sportSample: 2, familieSample: 6, lieblingsessenSample: 2 })
+    ], { sprachenSample: 1, hobbysSample: 3, berufSample: 4, sportSample: 2, familieSample: 6, lieblingsessenSample: 2, nameSample: 2, alterSample: 3, landSample: 4, wohnortSample: 5, tagesablaufSample: 6, wochenendeSample: 1,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe einen Zoo.“<br><strong>Wie viele Personen?</strong> „Drei Personen, eine Familie mit einem Kind.“<br><strong>Wo?</strong> „Sie stehen vor dem Käfig der Elefanten.“<br><strong>Was machen sie?</strong> „Sie schauen die Elefanten an. Das Kind zeigt mit der Hand. Das Wetter ist warm.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich möchte einen Tisch reservieren. Für vier Personen, bitte. Können wir um 19 Uhr kommen? Haben Sie einen Platz auf der Terrasse?“<br><strong>Reaktion:</strong> „Wunderbar, dann reservieren wir einen Tisch auf der Terrasse.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiederhören!“" })
   }),
   practiceExam({
     id: "exam-9",
@@ -1939,11 +2012,11 @@ const practiceExams = [
             "Deutschberatung: Kurse und Bewerbung, jeden Dienstag."
           ],
           rows: [
-            ["A", "Sie sind umgezogen und müssen Ihre neue Adresse anmelden.", 1],
-            ["B", "Sie haben Ihre Tasche im Bus verloren.", 2],
-            ["C", "Sie brauchen ein Konto und eine Bankkarte.", 3],
+            ["A", "Sie haben Fragen zu Ihrer Krankenversicherung.", 5],
+            ["B", "Sie brauchen ein Konto und eine Bankkarte.", 3],
+            ["C", "Sie sind umgezogen und müssen Ihre neue Adresse anmelden.", 1],
             ["D", "Sie brauchen heute noch Passfotos und Kopien.", 4],
-            ["E", "Sie haben Fragen zu Ihrer Krankenversicherung.", 5]
+            ["E", "Sie haben Ihre Tasche im Bus verloren.", 2]
           ],
           prefix: "r1"
         }),
@@ -1982,11 +2055,11 @@ const practiceExams = [
           },
           options: ["Bild 1", "Bild 2", "Bild 3", "Bild 4", "Bild 5", "Bild 6"],
           rows: [
-            ["A", "Ich warte im Rathaus. Ich möchte meine neue Adresse anmelden.", 1],
-            ["B", "Meine Schlüssel sind weg. Vielleicht sind sie im Fundbüro.", 2],
-            ["C", "Ich fülle ein Formular für ein neues Konto aus.", 3],
-            ["D", "Für den Antrag brauche ich ein Passfoto und zwei Kopien.", 4],
-            ["E", "Ich verstehe das Formular für die Versicherung nicht.", 5]
+            ["A", "Ich fülle ein Formular für ein neues Konto aus.", 3],
+            ["B", "Ich warte im Rathaus. Ich möchte meine neue Adresse anmelden.", 1],
+            ["C", "Ich verstehe das Formular für die Versicherung nicht.", 5],
+            ["D", "Meine Schlüssel sind weg. Vielleicht sind sie im Fundbüro.", 2],
+            ["E", "Für den Antrag brauche ich ein Passfoto und zwei Kopien.", 4]
           ],
           prefix: "r3"
         })
@@ -2081,14 +2154,17 @@ const practiceExams = [
         ["Dokument", "Pass", ["pass", "reisepass"]],
         ["Grund", "Umzug", ["umzug", "adresse anmelden"]]
       ],
-      emailPrompt: "Sie haben Ihre Tasche verloren und schreiben an das Fundbüro. Schreiben Sie circa 30 Wörter: was Sie verloren haben, wann/wo das war, und fragen Sie nach einer Antwort.",
-      checklist: ["Anrede", "Sache beschrieben", "Zeit/Ort genannt", "Frage/Bitte", "Gruß"],
-      sample: "Sehr geehrte Damen und Herren,\nich habe gestern im Bus 13 eine schwarze Tasche verloren. In der Tasche sind Schlüssel und ein Buch. Haben Sie die Tasche gefunden?\nMit freundlichen Grüßen\nLina Farah"
+      emailPrompt: "Sie haben Ihre Tasche im Bus verloren. Schreiben Sie einen Brief von mindestens 30 Wörtern an das Fundbüro: was Sie verloren haben, wann und wo das war, wie die Tasche aussieht, und fragen Sie, wann Sie sie abholen können.",
+      checklist: ["Formelle Anrede", "Sache beschrieben", "Zeit und Ort genannt", "Frage nach Abholung", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\ngestern habe ich im Bus der Linie 13 meine schwarze Tasche verloren. Die Tasche ist klein und hat einen langen Riemen. In der Tasche sind meine Schlüssel und ein Buch. Wann und wo kann ich die Tasche abholen?\nMit freundlichen Grüßen,\nLina Farah",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie sind im Fundbüro. Fragen Sie nach Ihrer verlorenen Tasche, der Abholzeit und den Dokumenten.",
       "Beschreiben Sie ein Bild: Menschen warten in einem Amt."
-    ], { sprachenSample: 3, hobbysSample: 6, berufSample: 2, sportSample: 4, familieSample: 5, lieblingsessenSample: 1 })
+    ], { sprachenSample: 3, hobbysSample: 6, berufSample: 2, sportSample: 4, familieSample: 5, lieblingsessenSample: 1, nameSample: 3, alterSample: 4, landSample: 5, wohnortSample: 6, tagesablaufSample: 1, wochenendeSample: 2,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe ein Amt.“<br><strong>Wie viele Personen?</strong> „Ungefähr sechs Personen.“<br><strong>Wo?</strong> „Sie sitzen auf Stühlen im Wartezimmer.“<br><strong>Was machen sie?</strong> „Sie warten. Eine Frau liest die Zeitung, ein Mann schaut auf sein Handy.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich habe meine Tasche im Bus verloren. Sie ist schwarz. Haben Sie sie gefunden? Wann kann ich sie abholen? Welche Dokumente brauche ich?“<br><strong>Reaktion:</strong> „Gut, ich komme morgen mit meinem Pass.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“" })
   }),
   practiceExam({
     id: "exam-10",
@@ -2121,11 +2197,11 @@ const practiceExams = [
             "Fahrradverleih See: E-Bikes, Rückgabe bis 19 Uhr."
           ],
           rows: [
-            ["A", "Ihr Zug fällt aus und Sie brauchen ein neues Ticket.", 1],
-            ["B", "Ihr Koffer ist kaputt und Sie möchten ihn reparieren lassen.", 2],
-            ["C", "Sie kommen spät an und brauchen ein Hotelzimmer.", 3],
-            ["D", "Sie wollen morgen wandern und brauchen Informationen zum Wetter.", 4],
-            ["E", "Sie möchten die Altstadt mit einer Gruppe sehen.", 5]
+            ["A", "Sie wollen morgen wandern und brauchen Informationen zum Wetter.", 4],
+            ["B", "Sie möchten die Altstadt mit einer Gruppe sehen.", 5],
+            ["C", "Ihr Koffer ist kaputt und Sie möchten ihn reparieren lassen.", 2],
+            ["D", "Sie kommen spät an und brauchen ein Hotelzimmer.", 3],
+            ["E", "Ihr Zug fällt aus und Sie brauchen ein neues Ticket.", 1]
           ],
           prefix: "r1"
         }),
@@ -2164,11 +2240,11 @@ const practiceExams = [
           },
           options: ["Bild 1", "Bild 2", "Bild 3", "Bild 4", "Bild 5", "Bild 6"],
           rows: [
-            ["A", "Der Zug hat Verspätung. Viele Leute warten am Bahnsteig.", 1],
+            ["A", "Es regnet stark. Für die Wanderung brauche ich eine Jacke.", 5],
             ["B", "Ich suche am Flughafen den Bus in die Stadt.", 2],
-            ["C", "Der Koffer ist schwer. Ich stelle ihn in ein Schließfach.", 3],
-            ["D", "An der Rezeption bekomme ich die Zimmerkarte.", 4],
-            ["E", "Es regnet stark. Für die Wanderung brauche ich eine Jacke.", 5]
+            ["C", "An der Rezeption bekomme ich die Zimmerkarte.", 4],
+            ["D", "Der Zug hat Verspätung. Viele Leute warten am Bahnsteig.", 1],
+            ["E", "Der Koffer ist schwer. Ich stelle ihn in ein Schließfach.", 3]
           ],
           prefix: "r3"
         })
@@ -2263,14 +2339,17 @@ const practiceExams = [
         ["Frühstück", "Ja", ["ja"]],
         ["Ankunft", "nach 22 Uhr", ["nach 22 uhr", "22 uhr", "nach 22"]]
       ],
-      emailPrompt: "Ihr Zug hat Verspätung und Sie schreiben an das Hotel. Schreiben Sie circa 30 Wörter: warum Sie später kommen, wann Sie ankommen, und fragen Sie nach dem Schlüssel.",
-      checklist: ["Anrede", "Grund genannt", "Ankunftszeit genannt", "Frage nach Schlüssel", "Gruß"],
-      sample: "Sehr geehrte Damen und Herren,\nmein Zug hat heute Verspätung. Ich komme erst nach 22 Uhr im Hotel an. Liegt der Schlüssel an der Rezeption?\nMit freundlichen Grüßen\nDavid Novak"
+      emailPrompt: "Ihr Zug hat Verspätung und Sie kommen später ins Hotel. Schreiben Sie einen Brief von mindestens 30 Wörtern an das Hotel: warum Sie später kommen, wann Sie ungefähr ankommen, was Sie wegen des Schlüssels brauchen, und bitten Sie um eine Bestätigung.",
+      checklist: ["Formelle Anrede", "Grund genannt", "Ankunftszeit genannt", "Bitte zum Schlüssel", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\nmein Zug aus Wien hat heute leider zwei Stunden Verspätung. Ich komme erst gegen 23 Uhr in Ihrem Hotel an. Bitte legen Sie den Zimmerschlüssel an der Rezeption für mich bereit. Können Sie mir das kurz schriftlich bestätigen?\nMit freundlichen Grüßen,\nDavid Novak",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie sind am Bahnhof. Ihr Zug hat Verspätung. Fragen Sie nach einem neuen Ticket, dem Gleis und der Ankunftszeit.",
       "Beschreiben Sie ein Bild: Reisende warten mit Koffern am Bahnhof."
-    ], { sprachenSample: 5, hobbysSample: 1, berufSample: 6, sportSample: 1, familieSample: 2, lieblingsessenSample: 4 })
+    ], { sprachenSample: 5, hobbysSample: 1, berufSample: 6, sportSample: 1, familieSample: 2, lieblingsessenSample: 4, nameSample: 4, alterSample: 5, landSample: 6, wohnortSample: 1, tagesablaufSample: 2, wochenendeSample: 3,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe einen Bahnhof.“<br><strong>Wie viele Personen?</strong> „Viele Reisende, ungefähr fünfzehn Personen.“<br><strong>Wo?</strong> „Sie stehen auf dem Bahnsteig.“<br><strong>Was machen sie?</strong> „Sie warten auf den Zug. Sie haben Koffer und Taschen. Eine Frau liest die Anzeigetafel.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Mein Zug hat Verspätung. Ich brauche bitte ein neues Ticket. Von welchem Gleis fährt der nächste Zug? Wann komme ich in Wien an?“<br><strong>Reaktion:</strong> „Aha, gut. Dann fahre ich um 15 Uhr.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“" })
   }),
   practiceExam({
     id: "exam-11",
@@ -2346,11 +2425,11 @@ const practiceExams = [
           },
           options: ["Bild 1", "Bild 2", "Bild 3", "Bild 4", "Bild 5", "Bild 6"],
           rows: [
-            ["A", "Ich stehe vor der Tür. Mein Schlüssel ist in der Wohnung.", 1],
-            ["B", "Heute wasche ich im Keller. Ich habe mich in die Liste eingetragen.", 2],
-            ["C", "Der Heizkörper bleibt kalt, obwohl es draußen sehr kalt ist.", 3],
-            ["D", "Die Nachbarn feiern laut. Ich kann nicht schlafen.", 4],
-            ["E", "Im Innenhof verkaufen wir am Samstag alte Sachen.", 5]
+            ["A", "Heute wasche ich im Keller. Ich habe mich in die Liste eingetragen.", 2],
+            ["B", "Ich stehe vor der Tür. Mein Schlüssel ist in der Wohnung.", 1],
+            ["C", "Die Nachbarn feiern laut. Ich kann nicht schlafen.", 4],
+            ["D", "Im Innenhof verkaufen wir am Samstag alte Sachen.", 5],
+            ["E", "Der Heizkörper bleibt kalt, obwohl es draußen sehr kalt ist.", 3]
           ],
           prefix: "r3"
         })
@@ -2445,14 +2524,17 @@ const practiceExams = [
         ["Seit", "14.01.", ["14 01", "14.01", "14.1"]],
         ["Terminwunsch", "Mittwoch 16 Uhr", ["mittwoch 16 uhr", "mi 16 uhr", "mittwoch 16"]]
       ],
-      emailPrompt: "Ihre Nachbarin feiert sehr laut. Schreiben Sie circa 30 Wörter: warum Sie schreiben, was das Problem ist, und bitten Sie um eine Lösung.",
-      checklist: ["Anrede", "Grund genannt", "Problem beschrieben", "Bitte/Lösung", "Gruß"],
-      sample: "Liebe Frau Berger,\nich schreibe wegen der Musik. Es ist spät und sehr laut. Mein Kind kann nicht schlafen. Können Sie die Musik bitte leiser machen?\nViele Grüße\nNora Klein"
+      emailPrompt: "Ihre Nachbarn sind sehr laut. Schreiben Sie einen Brief von mindestens 30 Wörtern an die Hausverwaltung: was das Problem ist, wann es passiert, was Sie schon versucht haben, und bitten Sie um Hilfe.",
+      checklist: ["Formelle Anrede", "Problem beschrieben", "Zeit genannt", "Bitte um Hilfe", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\nich wohne in Wohnung 12 im zweiten Stock. Meine Nachbarn hören jeden Abend nach 22 Uhr sehr laute Musik. Ich habe sie schon zweimal höflich gebeten, leiser zu sein, aber es ändert sich nichts. Bitte helfen Sie mir.\nMit freundlichen Grüßen,\nNora Klein",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie rufen die Hausverwaltung an. Melden Sie eine kaputte Heizung und fragen Sie nach einem Termin.",
       "Beschreiben Sie ein Bild: Eine Person steht mit einem Schlüssel vor einer Wohnungstür."
-    ], { sprachenSample: 2, hobbysSample: 4, berufSample: 3, sportSample: 6, familieSample: 4, lieblingsessenSample: 6 })
+    ], { sprachenSample: 2, hobbysSample: 4, berufSample: 3, sportSample: 6, familieSample: 4, lieblingsessenSample: 6, nameSample: 5, alterSample: 6, landSample: 1, wohnortSample: 2, tagesablaufSample: 3, wochenendeSample: 4,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe eine Wohnungstür.“<br><strong>Wie viele Personen?</strong> „Eine Person, ein junger Mann.“<br><strong>Wo?</strong> „Er steht im Flur vor der Tür.“<br><strong>Was machen sie?</strong> „Er hat einen Schlüssel in der Hand und möchte die Tür öffnen.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag, hier ist Frau Sahin.“<br><strong>Wunsch / Frage:</strong> „Meine Heizung ist kaputt. Die Wohnung ist sehr kalt. Können Sie bitte einen Techniker schicken? Wann kommt er?“<br><strong>Reaktion:</strong> „Okay, morgen am Nachmittag passt mir gut.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiederhören!“" })
   }),
   practiceExam({
     id: "exam-12",
@@ -2485,11 +2567,11 @@ const practiceExams = [
             "Freiwillig helfen: Sozialküche, Samstag 9–12 Uhr."
           ],
           rows: [
-            ["A", "Sie möchten Ihren Lebenslauf prüfen lassen und einen Termin buchen.", 1],
-            ["B", "Sie haben einen Abholcode und möchten ein Paket bekommen.", 2],
-            ["C", "Ihr Handyvertrag ist zu teuer und Sie brauchen Beratung.", 3],
-            ["D", "Sie möchten lernen, wie man eine E-Mail und ein Online-Formular schreibt.", 4],
-            ["E", "Sie müssen Ihre Bewerbung ausdrucken und Dokumente scannen.", 5]
+            ["A", "Sie möchten lernen, wie man eine E-Mail und ein Online-Formular schreibt.", 4],
+            ["B", "Ihr Handyvertrag ist zu teuer und Sie brauchen Beratung.", 3],
+            ["C", "Sie möchten Ihren Lebenslauf prüfen lassen und einen Termin buchen.", 1],
+            ["D", "Sie müssen Ihre Bewerbung ausdrucken und Dokumente scannen.", 5],
+            ["E", "Sie haben einen Abholcode und möchten ein Paket bekommen.", 2]
           ],
           prefix: "r1"
         }),
@@ -2528,11 +2610,11 @@ const practiceExams = [
           },
           options: ["Bild 1", "Bild 2", "Bild 3", "Bild 4", "Bild 5", "Bild 6"],
           rows: [
-            ["A", "Ich hole ein Paket mit einem Code ab.", 1],
+            ["A", "Ich drucke meine Bewerbung und scanne ein Zeugnis.", 3],
             ["B", "Mein Termin ist online. Ich spreche am Computer mit der Beraterin.", 2],
-            ["C", "Ich drucke meine Bewerbung und scanne ein Zeugnis.", 3],
+            ["C", "Im Handyshop kaufe ich eine neue SIM-Karte.", 5],
             ["D", "Morgen habe ich ein Gespräch wegen einer Arbeit.", 4],
-            ["E", "Im Handyshop kaufe ich eine neue SIM-Karte.", 5]
+            ["E", "Ich hole ein Paket mit einem Code ab.", 1]
           ],
           prefix: "r3"
         })
@@ -2627,18 +2709,21 @@ const practiceExams = [
         ["Beraterin/Raum", "Frau Berger, Raum 7", ["frau berger raum 7", "berger raum 7", "raum 7"]],
         ["Mitbringen", "Ausweis und Lebenslauf", ["ausweis und lebenslauf", "ausweis lebenslauf"]]
       ],
-      emailPrompt: "Sie können nicht zum Computerkurs kommen. Schreiben Sie circa 30 Wörter: warum Sie nicht kommen, wann Sie wieder Zeit haben, und fragen Sie nach den Hausaufgaben.",
-      checklist: ["Anrede", "Absage/Grund", "neuer Termin/Zeit", "Frage nach Hausaufgaben", "Gruß"],
-      sample: "Liebe Frau Bauer,\nleider kann ich heute nicht zum Computerkurs kommen, weil ich krank bin. Am Montag habe ich wieder Zeit. Können Sie mir bitte die Hausaufgaben schicken?\nViele Grüße\nSami Yildiz"
+      emailPrompt: "Sie haben eine neue Adresse. Schreiben Sie einen Brief von mindestens 30 Wörtern an Ihre Versicherung: wer Sie sind, Ihre alte und neue Adresse, ab wann die neue Adresse gilt, und bitten Sie um eine schriftliche Bestätigung.",
+      checklist: ["Formelle Anrede", "Person vorgestellt", "Alte und neue Adresse", "Datum ab wann", "Formeller Gruß + Name"],
+      sample: "Sehr geehrte Damen und Herren,\nmein Name ist Sami Yildiz, meine Versicherungsnummer ist 12 345 678. Ich bin umgezogen. Meine alte Adresse war Lindenstraße 4 in Wien. Ab dem 1. Mai wohne ich in der Marktgasse 9 in Graz. Bitte schicken Sie mir eine Bestätigung.\nMit freundlichen Grüßen,\nSami Yildiz",
+      textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
       "Sie haben einen Termin im Jobcenter. Fragen Sie nach dem Raum, den Unterlagen und einem neuen Termin.",
       "Beschreiben Sie ein Bild: Eine Person holt ein Paket an einer Paketstation ab."
-    ], { sprachenSample: 4, hobbysSample: 5, berufSample: 5, sportSample: 3, familieSample: 1, lieblingsessenSample: 3 })
+    ], { sprachenSample: 4, hobbysSample: 5, berufSample: 5, sportSample: 3, familieSample: 1, lieblingsessenSample: 3, nameSample: 6, alterSample: 1, landSample: 2, wohnortSample: 3, tagesablaufSample: 4, wochenendeSample: 5,
+      task2Model: "Beispiel:<br><strong>Was?</strong> „Ich sehe eine Paketstation.“<br><strong>Wie viele Personen?</strong> „Eine Person, eine Frau.“<br><strong>Wo?</strong> „Sie steht vor der Paketstation.“<br><strong>Was machen sie?</strong> „Sie holt ein Paket ab und gibt eine Nummer in das Display ein.“",
+      task3Model: "Beispiel:<br><strong>Begrüßung:</strong> „Guten Tag!“<br><strong>Wunsch / Frage:</strong> „Ich habe heute einen Termin. In welchem Raum ist der Termin? Welche Unterlagen brauche ich? Können wir auch einen neuen Termin machen?“<br><strong>Reaktion:</strong> „Aha, Raum sieben. Ich komme nächste Woche noch einmal.“<br><strong>Abschluss:</strong> „Vielen Dank, auf Wiedersehen!“" })
   })
 ];
 
-function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample }) {
+function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample, textTitle = "Aufgabe 2: Persönliches E-Mail" }) {
   return {
     minutes: 20,
     tasks: [
@@ -2650,7 +2735,8 @@ function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample })
       },
       {
         type: "text",
-        title: "Aufgabe 2: Persönliches E-Mail",
+        // Exams 1-5 use the default "E-Mail" title; exams 6-12 pass "Aufgabe 2: Brief".
+        title: textTitle,
         prompt: emailPrompt,
         minWords: 30,
         checklist,
@@ -2675,20 +2761,32 @@ function getSpeakingTopicSample(topic, sampleNumber) {
 }
 
 function practiceSpeakingTask1Model({
+  nameSample = 1,
+  alterSample = 1,
+  landSample = 1,
+  wohnortSample = 1,
+  familieSample = 1,
+  berufSample = 1,
   sprachenSample = 1,
   hobbysSample = 1,
   sportSample = 1,
-  familieSample = 1,
-  berufSample = 1,
-  lieblingsessenSample = 1
+  lieblingsessenSample = 1,
+  tagesablaufSample = 1,
+  wochenendeSample = 1
 } = {}) {
   return [
+    ["Name", "name", nameSample],
+    ["Alter", "alter", alterSample],
+    ["Land", "land", landSample],
+    ["Wohnort", "wohnort", wohnortSample],
+    ["Familie", "familie", familieSample],
+    ["Beruf", "beruf", berufSample],
     ["Sprachen", "sprachen", sprachenSample],
     ["Hobbys", "hobbys", hobbysSample],
     ["Sport", "sport", sportSample],
-    ["Familie", "familie", familieSample],
-    ["Beruf", "beruf", berufSample],
-    ["Lieblingsessen", "lieblingsessen", lieblingsessenSample]
+    ["Lieblingsessen", "lieblingsessen", lieblingsessenSample],
+    ["Tagesablauf", "tagesablauf", tagesablaufSample],
+    ["Wochenende", "wochenende", wochenendeSample]
   ]
     .map(([label, topic, sampleNumber]) => `<strong>${label}</strong><br>${modelLinesToHtml(getSpeakingTopicSample(topic, sampleNumber))}`)
     .join("<br><br>");
@@ -2702,7 +2800,7 @@ function practiceSpeaking([roleText, pictureText], images = {}) {
         title: "Aufgabe 1: Über etwas sprechen (sich vorstellen)",
         prompt: "Wählen Sie 4 Themen aus und sprechen Sie zu jedem Thema ein paar Sätze.",
         image: images.task1,
-        cards: ["Sprachen", "Hobbys", "Sport", "Familie", "Beruf", "Lieblingsessen"],
+        cards: ["Name", "Alter", "Land", "Wohnort", "Familie", "Beruf", "Sprachen", "Hobbys", "Sport", "Lieblingsessen", "Tagesablauf", "Wochenende"],
         model: practiceSpeakingTask1Model(images)
       },
       {
@@ -2710,14 +2808,26 @@ function practiceSpeaking([roleText, pictureText], images = {}) {
         prompt: pictureText + " Sagen Sie: Was sehen Sie? Wie viele Personen? Wo sind sie? Was machen sie?",
         image: images.task2,
         cards: ["Was?", "Wie viele Personen?", "Wo?", "Was machen sie?"],
-        model: "Beispiel: „Ich sehe … Es sind … Personen. Sie sind … Sie … gerade.“"
+        // The full per-exam sample answer (structured by the four cards) is
+        // passed in from each practiceExam call; this generic line is a fallback.
+        model: images.task2Model || "Beispiel: „Ich sehe … Es sind … Personen. Sie sind … Sie … gerade.“"
       },
       {
         title: "Aufgabe 3: Miteinander sprechen (Alltagssituationen)",
         prompt: roleText,
         image: images.task3,
         cards: ["Begrüßung", "Wunsch / Frage", "Reaktion", "Abschluss"],
-        model: "Beispiel: „Guten Tag! Ich möchte … Können Sie mir helfen? … Vielen Dank, auf Wiedersehen!“"
+        model: images.task3Model || "Beispiel: „Guten Tag! Ich möchte … Können Sie mir helfen? … Vielen Dank, auf Wiedersehen!“"
+      },
+      {
+        // Extra practice, NOT part of the official ÖSD exam. A free A1 conversation
+        // with the AI tutor (chat mode). It opens with a fixed question, then the
+        // tutor invents the next question after each of your answers.
+        title: "Aufgabe 4: Freies Gespräch (Extra-Übung)",
+        prompt: "Sprechen Sie frei mit dem KI-Tutor. Er stellt einfache Fragen (A1) und korrigiert Ihre Antworten. Diese Aufgabe ist kein Teil der echten Prüfung.",
+        mode: "chat",
+        opener: "Hallo! Wie heißen Sie und woher kommen Sie?",
+        model: "Tipp: Antworten Sie in einfachen, kurzen Sätzen. Beispiel: „Ich heiße … Ich komme aus … Ich wohne in …“"
       }
     ]
   };
@@ -2736,6 +2846,12 @@ let mediaRecorder = null;
 let recordingStream = null;
 let recordingChunks = [];
 let recordingTaskId = null;
+// Guided speaking loop: which card (by index) the learner should speak about next.
+// Keyed by recordId, e.g. "exam-3-speaking-0". Transient (not saved to storage).
+const speakingCardProgress = {};
+// Free-chat loop (Aufgabe 4): remembers the tutor's last question so the next
+// answer is corrected in context. Keyed by recordId.
+const chatPrevQuestion = {};
 
 const app = document.querySelector("#app");
 const examSelect = document.querySelector("#examSelect");
@@ -2915,12 +3031,469 @@ function isQuestionCorrect(question, value) {
   return value === question.answer;
 }
 
+// ============================================================================
+// Vocabulary feature
+// ----------------------------------------------------------------------------
+// When the "Übersetzen" toggle is on, clicking a word inside the main content
+// area calls /api/translate-word. The word + its English meaning + two A1
+// example sentences are auto-saved to a localStorage deck. The "Wörter" button
+// in the top bar opens a modal with two tabs:
+//   - "Lernen": flip cards (front = German, back = English + examples), rate
+//                with Nochmal / Gut / Leicht (no scheduling - just review).
+//   - "Alle Wörter": full list with delete buttons.
+// ============================================================================
+
+const VOCAB_KEY = "osd-a1-vocab";
+let vocab = loadVocab();
+let translateMode = false;
+let translatePopover = null;
+let vocabModalEl = null;
+let vocabTab = "lernen"; // "lernen" | "alle"
+// Flashcard session state - rebuilt every time the Lernen tab opens.
+let flashDeck = [];
+let flashIndex = 0;
+let flashFront = true;
+
+function loadVocab() {
+  try { return JSON.parse(localStorage.getItem(VOCAB_KEY) || "[]"); }
+  catch { return []; }
+}
+function saveVocab() {
+  try { localStorage.setItem(VOCAB_KEY, JSON.stringify(vocab)); }
+  catch { /* storage full - ignore */ }
+}
+
+// Idempotent: if the word already exists (case-insensitive), refresh missing
+// fields instead of creating a duplicate.
+function addVocab({ german, english, examples }) {
+  const key = german.toLowerCase();
+  const existing = vocab.find((c) => c.german.toLowerCase() === key);
+  if (existing) {
+    if (!existing.english && english) existing.english = english;
+    if ((!existing.examples || !existing.examples.length) && examples?.length) existing.examples = examples;
+    saveVocab();
+    return existing;
+  }
+  const card = {
+    id: `v_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+    german,
+    english: english || "",
+    examples: Array.isArray(examples) ? examples : [],
+    addedAt: Date.now()
+  };
+  vocab.push(card);
+  saveVocab();
+  return card;
+}
+function removeVocab(id) {
+  vocab = vocab.filter((c) => c.id !== id);
+  saveVocab();
+}
+function updateVocabCountBadge() {
+  const el = document.getElementById("vocabCount");
+  if (el) el.textContent = vocab.length;
+}
+
+// ----- Translate mode toggle ------------------------------------------------
+
+function setTranslateMode(on) {
+  translateMode = Boolean(on);
+  const btn = document.getElementById("translateToggle");
+  if (btn) {
+    btn.setAttribute("aria-pressed", translateMode ? "true" : "false");
+    btn.textContent = `Übersetzen: ${translateMode ? "an" : "aus"}`;
+    btn.classList.toggle("is-on", translateMode);
+  }
+  document.body.classList.toggle("translate-mode", translateMode);
+  if (!translateMode) closeTranslatePopover();
+}
+
+// ----- Click-to-translate ---------------------------------------------------
+
+// Pull the word at a screen position out of the underlying text node. Returns
+// {word, context} or null if the click wasn't on actual letter content.
+function extractWordAtPoint(x, y) {
+  // Prefer the standard, fall back for Firefox-style implementations.
+  let textNode = null;
+  let offset = 0;
+  if (document.caretRangeFromPoint) {
+    const range = document.caretRangeFromPoint(x, y);
+    if (range && range.startContainer.nodeType === 3) {
+      textNode = range.startContainer;
+      offset = range.startOffset;
+    }
+  } else if (document.caretPositionFromPoint) {
+    const pos = document.caretPositionFromPoint(x, y);
+    if (pos && pos.offsetNode?.nodeType === 3) {
+      textNode = pos.offsetNode;
+      offset = pos.offset;
+    }
+  }
+  if (!textNode) return null;
+
+  const text = textNode.nodeValue || "";
+  if (!text) return null;
+
+  // Letter test that includes German Umlauts and ß plus Unicode letters.
+  const letter = /[\p{L}]/u;
+  let i = Math.max(0, Math.min(offset, text.length - 1));
+  if (!letter.test(text[i] || "")) {
+    // Click landed on a space/punct: try the char to the left.
+    if (i > 0 && letter.test(text[i - 1])) i -= 1;
+    else return null;
+  }
+  let start = i, end = i + 1;
+  while (start > 0 && letter.test(text[start - 1])) start--;
+  while (end < text.length && letter.test(text[end])) end++;
+  const word = text.slice(start, end);
+  if (!word || word.length < 2) return null; // ignore single letters
+
+  const ctxStart = Math.max(0, start - 80);
+  const ctxEnd = Math.min(text.length, end + 80);
+  return { word, context: text.slice(ctxStart, ctxEnd).trim() };
+}
+
+// Should this element accept translate-clicks? We want to leave interactive
+// controls (inputs, buttons, audio, etc.) alone.
+function isTranslatableTarget(el) {
+  if (!el || !(el instanceof Element)) return false;
+  // Must live inside the main content area.
+  if (!el.closest("#app")) return false;
+  // Skip interactive controls, form fields, and anything that already has its
+  // own click behavior (overview cards via data-exam, etc.).
+  if (el.closest("input, textarea, select, button, label, audio, a, [data-action], [data-exam], [data-section], [contenteditable]")) return false;
+  return true;
+}
+
+async function handleTranslateClick(event) {
+  if (!translateMode) return;
+  if (!isTranslatableTarget(event.target)) return;
+  const found = extractWordAtPoint(event.clientX, event.clientY);
+  if (!found) return;
+  // We're handling this click; don't let it propagate to other app handlers.
+  event.preventDefault();
+  event.stopPropagation();
+  openTranslatePopover(event.clientX, event.clientY, found.word, found.context);
+}
+
+function openTranslatePopover(x, y, word, context) {
+  closeTranslatePopover();
+  const el = document.createElement("div");
+  el.className = "translate-popover";
+  el.setAttribute("role", "dialog");
+  el.innerHTML = `
+    <div class="translate-head">
+      <strong class="translate-word"></strong>
+      <button type="button" class="translate-close" aria-label="Schließen">×</button>
+    </div>
+    <div class="translate-body">Übersetzen …</div>
+  `;
+  el.querySelector(".translate-word").textContent = word;
+  document.body.append(el);
+
+  // Position near the click but keep it on screen.
+  const rect = el.getBoundingClientRect();
+  const left = Math.max(8, Math.min(x, window.innerWidth - rect.width - 8));
+  const top = Math.min(y + 12, window.innerHeight - rect.height - 8);
+  el.style.left = `${left}px`;
+  el.style.top = `${top}px`;
+
+  translatePopover = el;
+
+  // Click X to close.
+  el.querySelector(".translate-close").addEventListener("click", closeTranslatePopover);
+
+  // Fetch + auto-save.
+  fetch("/api/translate-word", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ word, context })
+  })
+    .then(async (r) => {
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || "Fehler.");
+      return data;
+    })
+    .then((data) => {
+      const card = addVocab({ german: word, english: data.translation, examples: data.examples });
+      renderTranslatePopoverBody(el, card);
+      updateVocabCountBadge();
+      // If the vocab modal is open, refresh it so the new word shows up.
+      if (vocabModalEl) renderVocabModalBody();
+    })
+    .catch((err) => {
+      const body = el.querySelector(".translate-body");
+      body.textContent = `Fehler: ${err.message}`;
+    });
+}
+
+function renderTranslatePopoverBody(el, card) {
+  const body = el.querySelector(".translate-body");
+  body.innerHTML = "";
+  const en = document.createElement("p");
+  en.className = "translate-en";
+  en.textContent = card.english || "(keine Übersetzung)";
+  body.append(en);
+  if (card.examples?.length) {
+    const ul = document.createElement("ul");
+    ul.className = "translate-examples";
+    for (const s of card.examples) {
+      const li = document.createElement("li");
+      li.textContent = s;
+      ul.append(li);
+    }
+    body.append(ul);
+  }
+  const status = document.createElement("div");
+  status.className = "translate-status";
+  const saved = document.createElement("span");
+  saved.className = "muted";
+  saved.textContent = "Gespeichert ✓ ";
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "link-btn";
+  removeBtn.textContent = "Entfernen";
+  removeBtn.addEventListener("click", () => {
+    removeVocab(card.id);
+    updateVocabCountBadge();
+    closeTranslatePopover();
+    if (vocabModalEl) renderVocabModalBody();
+  });
+  status.append(saved, removeBtn);
+  body.append(status);
+}
+
+function closeTranslatePopover() {
+  if (translatePopover) translatePopover.remove();
+  translatePopover = null;
+}
+
+// ----- Vocab modal ----------------------------------------------------------
+
+function openVocabModal() {
+  if (vocabModalEl) return;
+  vocabTab = "lernen";
+  startFlashSession();
+  const wrap = document.createElement("div");
+  wrap.className = "vocab-modal-backdrop";
+  wrap.innerHTML = `
+    <div class="vocab-modal" role="dialog" aria-label="Meine Wörter">
+      <div class="vocab-modal-head">
+        <strong>Meine Wörter</strong>
+        <button type="button" class="translate-close" data-action="close-vocab" aria-label="Schließen">×</button>
+      </div>
+      <div class="vocab-tabs">
+        <button type="button" class="vocab-tab" data-vocab-tab="lernen">Lernen</button>
+        <button type="button" class="vocab-tab" data-vocab-tab="alle">Alle Wörter</button>
+      </div>
+      <div class="vocab-modal-body"></div>
+    </div>
+  `;
+  document.body.append(wrap);
+  vocabModalEl = wrap;
+  renderVocabModalBody();
+  // Click backdrop (outside dialog) to close.
+  wrap.addEventListener("click", (e) => { if (e.target === wrap) closeVocabModal(); });
+}
+
+function closeVocabModal() {
+  if (vocabModalEl) vocabModalEl.remove();
+  vocabModalEl = null;
+}
+
+function renderVocabModalBody() {
+  if (!vocabModalEl) return;
+  // Tab active state
+  vocabModalEl.querySelectorAll(".vocab-tab").forEach((b) => {
+    b.classList.toggle("is-active", b.dataset.vocabTab === vocabTab);
+  });
+  const body = vocabModalEl.querySelector(".vocab-modal-body");
+  body.innerHTML = "";
+  if (vocabTab === "lernen") body.append(renderFlashView());
+  else body.append(renderAllView());
+}
+
+function startFlashSession() {
+  // Shuffle a copy of vocab so the order changes each session.
+  flashDeck = [...vocab].sort(() => Math.random() - 0.5);
+  flashIndex = 0;
+  flashFront = true;
+}
+
+function renderFlashView() {
+  const frag = document.createElement("div");
+  frag.className = "flash-view";
+
+  if (!vocab.length) {
+    frag.innerHTML = `<p class="muted">Noch keine Wörter. Schalten Sie <strong>„Übersetzen"</strong> in der Kopfleiste ein und klicken Sie auf ein Wort im Text – es wird automatisch gespeichert.</p>`;
+    return frag;
+  }
+  if (flashIndex >= flashDeck.length) {
+    const done = document.createElement("p");
+    done.className = "flash-done";
+    done.textContent = "Fertig! Sie haben alle Karten gesehen.";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "ghost-btn";
+    btn.textContent = "Noch einmal";
+    btn.addEventListener("click", () => { startFlashSession(); renderVocabModalBody(); });
+    frag.append(done, btn);
+    return frag;
+  }
+
+  const card = flashDeck[flashIndex];
+
+  const head = document.createElement("p");
+  head.className = "flash-progress";
+  head.textContent = `Karte ${flashIndex + 1} / ${flashDeck.length}`;
+  frag.append(head);
+
+  const cardEl = document.createElement("div");
+  cardEl.className = "flash-card";
+  if (flashFront) {
+    const word = document.createElement("p");
+    word.className = "flash-word";
+    word.textContent = card.german;
+    const hint = document.createElement("p");
+    hint.className = "muted";
+    hint.textContent = "Tippen zum Umdrehen";
+    cardEl.append(word, hint);
+    cardEl.addEventListener("click", () => { flashFront = false; renderVocabModalBody(); });
+  } else {
+    const word = document.createElement("p");
+    word.className = "flash-word";
+    word.textContent = card.german;
+    const en = document.createElement("p");
+    en.className = "flash-en";
+    en.textContent = card.english || "(keine Übersetzung)";
+    cardEl.append(word, en);
+    if (card.examples?.length) {
+      const ex = document.createElement("ul");
+      ex.className = "flash-examples";
+      for (const s of card.examples) {
+        const li = document.createElement("li");
+        li.textContent = s;
+        ex.append(li);
+      }
+      cardEl.append(ex);
+    }
+  }
+  frag.append(cardEl);
+
+  if (!flashFront) {
+    const row = document.createElement("div");
+    row.className = "flash-actions";
+    const makeBtn = (label, cls, onClick) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = `ghost-btn ${cls}`;
+      b.textContent = label;
+      b.addEventListener("click", onClick);
+      return b;
+    };
+    row.append(
+      makeBtn("Nochmal", "flash-again", () => {
+        // Put this card back at the end of the session deck.
+        flashDeck.push(card);
+        flashIndex += 1;
+        flashFront = true;
+        renderVocabModalBody();
+      }),
+      makeBtn("Gut", "flash-good", () => {
+        flashIndex += 1;
+        flashFront = true;
+        renderVocabModalBody();
+      }),
+      makeBtn("Leicht", "flash-easy", () => {
+        flashIndex += 1;
+        flashFront = true;
+        renderVocabModalBody();
+      })
+    );
+    frag.append(row);
+  }
+
+  return frag;
+}
+
+function renderAllView() {
+  const wrap = document.createElement("div");
+  wrap.className = "vocab-all";
+
+  if (!vocab.length) {
+    wrap.innerHTML = `<p class="muted">Noch keine Wörter gespeichert.</p>`;
+    return wrap;
+  }
+
+  const list = document.createElement("ul");
+  list.className = "vocab-list";
+  // Newest first.
+  const sorted = [...vocab].sort((a, b) => b.addedAt - a.addedAt);
+  for (const card of sorted) {
+    const li = document.createElement("li");
+    li.className = "vocab-row";
+    const text = document.createElement("div");
+    const g = document.createElement("strong");
+    g.textContent = card.german;
+    const e = document.createElement("span");
+    e.className = "muted";
+    e.textContent = card.english ? ` – ${card.english}` : "";
+    text.append(g, e);
+    const rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "link-btn";
+    rm.textContent = "Löschen";
+    rm.addEventListener("click", () => {
+      removeVocab(card.id);
+      updateVocabCountBadge();
+      // Also drop it from the current flash session deck.
+      flashDeck = flashDeck.filter((c) => c.id !== card.id);
+      renderVocabModalBody();
+    });
+    li.append(text, rm);
+    list.append(li);
+  }
+  wrap.append(list);
+  return wrap;
+}
+
+// ----- Wire up top-level event handlers (vocab + translate) -----------------
+
+document.addEventListener("click", (event) => {
+  // Tabs inside the modal.
+  const tab = event.target.closest("[data-vocab-tab]");
+  if (tab) {
+    vocabTab = tab.dataset.vocabTab;
+    renderVocabModalBody();
+    return;
+  }
+  // Action buttons in the top bar / modal.
+  const action = event.target.closest("[data-action]");
+  if (!action) return;
+  if (action.dataset.action === "open-vocab") openVocabModal();
+  if (action.dataset.action === "close-vocab") closeVocabModal();
+  if (action.dataset.action === "toggle-translate") setTranslateMode(!translateMode);
+});
+
+// Translate-click on the content area. Listen on the document so it works no
+// matter how the inner DOM gets re-rendered.
+document.addEventListener("click", handleTranslateClick, true);
+
+// Esc closes whatever is open.
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  if (translatePopover) { closeTranslatePopover(); return; }
+  if (vocabModalEl) { closeVocabModal(); return; }
+});
+
 function init() {
   applyTheme(theme, false);
   examSelect.innerHTML = exams
     .map((exam) => `<option value="${exam.id}">${exam.official ? "★ " : ""}${exam.title}</option>`)
     .join("");
   examSelect.value = currentExam().id;
+  updateVocabCountBadge();
+  setTranslateMode(false);
   render();
 }
 
@@ -3156,7 +3729,7 @@ function renderFeedback(question, task, value) {
 
 function renderWriting(exam) {
   app.innerHTML = `
-    ${renderPageHead("Schreiben", "Aufgabe 1: Formular ausfüllen (5 Punkte, automatisch korrigiert). Aufgabe 2: persönliches E-Mail, ca. 30 Wörter (10 Punkte, Selbstkontrolle).", exam.writing.minutes)}
+    ${renderPageHead("Schreiben", "Aufgabe 1: Formular ausfüllen (5 Punkte, automatisch korrigiert). Aufgabe 2: persönliches E-Mail oder Brief, mindestens 30 Wörter (10 Punkte, Selbstkontrolle).", exam.writing.minutes)}
     ${exam.writing.tasks.map((task, index) => task.type === "form" ? renderFormTask(task, index) : renderTextTask(task, index)).join("")}
   `;
 }
@@ -3228,9 +3801,25 @@ function renderTextTask(task, index) {
           `;
         }).join("")}
       </div>
+      ${!currentExam().official ? renderWritingAiPanel(index) : ""}
       ${renderModelButton(`writing-text-${index}`)}
       <div class="model-box ${state.modelOpen[`writing-text-${index}`] ? "" : "hidden"}">${escapeHtml(task.sample).replaceAll("\n", "<br>")}</div>
     </article>
+  `;
+}
+
+// Static skeleton for the AI writing checker. On click, app.js sends the text +
+// checklist to the backend and fills in the result area below.
+function renderWritingAiPanel(textIndex) {
+  return `
+    <div class="ai-writing" data-writing-feedback="${textIndex}">
+      <div class="action-row">
+        <button class="ghost-btn" type="button" data-action="check-email" data-text-index="${textIndex}">KI-Korrektur holen</button>
+        <span class="muted">Die KI prüft Ihre E-Mail und sagt, welche Punkte aus der Liste enthalten sind.</span>
+      </div>
+      <div class="ai-writing-status hidden" data-writing-status="${textIndex}"></div>
+      <div class="ai-writing-result hidden" data-writing-result="${textIndex}"></div>
+    </div>
   `;
 }
 
@@ -3254,6 +3843,9 @@ function renderSpeaking(exam) {
 function renderSpeakingTask(task, index) {
   const noteKey = keyFor("speaking", `task-${index}`);
   const recordId = `${currentExam().id}-speaking-${index}`;
+  // The AI tutor is only offered on the authored practice exams, never on the
+  // official OSD model set (which must stay 1:1 with the original material).
+  const showTutor = !currentExam().official;
   return `
     <article class="speaking-panel">
       <div class="task-head">
@@ -3270,6 +3862,7 @@ function renderSpeakingTask(task, index) {
         <button class="ghost-btn" type="button" data-action="stop-record" data-record="${recordId}" disabled>Stopp</button>
       </div>
       <audio class="recording-player" controls data-player="${recordId}"></audio>
+      ${showTutor ? renderTutorPanel(recordId, task) : ""}
       <label class="field-group full">
         <span>Notizen</span>
         <textarea class="notes-input" data-key="${noteKey}" placeholder="Nützliche Sätze oder Selbst-Feedback ...">${escapeHtml(state.notes[noteKey] || "")}</textarea>
@@ -3367,6 +3960,340 @@ function showToast(message) {
   setTimeout(() => toast.classList.remove("show"), 2200);
 }
 
+// Static skeleton for the AI speaking tutor. The "current" area shows which card
+// to speak about now (guided mode) or a chat hint (Aufgabe 4). The status/result
+// areas are filled after each recording from the backend response.
+function renderTutorPanel(recordId, task) {
+  const isChat = task.mode === "chat";
+  const hint = isChat
+    ? "Freies Gespräch: Sprechen Sie, die KI antwortet mit einer neuen Frage."
+    : "Geführte Übung: Sprechen Sie zu jeder Karte. Die KI korrigiert und geht zur nächsten Karte.";
+  return `
+    <div class="ai-tutor" data-feedback="${recordId}">
+      <div class="ai-tutor-head">
+        <strong>KI-Sprechtutor</strong>
+        <span class="muted">${hint}</span>
+      </div>
+      <div class="ai-tutor-current" data-feedback-current="${recordId}">
+        ${renderCurrentCard(recordId, task)}
+      </div>
+      <div class="ai-tutor-status hidden" data-feedback-status="${recordId}"></div>
+      <div class="ai-tutor-result hidden" data-feedback-result="${recordId}"></div>
+    </div>
+  `;
+}
+
+// How far through the cards this task is (which card to do next).
+function currentCardIndex(recordId) {
+  return speakingCardProgress[recordId] ?? 0;
+}
+
+// Recover the task object from a recordId like "exam-3-speaking-1".
+function speakingTaskFromRecordId(recordId) {
+  const index = Number(recordId.split("-speaking-")[1]);
+  return currentExam().speaking?.tasks?.[index] || {};
+}
+
+// The "what to do now" prompt. In guided mode it names the current card and
+// shows progress (e.g. "Karte 3 / 12"); when the cards run out it shows a
+// "done" message with a restart button. Chat mode (Aufgabe 4) shows a hint.
+function renderCurrentCard(recordId, task) {
+  if (task.mode === "chat") {
+    // Before the first answer, show the fixed opener; afterwards, the tutor's
+    // latest question.
+    const question = chatPrevQuestion[recordId] || task.opener || "";
+    return question
+      ? `<p class="ai-current-label">Frage</p><p class="ai-current-card">„${escapeHtml(question)}“</p>`
+      : `<p class="muted">Starten Sie das Gespräch: Stellen Sie sich kurz vor.</p>`;
+  }
+  const cards = task.cards || [];
+  if (!cards.length) return "";
+  const idx = currentCardIndex(recordId);
+  if (idx >= cards.length) {
+    return `
+      <p class="ai-current-done"><strong>Alle Karten fertig – gut gemacht!</strong></p>
+      <button type="button" class="ghost-btn" data-action="restart-cards" data-record="${recordId}">Von vorne beginnen</button>
+    `;
+  }
+  return `
+    <p class="ai-current-label">Karte ${idx + 1} / ${cards.length}</p>
+    <p class="ai-current-card">Sprechen Sie zu: „${escapeHtml(cards[idx])}“</p>
+  `;
+}
+
+// Re-render just the "current card" area (after advancing, or after restart).
+function updateCurrentCardDisplay(recordId) {
+  const el = document.querySelector(`[data-feedback-current="${recordId}"]`);
+  if (el) el.innerHTML = renderCurrentCard(recordId, speakingTaskFromRecordId(recordId));
+}
+
+// Turn a recorded audio Blob into a base64 string (without the "data:...," prefix).
+// OpenRouter's Whisper endpoint wants the raw base64, and FileReader handles
+// large blobs more reliably than btoa(String.fromCharCode(...)).
+function blobToBase64(blob) {
+  return new Promise((resolvePromise, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = String(reader.result); // e.g. "data:audio/webm;base64,AAAA..."
+      resolvePromise(dataUrl.split(",")[1] || "");
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+// Called automatically when a practice-exam recording stops. Sends the audio to
+// our local server, then shows the transcript and the tutor's correction.
+// Guided mode (Aufgaben 1-3): corrects the answer to the current card, then
+// auto-advances to the next card. Chat mode (Aufgabe 4): free conversation.
+async function requestSpeakingFeedback(recordId, blob) {
+  const statusEl = document.querySelector(`[data-feedback-status="${recordId}"]`);
+  const resultEl = document.querySelector(`[data-feedback-result="${recordId}"]`);
+  // If this recording isn't a tutor-enabled task (e.g. official set), do nothing.
+  if (!statusEl || !resultEl) return;
+
+  const task = speakingTaskFromRecordId(recordId);
+  const cards = task.cards || [];
+  const isChat = task.mode === "chat";
+  const idx = currentCardIndex(recordId);
+
+  // Guided mode: if every card is already done, nudge the learner to restart
+  // instead of sending another recording.
+  if (!isChat && cards.length && idx >= cards.length) {
+    statusEl.classList.remove("hidden", "error");
+    statusEl.textContent = "Alle Karten sind fertig. Klicken Sie „Von vorne beginnen“.";
+    return;
+  }
+
+  // Loading state.
+  resultEl.classList.add("hidden");
+  resultEl.innerHTML = "";
+  statusEl.classList.remove("hidden", "error");
+  statusEl.textContent = "Wird ausgewertet … (Transkription + Korrektur)";
+
+  try {
+    const audio = await blobToBase64(blob);
+    const response = await fetch("/api/speaking-feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        audio,
+        format: "webm",
+        mode: isChat ? "chat" : "guided",
+        taskTitle: task.title || "",
+        taskPrompt: task.prompt || "",
+        // In guided mode we tell the tutor which card the learner is answering.
+        cardTopic: !isChat ? cards[idx] || "" : "",
+        // In chat mode we send the previous question (or the fixed opener on the
+        // first turn) so the correction is judged in context.
+        previousQuestion: isChat ? chatPrevQuestion[recordId] || task.opener || "" : ""
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "Serverfehler.");
+    }
+
+    statusEl.classList.add("hidden");
+    // The "what to do next" prompt (next card or next question) is shown in the
+    // current-card area above, so the feedback itself only covers the answer.
+    showSpeakingFeedback(resultEl, data);
+
+    if (isChat) {
+      // Remember the new question so the next answer is corrected in context.
+      chatPrevQuestion[recordId] = data.nextQuestion || "";
+      updateCurrentCardDisplay(recordId);
+    } else {
+      // Move to the next card and update the prompt above.
+      speakingCardProgress[recordId] = idx + 1;
+      updateCurrentCardDisplay(recordId);
+    }
+  } catch (error) {
+    statusEl.classList.add("error");
+    statusEl.textContent = `Fehler: ${error.message} Läuft der Server (node server.mjs)?`;
+  }
+}
+
+// Build the feedback display. We use textContent for anything that came from the
+// API so model output can never inject HTML into the page.
+function showSpeakingFeedback(resultEl, data) {
+  resultEl.innerHTML = "";
+
+  const addBlock = (label, value, className = "") => {
+    if (!value) return;
+    const block = document.createElement("div");
+    block.className = `ai-block ${className}`.trim();
+    const head = document.createElement("span");
+    head.className = "ai-block-label";
+    head.textContent = label;
+    const body = document.createElement("p");
+    body.textContent = value;
+    block.append(head, body);
+    resultEl.append(block);
+  };
+
+  addBlock("Das haben Sie gesagt", data.transcript, "ai-transcript");
+  addBlock("Korrektur (A1)", data.corrected, "ai-corrected");
+
+  // Mistakes is a list; show a friendly note when there are none.
+  const mistakesBlock = document.createElement("div");
+  mistakesBlock.className = "ai-block ai-mistakes";
+  const mLabel = document.createElement("span");
+  mLabel.className = "ai-block-label";
+  mLabel.textContent = "Hinweise";
+  mistakesBlock.append(mLabel);
+  if (Array.isArray(data.mistakes) && data.mistakes.length) {
+    const list = document.createElement("ul");
+    for (const item of data.mistakes) {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.append(li);
+    }
+    mistakesBlock.append(list);
+  } else {
+    const ok = document.createElement("p");
+    ok.textContent = "Keine Fehler – sehr gut!";
+    mistakesBlock.append(ok);
+  }
+  resultEl.append(mistakesBlock);
+
+  addBlock("Englisch", data.translation, "ai-translation");
+
+  resultEl.classList.remove("hidden");
+}
+
+// ---------- AI writing checker (Schreiben Aufgabe 2) ----------
+// Sends the student's email + the checklist to the backend, then renders
+// per-item "covered/missing" results, an overall note, and a corrected version.
+async function requestWritingFeedback(textIndex) {
+  const statusEl = document.querySelector(`[data-writing-status="${textIndex}"]`);
+  const resultEl = document.querySelector(`[data-writing-result="${textIndex}"]`);
+  if (!statusEl || !resultEl) return;
+
+  const task = currentExam().writing?.tasks?.[textIndex];
+  if (!task || task.type !== "text") return;
+
+  const textKey = keyFor("writing", `text-${textIndex}`);
+  const emailText = (state.writing[textKey] || "").trim();
+  if (!emailText) {
+    statusEl.classList.remove("hidden");
+    statusEl.classList.add("error");
+    statusEl.textContent = "Bitte schreiben Sie zuerst Ihre E-Mail.";
+    resultEl.classList.add("hidden");
+    return;
+  }
+
+  resultEl.classList.add("hidden");
+  resultEl.innerHTML = "";
+  statusEl.classList.remove("hidden", "error");
+  statusEl.textContent = "Wird geprüft …";
+
+  try {
+    const response = await fetch("/api/writing-feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        emailText,
+        prompt: task.prompt || "",
+        checklist: task.checklist || []
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Serverfehler.");
+    statusEl.classList.add("hidden");
+    showWritingFeedback(resultEl, data);
+  } catch (error) {
+    statusEl.classList.add("error");
+    statusEl.textContent = `Fehler: ${error.message} Läuft der Server (node server.mjs)?`;
+  }
+}
+
+// Build the writing-feedback display safely (textContent for API strings).
+function showWritingFeedback(resultEl, data) {
+  resultEl.innerHTML = "";
+
+  // Word-count line (deterministic, computed by the server).
+  if (typeof data.wordCount === "number") {
+    const count = document.createElement("div");
+    const ok = Boolean(data.wordCountOk);
+    count.className = `ai-writing-item ${ok ? "ai-ok" : "ai-missing"}`;
+    const icon = document.createElement("span");
+    icon.className = "ai-writing-icon";
+    icon.textContent = ok ? "✓" : "✗";
+    const text = document.createElement("div");
+    const label = document.createElement("strong");
+    label.textContent = `Wörter: ${data.wordCount} / ${data.minWords || 30}`;
+    const note = document.createElement("span");
+    note.className = "muted";
+    note.textContent = ok ? " – Mindestlänge erreicht." : " – Schreiben Sie noch ein paar Sätze mehr.";
+    text.append(label, note);
+    count.append(icon, text);
+    resultEl.append(count);
+  }
+
+  // Per-item checklist results.
+  const list = document.createElement("ul");
+  list.className = "ai-writing-items";
+  for (const item of data.items || []) {
+    const li = document.createElement("li");
+    li.className = `ai-writing-item ${item.covered ? "ai-ok" : "ai-missing"}`;
+    const icon = document.createElement("span");
+    icon.className = "ai-writing-icon";
+    icon.textContent = item.covered ? "✓" : "✗";
+    const text = document.createElement("div");
+    const label = document.createElement("strong");
+    label.textContent = item.label;
+    const note = document.createElement("span");
+    note.className = "muted";
+    note.textContent = item.note ? ` – ${item.note}` : "";
+    text.append(label, note);
+    li.append(icon, text);
+    list.append(li);
+  }
+  resultEl.append(list);
+
+  // Grammar / capitalization issues from the AI.
+  if (Array.isArray(data.grammar) && data.grammar.length) {
+    const block = document.createElement("div");
+    block.className = "ai-block ai-mistakes";
+    const head = document.createElement("span");
+    head.className = "ai-block-label";
+    head.textContent = "Grammatik & Großschreibung";
+    const ul = document.createElement("ul");
+    for (const note of data.grammar) {
+      const li = document.createElement("li");
+      li.textContent = note;
+      ul.append(li);
+    }
+    block.append(head, ul);
+    resultEl.append(block);
+  }
+
+  // Overall comment.
+  if (data.overall) {
+    const overall = document.createElement("p");
+    overall.className = "ai-writing-overall";
+    overall.textContent = data.overall;
+    resultEl.append(overall);
+  }
+
+  // Corrected/improved A1 version.
+  if (data.corrected) {
+    const block = document.createElement("div");
+    block.className = "ai-block ai-corrected";
+    const head = document.createElement("span");
+    head.className = "ai-block-label";
+    head.textContent = "Korrigierte Version";
+    const body = document.createElement("p");
+    body.textContent = data.corrected;
+    block.append(head, body);
+    resultEl.append(block);
+  }
+
+  resultEl.classList.remove("hidden");
+}
+
 async function startRecording(recordId) {
   if (!navigator.mediaDevices?.getUserMedia) {
     showToast("Aufnahme ist in diesem Browser nicht verfügbar.");
@@ -3387,14 +4314,20 @@ async function startRecording(recordId) {
     });
     mediaRecorder.addEventListener("stop", () => {
       const blob = new Blob(recordingChunks, { type: "audio/webm" });
-      const player = document.querySelector(`[data-player="${recordingTaskId}"]`);
+      const finishedTaskId = recordingTaskId;
+      const player = document.querySelector(`[data-player="${finishedTaskId}"]`);
       if (player) {
         player.src = URL.createObjectURL(blob);
         player.style.display = "block";
       }
       recordingStream?.getTracks().forEach((track) => track.stop());
       recordingStream = null;
-      toggleRecordingButtons(recordingTaskId, false);
+      toggleRecordingButtons(finishedTaskId, false);
+      // On practice exams the speaking panel has an AI tutor area; send the
+      // audio there for transcription + correction. (No-op on the official set.)
+      if (blob.size && document.querySelector(`[data-feedback="${finishedTaskId}"]`)) {
+        requestSpeakingFeedback(finishedTaskId, blob);
+      }
     });
     mediaRecorder.start();
     toggleRecordingButtons(recordId, true);
@@ -3486,8 +4419,20 @@ app.addEventListener("click", (event) => {
     saveState();
     render();
   }
+  if (action.dataset.action === "check-email") requestWritingFeedback(Number(action.dataset.textIndex));
   if (action.dataset.action === "start-record") startRecording(action.dataset.record);
   if (action.dataset.action === "stop-record") stopRecording();
+  if (action.dataset.action === "restart-cards") {
+    const recordId = action.dataset.record;
+    speakingCardProgress[recordId] = 0;
+    updateCurrentCardDisplay(recordId);
+    // Clear any previous correction shown below.
+    const resultEl = document.querySelector(`[data-feedback-result="${recordId}"]`);
+    if (resultEl) {
+      resultEl.classList.add("hidden");
+      resultEl.innerHTML = "";
+    }
+  }
 });
 
 document.addEventListener("click", (event) => {
