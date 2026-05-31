@@ -1255,6 +1255,17 @@ button:disabled {
   margin-bottom: 4px;
 }
 
+.ai-block-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.ai-block-head .ai-block-label {
+  margin-bottom: 0;
+}
+
 .ai-block p {
   margin: 0;
   line-height: 1.45;
@@ -1343,6 +1354,85 @@ button:disabled {
   color: var(--ink);
 }
 
+.ai-writing-score {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--green);
+}
+
+.ai-writing-score.low {
+  border-left-color: var(--red);
+}
+
+.ai-writing-score strong {
+  font-size: 1.4rem;
+  color: var(--ink);
+}
+
+/* ---- Sprechen exam mode + per-card score list ---- */
+.exam-mode-hint {
+  margin: 10px 0 4px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+  border: 1px dashed var(--line);
+  font-size: 0.92rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.exam-mode-count {
+  color: var(--muted);
+}
+.exam-mode-count.is-ready {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.speaking-card.selectable {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.speaking-card.selectable input[type="checkbox"] {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.speaking-card.selectable.is-selected {
+  border-color: var(--green);
+  background: var(--green-weak);
+}
+
+.speaking-score-cards {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: grid;
+  gap: 6px;
+}
+
+.speaking-score-cards li {
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  line-height: 1.35;
+}
+
 /* ---- Vocabulary: top-bar button + toggle ----- */
 .vocab-btn .vocab-count {
   display: inline-block;
@@ -1425,6 +1515,28 @@ body.translate-mode #app {
 .translate-status {
   margin-top: 6px;
   font-size: 0.85rem;
+}
+
+.speaker-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-left: 4px;
+  padding: 2px 4px;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 0;
+}
+
+.speaker-btn:hover,
+.speaker-btn:focus-visible {
+  color: var(--green);
+  background: var(--panel-soft);
+  outline: none;
 }
 
 .link-btn {

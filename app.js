@@ -2873,7 +2873,15 @@ function loadState() {
       checks: parsed?.checks || {},
       notes: parsed?.notes || {},
       submitted: parsed?.submitted || {},
-      modelOpen: parsed?.modelOpen || {}
+      modelOpen: parsed?.modelOpen || {},
+      // AI score for Schreiben Aufgabe 2 (E-Mail/Brief), keyed by exam id.
+      writingScores: parsed?.writingScores || {},
+      // Sprechen Aufgabe 1 "Prüfungsmodus": the 4 cards the learner chose, keyed by recordId.
+      speakingExamCards: parsed?.speakingExamCards || {},
+      // Transcripts collected during a scored speaking task, keyed by recordId.
+      speakingRecords: parsed?.speakingRecords || {},
+      // AI scores for Sprechen Aufgaben 1/2/3, keyed by recordId.
+      speakingScores: parsed?.speakingScores || {}
     };
   } catch {
     return freshState();
@@ -2889,7 +2897,11 @@ function freshState() {
     checks: {},
     notes: {},
     submitted: {},
-    modelOpen: {}
+    modelOpen: {},
+    writingScores: {},
+    speakingExamCards: {},
+    speakingRecords: {},
+    speakingScores: {}
   };
 }
 
@@ -2996,12 +3008,33 @@ function autoScore(exam) {
   const lesen = sectionScore(exam, "reading");
   const hoeren = sectionScore(exam, "listening");
   const form = formScore(exam);
+  // AI-graded Schreiben Aufgabe 2 score (0-10), if the learner has run the
+  // checker on this exam yet. Defaults to 0 so the running total starts low.
+  const writing2 = Math.max(0, Math.min(10, Number(state.writingScores?.[exam.id] || 0)));
+  // AI-graded Sprechen scores. Real ÖSD weights: Aufgabe 1 = 5, Aufgabe 2 = 10,
+  // Aufgabe 3 = 10. Aufgabe 4 is extra practice and not scored.
+  const speakingScore = (taskIndex) => {
+    const recordId = `${exam.id}-speaking-${taskIndex}`;
+    const max = SPEAKING_TASK_MAX[taskIndex] || 0;
+    const raw = Number(state.speakingScores?.[recordId]?.score || 0);
+    return Math.max(0, Math.min(max, raw));
+  };
+  const sprechen1 = speakingScore(0);
+  const sprechen2 = speakingScore(1);
+  const sprechen3 = speakingScore(2);
+  const sprechen = sprechen1 + sprechen2 + sprechen3; // max 25
   return {
     lesen: lesen.points,
     hoeren: hoeren.points,
     form: form.points,
-    total: lesen.points + hoeren.points + form.points,
-    max: 65
+    writing2,
+    schreiben: form.points + writing2, // combined Schreiben (max 15)
+    sprechen1,
+    sprechen2,
+    sprechen3,
+    sprechen,
+    total: lesen.points + hoeren.points + form.points + writing2 + sprechen,
+    max: 100
   };
 }
 
@@ -3094,6 +3127,71 @@ function updateVocabCountBadge() {
   if (el) el.textContent = vocab.length;
 }
 
+// ----- Text-to-speech for vocab words ---------------------------------------
+// Calls the backend /api/tts-word endpoint, which proxies to OpenRouter's
+// OpenAI TTS model (gpt-4o-mini-tts). The returned MP3 is cached per word in
+// a Map of object URLs so re-clicking the same word doesn't hit the API again.
+
+const ttsAudioCache = new Map(); // word (lowercased) -> object URL
+let ttsCurrentAudio = null;      // the currently playing HTMLAudioElement, if any
+
+async function speakWord(word) {
+  if (!word) return;
+  const key = word.toLowerCase();
+
+  // Stop anything still playing so quick clicks feel snappy.
+  if (ttsCurrentAudio) {
+    try { ttsCurrentAudio.pause(); } catch { /* ignore */ }
+    ttsCurrentAudio = null;
+  }
+
+  try {
+    let url = ttsAudioCache.get(key);
+    if (!url) {
+      const response = await fetch("/api/tts-word", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ word })
+      });
+      if (!response.ok) {
+        // Try to read the error body for a useful toast.
+        let msg = "TTS-Fehler.";
+        try { const data = await response.json(); msg = data.error || msg; } catch { /* ignore */ }
+        showToast(msg);
+        return;
+      }
+      const blob = await response.blob();
+      url = URL.createObjectURL(blob);
+      ttsAudioCache.set(key, url);
+    }
+    const audio = new Audio(url);
+    ttsCurrentAudio = audio;
+    audio.addEventListener("ended", () => { if (ttsCurrentAudio === audio) ttsCurrentAudio = null; });
+    await audio.play();
+  } catch (error) {
+    showToast(`TTS-Fehler: ${error.message}`);
+  }
+}
+
+// Build a small speaker-icon button that plays the given word when clicked.
+function makeSpeakerButton(word) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "speaker-btn";
+  btn.title = "Aussprechen";
+  btn.setAttribute("aria-label", `Aussprechen: ${word}`);
+  btn.innerHTML = `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+    <path d="M8 1.5L4.2 4.5H1.5v7h2.7L8 14.5z" fill="currentColor"/>
+    <path d="M10.2 5.2a3.2 3.2 0 0 1 0 5.6M11.8 2.8a6 6 0 0 1 0 10.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  </svg>`;
+  btn.addEventListener("click", (e) => {
+    // Don't trigger parent click handlers (e.g. flashcard flip).
+    e.stopPropagation();
+    speakWord(word);
+  });
+  return btn;
+}
+
 // ----- Translate mode toggle ------------------------------------------------
 
 function setTranslateMode(on) {
@@ -3165,22 +3263,40 @@ function isTranslatableTarget(el) {
   return true;
 }
 
-async function handleTranslateClick(event) {
+function handleTranslateClick(event) {
   if (!translateMode) return;
   if (!isTranslatableTarget(event.target)) return;
-  const found = extractWordAtPoint(event.clientX, event.clientY);
-  if (!found) return;
+  // Grab coords synchronously - the event object is short-lived.
+  const cx = event.clientX;
+  const cy = event.clientY;
   // We're handling this click; don't let it propagate to other app handlers.
   event.preventDefault();
   event.stopPropagation();
-  openTranslatePopover(event.clientX, event.clientY, found.word, found.context);
+  // 200 ms grace lets a drag-selection finish committing so window.getSelection()
+  // is populated before we decide between phrase and single-word mode.
+  setTimeout(() => {
+    const selText = (window.getSelection()?.toString() || "").trim();
+    const isMulti = selText.length > 0 && /\s/.test(selText);
+    if (isMulti) {
+      // Multi-word selection -> one-off lookup. NOT saved to the vocab deck.
+      openTranslatePopover(cx, cy, selText, "", { mode: "phrase", save: false });
+    } else {
+      // Single click on a word -> normal flow (translate + auto-save).
+      const found = extractWordAtPoint(cx, cy);
+      if (!found) return;
+      openTranslatePopover(cx, cy, found.word, found.context, { mode: "word", save: true });
+    }
+  }, 200);
 }
 
-function openTranslatePopover(x, y, word, context) {
+function openTranslatePopover(x, y, text, context, opts = {}) {
+  const mode = opts.mode === "phrase" ? "phrase" : "word";
+  const save = opts.save !== false; // default true (word mode)
   closeTranslatePopover();
   const el = document.createElement("div");
   el.className = "translate-popover";
   el.setAttribute("role", "dialog");
+  if (mode === "phrase") el.classList.add("is-phrase");
   el.innerHTML = `
     <div class="translate-head">
       <strong class="translate-word"></strong>
@@ -3188,7 +3304,9 @@ function openTranslatePopover(x, y, word, context) {
     </div>
     <div class="translate-body">Übersetzen …</div>
   `;
-  el.querySelector(".translate-word").textContent = word;
+  el.querySelector(".translate-word").textContent = text;
+  // Speaker icon right after the title (works for both word and phrase).
+  el.querySelector(".translate-word").after(makeSpeakerButton(text));
   document.body.append(el);
 
   // Position near the click but keep it on screen.
@@ -3203,11 +3321,11 @@ function openTranslatePopover(x, y, word, context) {
   // Click X to close.
   el.querySelector(".translate-close").addEventListener("click", closeTranslatePopover);
 
-  // Fetch + auto-save.
+  // Fetch translation. In word mode we auto-save; in phrase mode it's a one-off.
   fetch("/api/translate-word", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ word, context })
+    body: JSON.stringify({ word: text, context, mode })
   })
     .then(async (r) => {
       const data = await r.json();
@@ -3215,11 +3333,15 @@ function openTranslatePopover(x, y, word, context) {
       return data;
     })
     .then((data) => {
-      const card = addVocab({ german: word, english: data.translation, examples: data.examples });
-      renderTranslatePopoverBody(el, card);
-      updateVocabCountBadge();
-      // If the vocab modal is open, refresh it so the new word shows up.
-      if (vocabModalEl) renderVocabModalBody();
+      if (save) {
+        const card = addVocab({ german: text, english: data.translation, examples: data.examples });
+        renderTranslatePopoverBody(el, card);
+        updateVocabCountBadge();
+        if (vocabModalEl) renderVocabModalBody();
+      } else {
+        // One-off: render translation only, no save footer, no vocab side-effects.
+        renderTranslatePopoverOneOff(el, data);
+      }
     })
     .catch((err) => {
       const body = el.querySelector(".translate-body");
@@ -3261,6 +3383,22 @@ function renderTranslatePopoverBody(el, card) {
   });
   status.append(saved, removeBtn);
   body.append(status);
+}
+
+// One-off renderer used for multi-word selections. Shows the translation only,
+// no example list, and no "Gespeichert / Entfernen" footer because the lookup
+// is intentionally not added to the vocab deck.
+function renderTranslatePopoverOneOff(el, data) {
+  const body = el.querySelector(".translate-body");
+  body.innerHTML = "";
+  const en = document.createElement("p");
+  en.className = "translate-en";
+  en.textContent = data.translation || "(keine Übersetzung)";
+  body.append(en);
+  const note = document.createElement("div");
+  note.className = "translate-status muted";
+  note.textContent = "Einmalige Übersetzung – nicht gespeichert.";
+  body.append(note);
 }
 
 function closeTranslatePopover() {
@@ -3354,6 +3492,7 @@ function renderFlashView() {
     const word = document.createElement("p");
     word.className = "flash-word";
     word.textContent = card.german;
+    word.append(" ", makeSpeakerButton(card.german));
     const hint = document.createElement("p");
     hint.className = "muted";
     hint.textContent = "Tippen zum Umdrehen";
@@ -3363,6 +3502,7 @@ function renderFlashView() {
     const word = document.createElement("p");
     word.className = "flash-word";
     word.textContent = card.german;
+    word.append(" ", makeSpeakerButton(card.german));
     const en = document.createElement("p");
     en.className = "flash-en";
     en.textContent = card.english || "(keine Übersetzung)";
@@ -3438,7 +3578,7 @@ function renderAllView() {
     const e = document.createElement("span");
     e.className = "muted";
     e.textContent = card.english ? ` – ${card.english}` : "";
-    text.append(g, e);
+    text.append(g, " ", makeSpeakerButton(card.german), e);
     const rm = document.createElement("button");
     rm.type = "button";
     rm.className = "link-btn";
@@ -3481,9 +3621,22 @@ document.addEventListener("click", handleTranslateClick, true);
 
 // Esc closes whatever is open.
 document.addEventListener("keydown", (event) => {
-  if (event.key !== "Escape") return;
-  if (translatePopover) { closeTranslatePopover(); return; }
-  if (vocabModalEl) { closeVocabModal(); return; }
+  // Esc closes the popover or vocab modal, whichever is open.
+  if (event.key === "Escape") {
+    if (translatePopover) { closeTranslatePopover(); return; }
+    if (vocabModalEl) { closeVocabModal(); return; }
+    return;
+  }
+  // Alt/Option + T toggles translate mode. We use event.code (KeyT) instead of
+  // event.key because on macOS Option+T produces the dead-key "†".
+  if (event.altKey && event.code === "KeyT" && !event.ctrlKey && !event.metaKey) {
+    // Don't hijack the shortcut while the user is typing in a field.
+    const t = event.target;
+    if (t && (t.matches("input, textarea, select, [contenteditable='true']"))) return;
+    event.preventDefault();
+    setTranslateMode(!translateMode);
+    showToast(`Übersetzen ${translateMode ? "an" : "aus"}`);
+  }
 });
 
 function init() {
@@ -3530,15 +3683,23 @@ function renderNav(exam) {
 
 function renderScore(exam) {
   const score = autoScore(exam);
-  scoreValue.textContent = `${score.total} / ${score.max}`;
+  // Show up to 2 decimals; trim trailing zeros. 1.25 should stay 1.25, not 1.3.
+  const fmt = (n) => {
+    const num = Number(n) || 0;
+    if (Number.isInteger(num)) return String(num);
+    return num.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  };
+  scoreValue.textContent = `${fmt(score.total)} / ${score.max}`;
   scoreMeter.style.width = `${Math.round((score.total / score.max) * 100)}%`;
   const lesenOk = score.lesen >= 6;
   const hoerenOk = score.hoeren >= 6;
   progressText.innerHTML =
     `Lesen <strong>${score.lesen}</strong>/30 ${lesenOk ? "✓" : "(min. 6)"} · ` +
     `Hören <strong>${score.hoeren}</strong>/30 ${hoerenOk ? "✓" : "(min. 6)"} · ` +
-    `Schreiben A1 <strong>${score.form}</strong>/5.<br>` +
-    `Schreiben A2 (10) und Sprechen (25) bewerten Sie mit Checkliste und Modell.`;
+    `Schreiben <strong>${fmt(score.schreiben)}</strong>/15 ` +
+    `<span class="muted">(Formular ${score.form}/5 + Aufgabe 2 ${fmt(score.writing2)}/10)</span> · ` +
+    `Sprechen <strong>${fmt(score.sprechen)}</strong>/25 ` +
+    `<span class="muted">(${fmt(score.sprechen1)}/5 + ${fmt(score.sprechen2)}/10 + ${fmt(score.sprechen3)}/10)</span>.`;
 }
 
 function renderPageHead(title, description, minutes) {
@@ -3846,6 +4007,13 @@ function renderSpeakingTask(task, index) {
   // The AI tutor is only offered on the authored practice exams, never on the
   // official OSD model set (which must stay 1:1 with the original material).
   const showTutor = !currentExam().official;
+  // Aufgabe 4 (chat) is extra practice, not part of the 3 Teile - skip the tag.
+  const showTeilTag = task.mode !== "chat";
+  // Aufgabe 1 has > 4 cards: each card becomes a checkbox so the learner can
+  // pick exactly 4 for "Prüfungsmodus". Aufgaben 2/3 stay as fixed grids.
+  const selectable = !!task.cards && task.cards.length > 4 && showTutor;
+  const selected = selectable ? (state.speakingExamCards?.[recordId] || []) : [];
+  const selectedCount = selected.length;
   return `
     <article class="speaking-panel">
       <div class="task-head">
@@ -3853,10 +4021,22 @@ function renderSpeakingTask(task, index) {
           <h2>${task.title}</h2>
           <p class="instructions">${task.prompt}</p>
         </div>
-        <span class="tag gold">Teil ${index + 1}</span>
+        ${showTeilTag ? `<span class="tag gold">Teil ${index + 1}</span>` : ""}
       </div>
       ${task.image ? `<img class="task-image" src="${task.image}" alt="Originalseite Sprechen" loading="lazy">` : ""}
-      ${task.cards ? `<div class="speaking-cards">${task.cards.map((card) => `<div class="speaking-card"><strong>${card}</strong><span class="muted">Ein paar einfache Sätze.</span></div>`).join("")}</div>` : ""}
+      ${selectable ? `
+        <div class="exam-mode-hint">
+          <strong>Prüfungsmodus:</strong> wählen Sie genau 4 Themen aus
+          <span class="exam-mode-count ${selectedCount === 4 ? "is-ready" : ""}">(${selectedCount}/4)</span>
+          ${selectedCount > 0 ? `<button type="button" class="link-btn" data-action="clear-exam-cards" data-record="${recordId}">Auswahl zurücksetzen</button>` : ""}
+        </div>
+      ` : ""}
+      ${task.cards ? `<div class="speaking-cards${selectable ? " is-selectable" : ""}">${task.cards.map((card) => {
+        const isOn = selectable && selected.includes(card);
+        return selectable
+          ? `<label class="speaking-card selectable ${isOn ? "is-selected" : ""}"><input type="checkbox" data-action="toggle-exam-card" data-record="${recordId}" data-card="${escapeAttr(card)}" ${isOn ? "checked" : ""}><strong>${card}</strong><span class="muted">Ein paar einfache Sätze.</span></label>`
+          : `<div class="speaking-card"><strong>${card}</strong><span class="muted">Ein paar einfache Sätze.</span></div>`;
+      }).join("")}</div>` : ""}
       <div class="action-row">
         <button type="button" data-action="start-record" data-record="${recordId}">Aufnahme starten</button>
         <button class="ghost-btn" type="button" data-action="stop-record" data-record="${recordId}" disabled>Stopp</button>
@@ -3994,6 +4174,46 @@ function speakingTaskFromRecordId(recordId) {
   return currentExam().speaking?.tasks?.[index] || {};
 }
 
+// Which task index is this recordId (0..3)?
+function speakingTaskIndex(recordId) {
+  return Number(recordId.split("-speaking-")[1]);
+}
+
+// Real ÖSD weights for Sprechen Aufgaben 1/2/3 (Aufgabe 4 is extra, not scored).
+const SPEAKING_TASK_MAX = [5, 10, 10, 0];
+function speakingTaskMax(recordId) {
+  return SPEAKING_TASK_MAX[speakingTaskIndex(recordId)] || 0;
+}
+
+// The card deck the guided loop should walk for this task.
+// - Aufgabe 1 (12 cards) in exam mode -> the 4 selected cards (in selection order).
+// - Aufgabe 1 in practice mode -> all 12 cards (no scoring).
+// - Aufgaben 2 and 3 -> their fixed 4 cards.
+function activeCardsFor(recordId, task) {
+  const cards = task?.cards || [];
+  if (!cards.length) return [];
+  if (cards.length > 4) {
+    const sel = state.speakingExamCards?.[recordId];
+    if (Array.isArray(sel) && sel.length === 4) return sel.slice();
+    return cards;
+  }
+  return cards;
+}
+
+// Is this task currently configured to receive an AI score at the end?
+// - Chat (Aufgabe 4): never.
+// - Aufgabe 1: only when exam mode is active (4 cards chosen).
+// - Aufgaben 2 + 3: always.
+function isSpeakingTaskScored(recordId, task) {
+  if (!task || task.mode === "chat") return false;
+  if (!task.cards || task.cards.length === 0) return false;
+  if (task.cards.length > 4) {
+    const sel = state.speakingExamCards?.[recordId];
+    return Array.isArray(sel) && sel.length === 4;
+  }
+  return true;
+}
+
 // The "what to do now" prompt. In guided mode it names the current card and
 // shows progress (e.g. "Karte 3 / 12"); when the cards run out it shows a
 // "done" message with a restart button. Chat mode (Aufgabe 4) shows a hint.
@@ -4006,18 +4226,55 @@ function renderCurrentCard(recordId, task) {
       ? `<p class="ai-current-label">Frage</p><p class="ai-current-card">„${escapeHtml(question)}“</p>`
       : `<p class="muted">Starten Sie das Gespräch: Stellen Sie sich kurz vor.</p>`;
   }
-  const cards = task.cards || [];
+  const cards = activeCardsFor(recordId, task);
   if (!cards.length) return "";
   const idx = currentCardIndex(recordId);
   if (idx >= cards.length) {
-    return `
-      <p class="ai-current-done"><strong>Alle Karten fertig – gut gemacht!</strong></p>
-      <button type="button" class="ghost-btn" data-action="restart-cards" data-record="${recordId}">Von vorne beginnen</button>
-    `;
+    // Task done. If it's scored, show the score block (or a loading
+    // placeholder until the /api/speaking-score response lands); otherwise
+    // just a "fertig" message. The restart button is always available.
+    const scored = isSpeakingTaskScored(recordId, task);
+    const scoreData = state.speakingScores?.[recordId];
+    let body = "";
+    if (scored) {
+      if (scoreData) {
+        body = renderSpeakingScoreHtml(scoreData, recordId);
+      } else {
+        body = `<p class="muted">Wird bewertet …</p>`;
+      }
+    } else {
+      body = `<p class="ai-current-done"><strong>Alle Karten fertig – gut gemacht!</strong></p>`;
+    }
+    return `${body}<button type="button" class="ghost-btn" data-action="restart-cards" data-record="${recordId}">Von vorne beginnen</button>`;
   }
   return `
     <p class="ai-current-label">Karte ${idx + 1} / ${cards.length}</p>
     <p class="ai-current-card">Sprechen Sie zu: „${escapeHtml(cards[idx])}“</p>
+  `;
+}
+
+// Renders the Sprechen score block (HTML string) for the current-card area.
+function renderSpeakingScoreHtml(scoreData, recordId) {
+  const max = Number(scoreData.maxScore) || speakingTaskMax(recordId);
+  const score = Number(scoreData.score) || 0;
+  const cls = score >= max * 0.6 ? "ok" : "low";
+  const perCard = Array.isArray(scoreData.perCard) ? scoreData.perCard : [];
+  const rows = perCard.map((c) => {
+    const flags = [
+      `${c.sentences >= 2 ? "✓" : "✗"} ≥ 2 Sätze`,
+      `${c.grammarOk ? "✓" : "✗"} Grammatik`,
+      `${c.onTopic ? "✓" : "✗"} im Thema`
+    ].join(" · ");
+    const perCardMaxStr = (max / perCard.length).toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+    return `<li><strong>${escapeHtml(c.topic || "")}</strong> – ${c.points}/${perCardMaxStr}<br><span class="muted">${flags}${c.note ? ` · ${escapeHtml(c.note)}` : ""}</span></li>`;
+  }).join("");
+  return `
+    <div class="ai-writing-score ${cls}">
+      <span class="ai-block-label">Punkte (KI)</span>
+      <strong>${score} / ${max}</strong>
+    </div>
+    ${rows ? `<ul class="speaking-score-cards">${rows}</ul>` : ""}
+    ${scoreData.summary ? `<p class="ai-writing-overall">${escapeHtml(scoreData.summary)}</p>` : ""}
   `;
 }
 
@@ -4053,7 +4310,9 @@ async function requestSpeakingFeedback(recordId, blob) {
   if (!statusEl || !resultEl) return;
 
   const task = speakingTaskFromRecordId(recordId);
-  const cards = task.cards || [];
+  // Use the deck currently being walked (4 selected cards in Aufgabe 1 exam
+  // mode, otherwise all task.cards).
+  const cards = task.mode === "chat" ? [] : activeCardsFor(recordId, task);
   const isChat = task.mode === "chat";
   const idx = currentCardIndex(recordId);
 
@@ -4105,9 +4364,30 @@ async function requestSpeakingFeedback(recordId, blob) {
       chatPrevQuestion[recordId] = data.nextQuestion || "";
       updateCurrentCardDisplay(recordId);
     } else {
-      // Move to the next card and update the prompt above.
-      speakingCardProgress[recordId] = idx + 1;
+      // Save the transcript so partial progress survives navigation.
+      if (data.transcript) {
+        if (!state.speakingRecords[recordId]) state.speakingRecords[recordId] = [];
+        state.speakingRecords[recordId][idx] = {
+          topic: cards[idx] || "",
+          transcript: data.transcript
+        };
+      }
+      // Per-card score: criteria come back inside the feedback response, so
+      // we can grade this card immediately without a second API call.
+      let cardScore = null;
+      if (isSpeakingTaskScored(recordId, task)) {
+        cardScore = recordCardScore(recordId, task, idx, cards, data);
+      }
+      saveState();
+      // Show the per-card evaluation alongside the correction.
+      if (cardScore) showCardScoreBlock(resultEl, cardScore, recordId);
+      // Move to the next card and update the prompt above (will also show the
+      // total + breakdown once this is the last card).
+      const next = idx + 1;
+      speakingCardProgress[recordId] = next;
       updateCurrentCardDisplay(recordId);
+      // Refresh the top score so the running Sprechen total ticks up.
+      renderScore(currentExam());
     }
   } catch (error) {
     statusEl.classList.add("error");
@@ -4134,7 +4414,23 @@ function showSpeakingFeedback(resultEl, data) {
   };
 
   addBlock("Das haben Sie gesagt", data.transcript, "ai-transcript");
-  addBlock("Korrektur (A1)", data.corrected, "ai-corrected");
+
+  // Korrektur (A1) - include a speaker icon next to the label so the learner
+  // can hear the corrected sentence in proper German pronunciation.
+  if (data.corrected) {
+    const block = document.createElement("div");
+    block.className = "ai-block ai-corrected";
+    const head = document.createElement("div");
+    head.className = "ai-block-head";
+    const lbl = document.createElement("span");
+    lbl.className = "ai-block-label";
+    lbl.textContent = "Korrektur (A1)";
+    head.append(lbl, makeSpeakerButton(data.corrected));
+    const body = document.createElement("p");
+    body.textContent = data.corrected;
+    block.append(head, body);
+    resultEl.append(block);
+  }
 
   // Mistakes is a list; show a friendly note when there are none.
   const mistakesBlock = document.createElement("div");
@@ -4203,6 +4499,13 @@ async function requestWritingFeedback(textIndex) {
     if (!response.ok) throw new Error(data.error || "Serverfehler.");
     statusEl.classList.add("hidden");
     showWritingFeedback(resultEl, data);
+    // Persist the AI score so it contributes to the running total at the top
+    // of the page and survives navigation.
+    if (typeof data.score === "number") {
+      state.writingScores[currentExam().id] = data.score;
+      saveState();
+      renderScore(currentExam());
+    }
   } catch (error) {
     statusEl.classList.add("error");
     statusEl.textContent = `Fehler: ${error.message} Läuft der Server (node server.mjs)?`;
@@ -4212,6 +4515,18 @@ async function requestWritingFeedback(textIndex) {
 // Build the writing-feedback display safely (textContent for API strings).
 function showWritingFeedback(resultEl, data) {
   resultEl.innerHTML = "";
+
+  // Big "Punkte: X / 10" headline so the score is the first thing the learner sees.
+  if (typeof data.score === "number") {
+    const scoreEl = document.createElement("div");
+    const max = data.maxScore || 10;
+    scoreEl.className = `ai-writing-score ${data.score >= 6 ? "ok" : "low"}`;
+    scoreEl.innerHTML = `<span class="ai-block-label">Punkte (KI)</span>`;
+    const big = document.createElement("strong");
+    big.textContent = `${data.score} / ${max}`;
+    scoreEl.append(big);
+    resultEl.append(scoreEl);
+  }
 
   // Word-count line (deterministic, computed by the server).
   if (typeof data.wordCount === "number") {
@@ -4292,6 +4607,64 @@ function showWritingFeedback(resultEl, data) {
   }
 
   resultEl.classList.remove("hidden");
+}
+
+// Grade the just-recorded card from criteria the tutor returned, update the
+// running score, and persist. Per-card points = (criteria-met / 3) * (max / n).
+// Returns the per-card entry it just saved so the caller can display it.
+function recordCardScore(recordId, task, idx, cards, data) {
+  const maxScore = speakingTaskMax(recordId);
+  if (!maxScore || !cards.length) return null;
+  const perCardMax = maxScore / cards.length;
+  const sentences = Number.isFinite(data.sentences) ? data.sentences : 0;
+  const grammarOk = Boolean(data.grammarOk);
+  // onTopic defaults true so that empty cardTopic doesn't penalize the learner.
+  const onTopic = typeof data.onTopic === "boolean" ? data.onTopic : true;
+  const met = (sentences >= 2 ? 1 : 0) + (grammarOk ? 1 : 0) + (onTopic ? 1 : 0);
+  // Round to 2 decimals to keep exact values like 1.25 intact - rounding to 1
+  // decimal would push 1.25 to 1.3 because Math.round(12.5) === 13 in JS.
+  const points = Math.round((met / 3) * perCardMax * 100) / 100;
+
+  const store = state.speakingScores[recordId] || { maxScore, perCard: [], score: 0, summary: "" };
+  store.maxScore = maxScore;
+  store.perCard = store.perCard || [];
+  store.perCard[idx] = {
+    topic: cards[idx] || "",
+    transcript: data.transcript || "",
+    sentences,
+    grammarOk,
+    onTopic,
+    points,
+    perCardMax,
+    note: data.mistakes?.join(" ") || ""
+  };
+  // Running total = sum of recorded card points so far. 2-decimal rounding
+  // again so partial scores like 1.25 + 1.25 stay exact.
+  store.score = Math.round(store.perCard.reduce((s, c) => s + (c?.points || 0), 0) * 100) / 100;
+  state.speakingScores[recordId] = store;
+  return store.perCard[idx];
+}
+
+// Tiny header block shown above each per-card correction with the immediate
+// criteria check and points earned for THIS card.
+function showCardScoreBlock(resultEl, card, recordId) {
+  const max = card.perCardMax || (speakingTaskMax(recordId) / 4);
+  const fmt = (n) => (Number.isInteger(n) ? `${n}` : Number(n).toFixed(2).replace(/0+$/, "").replace(/\.$/, ""));
+  const ok = card.points >= max * 0.5;
+  const block = document.createElement("div");
+  block.className = `ai-writing-score ${ok ? "ok" : "low"}`;
+  block.innerHTML = `<span class="ai-block-label">Karte – Punkte</span>`;
+  const strong = document.createElement("strong");
+  strong.textContent = `${fmt(card.points)} / ${fmt(max)}`;
+  block.append(strong);
+  const flags = document.createElement("p");
+  flags.className = "muted";
+  flags.style.margin = "4px 0 0";
+  flags.textContent = `${card.sentences >= 2 ? "✓" : "✗"} ≥ 2 Sätze · ${card.grammarOk ? "✓" : "✗"} Grammatik · ${card.onTopic ? "✓" : "✗"} im Thema`;
+  block.append(flags);
+  // Keep the score line at the very top of the panel so it's the first thing
+  // the learner sees after each card.
+  resultEl.prepend(block);
 }
 
 async function startRecording(recordId) {
@@ -4425,14 +4798,55 @@ app.addEventListener("click", (event) => {
   if (action.dataset.action === "restart-cards") {
     const recordId = action.dataset.record;
     speakingCardProgress[recordId] = 0;
-    updateCurrentCardDisplay(recordId);
-    // Clear any previous correction shown below.
-    const resultEl = document.querySelector(`[data-feedback-result="${recordId}"]`);
-    if (resultEl) {
-      resultEl.classList.add("hidden");
-      resultEl.innerHTML = "";
-    }
+    // Wipe the collected transcripts and AI score so the next attempt is fresh.
+    if (state.speakingRecords) delete state.speakingRecords[recordId];
+    if (state.speakingScores) delete state.speakingScores[recordId];
+    // Also clear the Aufgabe 1 exam selection so the user can pick anew.
+    if (state.speakingExamCards) delete state.speakingExamCards[recordId];
+    saveState();
+    render();
+    renderScore(currentExam());
   }
+  if (action.dataset.action === "clear-exam-cards") {
+    const recordId = action.dataset.record;
+    if (state.speakingExamCards) delete state.speakingExamCards[recordId];
+    // Also reset any partial run that depended on the old selection.
+    if (state.speakingRecords) delete state.speakingRecords[recordId];
+    if (state.speakingScores) delete state.speakingScores[recordId];
+    speakingCardProgress[action.dataset.record] = 0;
+    saveState();
+    render();
+    renderScore(currentExam());
+  }
+});
+
+// Aufgabe 1 card selection: each card is a checkbox; toggle adds/removes the
+// card from the recordId's selection list. Capped at 4; clicking a 5th is
+// ignored (the checkbox snaps back unchecked).
+document.addEventListener("change", (event) => {
+  const cb = event.target.closest("[data-action='toggle-exam-card']");
+  if (!cb) return;
+  const recordId = cb.dataset.record;
+  const card = cb.dataset.card;
+  const list = state.speakingExamCards[recordId] ? state.speakingExamCards[recordId].slice() : [];
+  if (cb.checked) {
+    if (list.length >= 4) {
+      cb.checked = false;
+      showToast("Sie haben schon 4 Themen ausgewählt. Entfernen Sie zuerst eines.");
+      return;
+    }
+    if (!list.includes(card)) list.push(card);
+  } else {
+    const i = list.indexOf(card);
+    if (i >= 0) list.splice(i, 1);
+  }
+  state.speakingExamCards[recordId] = list;
+  // Changing the selection invalidates any in-progress run for this task.
+  speakingCardProgress[recordId] = 0;
+  if (state.speakingRecords) delete state.speakingRecords[recordId];
+  if (state.speakingScores) delete state.speakingScores[recordId];
+  saveState();
+  render();
 });
 
 document.addEventListener("click", (event) => {
@@ -4445,14 +4859,43 @@ document.addEventListener("click", (event) => {
   }
   if (action.dataset.action === "print") window.print();
   if (action.dataset.action === "reset-all") {
-    if (!window.confirm("Alle Antworten und Notizen zurücksetzen?")) return;
-    state = freshState();
+    const exam = currentExam();
+    if (!window.confirm(`„${exam.title}" zurücksetzen? Andere Tests bleiben unverändert.`)) return;
+    resetExamProgress(exam.id);
     saveState();
     clearInterval(timerHandle);
     render();
-    showToast("Alle Daten zurückgesetzt.");
+    showToast(`${exam.title} zurückgesetzt.`);
   }
 });
+
+// Wipe every per-exam piece of state for one exam (answers, writing, notes,
+// AI scores, speaking selections + records, recording progress). Leaves the
+// other 12 exams' data alone.
+function resetExamProgress(examId) {
+  const matches = (key) =>
+    typeof key === "string" && (key === examId || key.startsWith(`${examId}:`) || key.startsWith(`${examId}-`));
+
+  const prune = (obj) => {
+    if (!obj) return;
+    for (const k of Object.keys(obj)) if (matches(k)) delete obj[k];
+  };
+
+  prune(state.answers);
+  prune(state.writing);
+  prune(state.checks);
+  prune(state.notes);
+  prune(state.submitted);
+  // writingScores is keyed by exam id directly.
+  if (state.writingScores) delete state.writingScores[examId];
+  // These three are keyed by recordId ("<examId>-speaking-N").
+  prune(state.speakingExamCards);
+  prune(state.speakingRecords);
+  prune(state.speakingScores);
+  // In-memory recording session state.
+  prune(speakingCardProgress);
+  prune(chatPrevQuestion);
+}
 
 document.addEventListener("change", (event) => {
   if (event.target.matches(".answer-input")) {

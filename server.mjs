@@ -77,13 +77,17 @@ Reply with ONLY a JSON object, no markdown, in exactly this shape:
   "corrected": "the student's sentence(s) rewritten in correct, simple A1 German. Keep it short and natural.",
   "mistakes": ["one short, kind note per mistake, in English, e.g. 'Use \"bin\" not \"ist\" with ich.' If there are no mistakes, return an empty array."],
   "translation": "the corrected German translated into simple English",
-  "nextQuestion": "one new, very simple A1 German question to keep the conversation going, related to the task"
+  "nextQuestion": "one new, very simple A1 German question to keep the conversation going, related to the task",
+  "sentences": "<integer: your best estimate of how many distinct sentences/utterances the student produced. Two short statements count as 2. If the transcript is empty, return 0.>",
+  "grammarOk": "<boolean: true if the German is basically correct at A1 level (small slips are fine), false if there are clear A1 mistakes that hurt understanding.>",
+  "onTopic": "<boolean: if the user message mentions a topic card, true when the student's words clearly relate to that topic; otherwise true.>"
 }
 
 Rules:
 - Stay at A1: short sentences, common words, present tense, no complex grammar terms.
 - Be warm and positive. Praise effort.
 - If the transcript is empty or not German, gently say so inside "mistakes" and give an easy nextQuestion to try again.
+- Always include sentences, grammarOk, onTopic even in chat mode (use sensible values).
 - Output valid JSON only. No backticks, no extra text.`;
 
 // ---------------------------------------------------------------------------
@@ -227,7 +231,12 @@ function normalizeFeedback(obj) {
     corrected: typeof obj.corrected === "string" ? obj.corrected : "",
     mistakes: Array.isArray(obj.mistakes) ? obj.mistakes.map(String) : [],
     translation: typeof obj.translation === "string" ? obj.translation : "",
-    nextQuestion: typeof obj.nextQuestion === "string" ? obj.nextQuestion : ""
+    nextQuestion: typeof obj.nextQuestion === "string" ? obj.nextQuestion : "",
+    // Per-card scoring criteria. The browser uses these in guided mode to show
+    // the learner an immediate per-card score after each recording.
+    sentences: Number.isFinite(Number(obj.sentences)) ? Math.max(0, Math.floor(Number(obj.sentences))) : 0,
+    grammarOk: Boolean(obj.grammarOk),
+    onTopic: typeof obj.onTopic === "boolean" ? obj.onTopic : true
   };
 }
 
@@ -417,11 +426,18 @@ async function handleWritingFeedback(req, res) {
     // Deterministic word count (we don't trust the model to count). Browser
     // shows this prominently as a pass/fail indicator alongside the checklist.
     const wordCount = countWordsServer(emailText);
+    // Score: each covered checklist item is worth 2 points (5 items -> 10 max).
+    // Strict and easy to understand; grammar/word-count are shown separately
+    // in the panel but don't subtract from the score.
+    const coveredCount = (feedback.items || []).filter((it) => it.covered).length;
+    const score = coveredCount * 2;
     sendJson(res, 200, {
       ...feedback,
       wordCount,
       minWords: MIN_WORDS,
-      wordCountOk: wordCount >= MIN_WORDS
+      wordCountOk: wordCount >= MIN_WORDS,
+      score,
+      maxScore: 10
     });
   } catch (error) {
     console.error("[writing-feedback]", error);
@@ -434,7 +450,7 @@ async function handleWritingFeedback(req, res) {
 // for context), Gemini returns a short English translation plus two A1-level
 // example sentences. Used by the click-to-translate feature in the browser.
 // ---------------------------------------------------------------------------
-const TRANSLATE_SYSTEM_PROMPT = `You translate single German words for an absolute beginner (A1) learning German. You are concise and accurate.
+const TRANSLATE_WORD_SYSTEM_PROMPT = `You translate single German words for an absolute beginner (A1) learning German. You are concise and accurate.
 
 You receive one word and optionally the sentence it came from (for context, e.g. to disambiguate homonyms).
 
@@ -450,10 +466,29 @@ Rules:
 - Always return exactly 2 examples.
 - Output valid JSON only.`;
 
-async function translateWord(apiKey, { word, context }) {
+// Phrase mode: the input is several words; we only want a short translation.
+// Example sentences don't make sense for an arbitrary phrase, so the response
+// shape returns an empty examples array.
+const TRANSLATE_PHRASE_SYSTEM_PROMPT = `You translate short German phrases for an A1 learner. You are concise and accurate.
+
+Reply with ONLY a JSON object, no markdown, no backticks, in this exact shape:
+{
+  "translation": "<short, natural English translation of the WHOLE phrase>",
+  "examples": []
+}
+
+Rules:
+- Translate the full phrase, not word by word.
+- Keep the translation short and natural.
+- "examples" must be an empty array.
+- Output valid JSON only.`;
+
+async function translateWord(apiKey, { word, context, mode }) {
+  const isPhrase = mode === "phrase";
+  const systemPrompt = isPhrase ? TRANSLATE_PHRASE_SYSTEM_PROMPT : TRANSLATE_WORD_SYSTEM_PROMPT;
   const userContent = context
-    ? `Word: "${word}"\nContext sentence: "${context}"`
-    : `Word: "${word}"`;
+    ? `${isPhrase ? "Phrase" : "Word"}: "${word}"\nContext sentence: "${context}"`
+    : `${isPhrase ? "Phrase" : "Word"}: "${word}"`;
 
   const response = await fetch(`${OPENROUTER_BASE_URL}/chat/completions`, {
     method: "POST",
@@ -461,7 +496,7 @@ async function translateWord(apiKey, { word, context }) {
     body: JSON.stringify({
       model: CHAT_MODEL, // gemini-2.5-flash-lite - cheap
       messages: [
-        { role: "system", content: TRANSLATE_SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         { role: "user", content: userContent }
       ],
       response_format: { type: "json_object" },
@@ -494,21 +529,202 @@ async function handleTranslateWord(req, res) {
 
   const word = (body.word || "").trim();
   const context = typeof body.context === "string" ? body.context.slice(0, 400) : "";
+  const mode = body.mode === "phrase" ? "phrase" : "word";
   if (!word) {
-    sendJson(res, 400, { error: "No word supplied." });
+    sendJson(res, 400, { error: "No text supplied." });
     return;
   }
-  if (word.length > 60) {
-    sendJson(res, 400, { error: "Word too long." });
+  // Words are short; phrases can be a sentence-ish length.
+  const maxLen = mode === "phrase" ? 240 : 60;
+  if (word.length > maxLen) {
+    sendJson(res, 400, { error: "Text too long." });
     return;
   }
 
   try {
-    const result = await translateWord(apiKey, { word, context });
+    const result = await translateWord(apiKey, { word, context, mode });
     sendJson(res, 200, result);
   } catch (error) {
     console.error("[translate-word]", error);
     sendJson(res, 502, { error: "The translator is unavailable right now." });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Speaking-task scorer (Sprechen Aufgaben 1, 2, 3). After the learner has
+// finished all the cards of a guided speaking task, the browser sends the
+// per-card transcripts here. Gemini grades each card on three criteria:
+//   1. >= 2 sentences
+//   2. correct A1 grammar
+//   3. words on-topic / relevant to the card
+// The server computes the numeric score from those three booleans + the
+// sentence count so the math is predictable, not left to the model.
+// ---------------------------------------------------------------------------
+
+const SPEAKING_SCORE_SYSTEM_PROMPT = `You evaluate spoken German answers from an A1 student on one task of the OSD A1 Sprechen exam. You are warm but accurate.
+
+For each card you receive:
+- the card's topic (a short German label, e.g. "Name", "Was?", "Begrüßung"),
+- the transcript of what the student said (from a speech-to-text system; the transcript may lack punctuation - count rough utterances as sentences).
+
+For EACH card decide three booleans plus a short note:
+- "sentences": integer >= 0 - your best estimate of how many distinct sentences/utterances the student produced for this card. Two short statements count as 2.
+- "grammarOk": true if the German is basically correct at A1 level (small slips are fine), false if there are clear A1 grammar mistakes that hurt understanding.
+- "onTopic": true if the words clearly relate to the card's topic, false if the student wandered off-topic or said something unrelated.
+- "note": one short sentence in English explaining your decisions for this card.
+
+Reply with ONLY a JSON object, no markdown, no backticks, in this exact shape:
+{
+  "perCard": [
+    {"topic": "<card label>", "sentences": <int>, "grammarOk": <bool>, "onTopic": <bool>, "note": "<short English sentence>"},
+    ...
+  ],
+  "summary": "<one short overall comment in English>"
+}
+
+Rules:
+- One object per card, in the SAME ORDER you received them.
+- If a transcript is empty, return sentences:0, grammarOk:false, onTopic:false, with a kind note.
+- Output valid JSON only.`;
+
+async function getSpeakingScore(apiKey, { taskTitle, taskPrompt, items }) {
+  const userContent =
+    `Task: ${taskTitle || "Sprechen"}\n` +
+    `Instructions: ${taskPrompt || ""}\n\n` +
+    `Cards (in order):\n` +
+    items.map((it, i) => `${i + 1}. Topic: "${it.topic || ""}"\n   Transcript: "${it.transcript || ""}"`).join("\n");
+
+  const response = await fetch(`${OPENROUTER_BASE_URL}/chat/completions`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: CHAT_MODEL,
+      messages: [
+        { role: "system", content: SPEAKING_SCORE_SYSTEM_PROMPT },
+        { role: "user", content: userContent }
+      ],
+      response_format: { type: "json_object" },
+      temperature: 0.2
+    })
+  });
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Speaking-score request failed (${response.status}): ${detail.slice(0, 300)}`);
+  }
+  const data = await response.json();
+  const content = data?.choices?.[0]?.message?.content || "";
+  return parseLooseJson(content);
+}
+
+async function handleSpeakingScore(req, res) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) { sendJson(res, 500, { error: "Server is missing OPENROUTER_API_KEY." }); return; }
+  let body;
+  try { body = await readJsonBody(req); }
+  catch (error) { sendJson(res, 400, { error: error.message }); return; }
+
+  const items = Array.isArray(body.items) ? body.items : [];
+  if (!items.length) { sendJson(res, 400, { error: "No cards supplied." }); return; }
+  const maxScore = Number(body.maxScore) || 10;
+  const taskTitle = String(body.taskTitle || "");
+  const taskPrompt = String(body.taskPrompt || "");
+
+  try {
+    const raw = await getSpeakingScore(apiKey, { taskTitle, taskPrompt, items });
+    // Normalize - make sure every card has an entry in the same order.
+    const incoming = Array.isArray(raw?.perCard) ? raw.perCard : [];
+    const perCard = items.map((it, i) => {
+      const match = incoming[i] || {};
+      const sentences = Number.isFinite(match.sentences) ? Math.max(0, Math.floor(match.sentences)) : 0;
+      const grammarOk = Boolean(match.grammarOk);
+      const onTopic = Boolean(match.onTopic);
+      const criteria = [sentences >= 2, grammarOk, onTopic];
+      const met = criteria.filter(Boolean).length; // 0..3
+      // Equal per-card share of the task max.
+      const perCardMax = maxScore / items.length;
+      const points = Math.round((met / 3) * perCardMax * 10) / 10; // 1 decimal
+      return {
+        topic: it.topic || "",
+        transcript: it.transcript || "",
+        sentences,
+        grammarOk,
+        onTopic,
+        points,
+        note: typeof match.note === "string" ? match.note : ""
+      };
+    });
+    const score = Math.round(perCard.reduce((sum, c) => sum + c.points, 0) * 10) / 10;
+    sendJson(res, 200, {
+      score,
+      maxScore,
+      perCard,
+      summary: typeof raw?.summary === "string" ? raw.summary : ""
+    });
+  } catch (error) {
+    console.error("[speaking-score]", error);
+    sendJson(res, 502, { error: "Scoring is unavailable right now." });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Text-to-speech for single vocabulary words. Calls OpenRouter's OpenAI
+// audio/speech endpoint (the same model the TTS generator script uses) and
+// streams the returned MP3 back to the browser.
+// ---------------------------------------------------------------------------
+const TTS_MODEL = process.env.OPENROUTER_TTS_MODEL || "openai/gpt-4o-mini-tts-2025-12-15";
+const TTS_VOICE = process.env.OPENROUTER_TTS_VOICE || "nova";
+
+async function handleTtsWord(req, res) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    sendJson(res, 500, { error: "Server is missing OPENROUTER_API_KEY." });
+    return;
+  }
+  let body;
+  try { body = await readJsonBody(req); }
+  catch (error) { sendJson(res, 400, { error: error.message }); return; }
+
+  const word = (body.word || "").trim();
+  if (!word) { sendJson(res, 400, { error: "No text supplied." }); return; }
+  // Safety cap (covers single words and short phrases from selection lookups).
+  if (word.length > 240) { sendJson(res, 400, { error: "Text too long." }); return; }
+
+  try {
+    const upstream = await fetch(`${OPENROUTER_BASE_URL}/audio/speech`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: TTS_MODEL,
+        input: word,
+        voice: TTS_VOICE,
+        response_format: "mp3",
+        // Slow, clear German pronunciation for a vocab card.
+        instructions: "Speak this German word slowly and clearly, with standard German pronunciation, as if teaching an A1 learner."
+      })
+    });
+
+    if (!upstream.ok) {
+      const detail = await upstream.text();
+      console.error("[tts-word] upstream", upstream.status, detail.slice(0, 300));
+      sendJson(res, 502, { error: "TTS is unavailable right now." });
+      return;
+    }
+
+    const buffer = Buffer.from(await upstream.arrayBuffer());
+    res.writeHead(200, {
+      "Content-Type": "audio/mpeg",
+      "Content-Length": buffer.length,
+      // Long browser-side cache: the audio for a word is deterministic enough
+      // that we don't need to re-request it for the same session.
+      "Cache-Control": "private, max-age=86400"
+    });
+    res.end(buffer);
+  } catch (error) {
+    console.error("[tts-word]", error);
+    sendJson(res, 502, { error: "TTS request failed." });
   }
 }
 
@@ -597,6 +813,24 @@ const server = createServer((req, res) => {
     return;
   }
 
+  if (pathname === "/api/tts-word") {
+    if (req.method !== "POST") {
+      sendJson(res, 405, { error: "Use POST for this endpoint." });
+      return;
+    }
+    handleTtsWord(req, res);
+    return;
+  }
+
+  if (pathname === "/api/speaking-score") {
+    if (req.method !== "POST") {
+      sendJson(res, 405, { error: "Use POST for this endpoint." });
+      return;
+    }
+    handleSpeakingScore(req, res);
+    return;
+  }
+
   if (req.method === "GET" || req.method === "HEAD") {
     serveStatic(req, res);
     return;
@@ -608,10 +842,12 @@ const server = createServer((req, res) => {
 await loadDotEnv();
 server.listen(PORT, () => {
   const hasKey = Boolean(process.env.OPENROUTER_API_KEY);
-  console.log(`OSD ZA1 trainer running at http://localhost:${PORT}/?v=41`);
+  console.log(`OSD ZA1 trainer running at http://localhost:${PORT}/?v=48`);
   console.log(`Speaking tutor API: POST /api/speaking-feedback`);
   console.log(`Writing tutor API:  POST /api/writing-feedback`);
   console.log(`Translate API:      POST /api/translate-word`);
+  console.log(`Word TTS API:       POST /api/tts-word`);
+  console.log(`Speaking score API: POST /api/speaking-score`);
   if (!hasKey) {
     console.warn("WARNING: OPENROUTER_API_KEY is not set - the speaking tutor will return an error until you add it to .env");
   }
