@@ -1,7 +1,7 @@
 # Coding Agent Handoff: ÖSD ZA1 German A1 Practice Trainer
 
 Last reviewed: 2026-05-29  
-Current cache version: `v=36`  
+Current cache version: `v=58`  
 Primary app files: `index.html`, `styles.css`, `app.js`, `server.mjs`
 
 ## Project Purpose
@@ -13,7 +13,7 @@ It was built so learners can practice the full exam flow repeatedly in one place
 - `Lesen`: reading comprehension tasks with automatic scoring.
 - `Hören`: listening tasks with audio, transcripts, and automatic scoring.
 - `Schreiben`: a form task with automatic scoring and an email task with self-check/model answer.
-- `Sprechen`: three speaking tasks with prompts, images, self-recording, notes, and model answers.
+- `Sprechen`: three exam-style speaking tasks plus an extra A1 conversation trainer, with prompts, images, self-recording, notes, and model answers.
 
 The app is intentionally simple to run and deploy. There is no frontend framework and no build step. It is plain HTML, CSS, JavaScript, and static assets.
 
@@ -46,7 +46,7 @@ node server.mjs
 Open:
 
 ```text
-http://localhost:8096/?v=36
+http://localhost:8096/?v=58
 ```
 
 `server.mjs` serves the static site **and** the `POST /api/speaking-feedback` endpoint on the same port, so there is no CORS setup. `python3 -m http.server 8096` still works for everything except the AI speaking tutor (which needs the API endpoint).
@@ -54,8 +54,8 @@ http://localhost:8096/?v=36
 If the browser still shows an older broken/static shell, hard refresh. `index.html` currently loads:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=36">
-<script src="app.js?v=36" defer></script>
+<link rel="stylesheet" href="styles.css?v=58">
+<script src="app.js?v=58" defer></script>
 ```
 
 When changing `app.js` or `styles.css`, bump both query strings in `index.html`. Also update the README and this handoff if the public run URL is documented there.
@@ -198,6 +198,8 @@ Automatic scoring is implemented for:
 
 Writing Aufgabe 2 and all speaking tasks are self-check/manual practice surfaces.
 
+Practice writing tasks also show a `Schreiben-Trainer` bank. It is selected automatically by `writingProfile(task)`: informal email for friends, polite/formal email for bosses/teachers/neighbors, and formal letter for companies/offices/hotels/insurance. Sentence-bank buttons insert useful A1 chunks into the textarea. Task-specific context chips are merged into the reason/problem and question/request groups from `WRITING_CONTEXT_SENTENCES`, and are visually marked with `Aufgabe`.
+
 The ÖSD-style points conversion uses:
 
 ```js
@@ -268,7 +270,7 @@ Common flow:
 ### Two tutor modes (request field `mode`)
 
 - **`guided`** (Aufgaben 1-3): walks the task's own `cards` one at a time. The request sends the current `cardTopic`; the panel shows "Karte N / total" and auto-advances after each correction. When the cards run out it shows a "done" message + a `restart-cards` button. The next prompt is the next card, driven client-side via `speakingCardProgress` — the model does **not** invent topics here.
-- **`chat`** (Aufgabe 4, "Freies Gespräch – Extra-Übung"): a free A1 conversation. Starts from a fixed `opener` on the task; each answer is corrected and the model's `nextQuestion` becomes the next prompt, tracked client-side via `chatPrevQuestion` and sent back as `previousQuestion` for continuity. Aufgabe 4 has `mode: "chat"`, no `cards`, no image; it is **not** part of the official exam.
+- **`chat`** (Aufgabe 4, "Gesprächstraining – Extra-Übung"): a free A1 conversation. Starts from a fixed `opener` on the task; each answer is corrected and the model's `nextQuestion` becomes the next prompt, tracked client-side via `chatPrevQuestion` and sent back as `previousQuestion` for continuity. The client also sends a rotating `chatSituation` from `A1_CHAT_SITUATIONS` so the tutor moves through realistic A1 situations such as hobbies, sports, supermarket prices, directions, help, appointments, work/course, housing, transport, health, birthday invitations, no-smoking/rules, weather, and simple plans. Aufgabe 4 has `mode: "chat"`, no `cards`, no image; it is **not** part of the official exam.
 
 ### Aufgabe 1 cards
 
@@ -276,8 +278,8 @@ Aufgabe 1 now has **12 topic cards**: Name, Alter, Land, Wohnort, Familie, Beruf
 
 Key files / functions:
 
-- `server.mjs`: `transcribeAudio`, `getTutorFeedback` (mode/cardTopic/previousQuestion aware), `parseTutorJson`, `handleSpeakingFeedback`, static file server.
-- `app.js`: `renderTutorPanel(recordId, task)`, `renderCurrentCard`, `updateCurrentCardDisplay`, `currentCardIndex`, `speakingTaskFromRecordId`, `blobToBase64`, `requestSpeakingFeedback`, `showSpeakingFeedback`, the `restart-cards` action, plus the `mediaRecorder` `stop` hook. Transient state: `speakingCardProgress`, `chatPrevQuestion`.
+- `server.mjs`: `transcribeAudio`, `getTutorFeedback` (mode/cardTopic/previousQuestion/chatSituation aware), `parseTutorJson`, `handleSpeakingFeedback`, static file server.
+- `app.js`: `A1_CHAT_SITUATIONS`, `renderChatSituationPicker`, `setChatSituation`, `renderTutorPanel(recordId, task)`, `renderCurrentCard`, `updateCurrentCardDisplay`, `currentCardIndex`, `speakingTaskFromRecordId`, `blobToBase64`, `requestSpeakingFeedback`, `showSpeakingFeedback`, the `restart-cards` action, plus the `mediaRecorder` `stop` hook. Transient state: `speakingCardProgress`, `chatPrevQuestion`, `chatTurnIndex`, `chatPromptSituationIndex`.
 - `styles.css`: `.ai-tutor*`, `.ai-current-*`, and `.ai-block*` rules.
 
 Configurable env vars (optional, sensible defaults): `OPENROUTER_STT_MODEL`, `OPENROUTER_CHAT_MODEL`, `OPENROUTER_BASE_URL`, `PORT`.
@@ -331,7 +333,7 @@ The project now includes:
 - README with screenshots.
 - Speaking task image support.
 - Sprechen Aufgabe 1 model answers for all six cards across Übungssatz 1-12.
-- Cache-busting query version updated to `v=32`.
+- Cache-busting query version updated to `v=58`.
 
 Important content fixes already made:
 
@@ -377,15 +379,16 @@ node -e 'const fs=require("fs"); const src=fs.readFileSync("app.js","utf8"); con
 
 Recommended browser smoke test:
 
-1. Start `python3 -m http.server 8096`.
-2. Open `http://localhost:8096/?v=32`.
+1. Start `node server.mjs`.
+2. Open `http://localhost:8096/?v=58`.
 3. Confirm:
    - test dropdown is populated,
-   - score shows `0 / 65`,
+   - score shows `0 / 100`,
    - section nav renders,
    - overview cards render,
    - selecting a practice exam and opening `Sprechen` works,
-   - `Modelllösung zeigen` in Sprechen Aufgabe 1 shows all six topic blocks.
+   - `Modelllösung zeigen` in Sprechen Aufgabe 1 shows all topic blocks,
+   - Aufgabe 4 shows a partner-style prompt and the tutor continues with varied A1 conversation situations.
 
 If browser automation is available, use it. A plain `node --check` is not enough to catch initialization-order bugs.
 

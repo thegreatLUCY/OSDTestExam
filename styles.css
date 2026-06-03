@@ -945,6 +945,125 @@ button:disabled {
   background: var(--control);
 }
 
+.check-row small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.writing-trainer {
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--control-soft);
+}
+
+.writing-trainer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.writing-trainer h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.writing-trainer p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.writing-bank-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.75fr) minmax(260px, 1.2fr) minmax(250px, 1fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.writing-bank-column {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.writing-bank-group {
+  display: grid;
+  align-content: start;
+  align-self: start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.writing-bank-group > strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.writing-bank-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.writing-bank-buttons button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  max-width: 100%;
+  border: 1px solid var(--line);
+  background: var(--control);
+  color: var(--ink);
+  border-radius: 6px;
+  padding: 5px 7px;
+  font: inherit;
+  font-size: 0.74rem;
+  line-height: 1.25;
+  cursor: pointer;
+  text-align: left;
+  white-space: normal;
+}
+
+.writing-bank-buttons button.context-sentence {
+  border-color: var(--gold);
+  background: var(--gold-weak);
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--line));
+  background: color-mix(in srgb, var(--gold-weak) 58%, var(--control));
+}
+
+.writing-context-label {
+  flex: 0 0 auto;
+  border-radius: 5px;
+  padding: 1px 3px;
+  background: var(--control);
+  color: var(--gold);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.writing-bank-buttons button:hover,
+.writing-bank-buttons button:focus-visible {
+  border-color: var(--green);
+  background: var(--panel-soft);
+  outline: none;
+}
+
 .word-count {
   color: var(--muted);
   font-size: 0.85rem;
@@ -1076,6 +1195,14 @@ button:disabled {
   .overview-strip {
     grid-template-columns: 1fr;
   }
+
+  .writing-bank-grid {
+    grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .writing-bank-column:last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 720px) {
@@ -1085,6 +1212,11 @@ button:disabled {
   .writing-grid,
   .speaking-cards {
     grid-template-columns: 1fr;
+  }
+
+  .writing-bank-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
   }
 
   .topbar {
@@ -1126,6 +1258,16 @@ button:disabled {
 
   .picture-prompt {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .writing-bank-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-bank-column:last-child {
+    grid-column: auto;
   }
 }
 
@@ -1211,11 +1353,61 @@ button:disabled {
   color: var(--muted);
 }
 
+.ai-current-label-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 2px;
+}
+
+.ai-current-label-row .ai-current-label {
+  margin: 0;
+}
+
+.ai-current-label-row .speaker-btn {
+  margin-left: 0;
+}
+
 .ai-current-card {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--ink);
+}
+
+.chat-situation-picker {
+  margin-top: 14px;
+}
+
+.chat-situation-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chat-situation-btn {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chat-situation-btn:hover,
+.chat-situation-btn:focus-visible {
+  color: var(--ink);
+  border-color: var(--green);
+  outline: none;
+}
+
+.chat-situation-btn.active {
+  color: var(--bg);
+  background: var(--green);
+  border-color: var(--green);
 }
 
 .ai-current-done {

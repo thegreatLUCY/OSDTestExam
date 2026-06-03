@@ -39,12 +39,12 @@ The project keeps the static-site spirit — plain HTML, CSS, vanilla JavaScript
 - **Hören** (30 pts) — photo matching, note-sheet completion, and short interviews. Practice MP3s for every exam, generated through OpenRouter TTS.
 - **Schreiben** (15 pts) —
   - *Aufgabe 1*: form fill, auto-scored against the answer key.
-  - *Aufgabe 2*: short personal **E-Mail** (exams 1–5) or formal **Brief** (exams 6–12). The AI checker grades the five required content points, flags German grammar/capitalization issues, counts words, and shows a corrected A1 version.
+  - *Aufgabe 2*: short **E-Mail** (exams 1–5, informal or polite depending on the situation) or formal **Brief** (exams 6–12). A sentence-bank trainer shows useful A1 building blocks for informal email, polite/formal email, or formal letter. The AI checker grades the five required content points, flags German grammar/capitalization issues, counts words, and shows a corrected A1 version.
 - **Sprechen** (25 pts) —
   - *Aufgabe 1*: pick **4 of 12** topic cards for *Prüfungsmodus*; the AI tutor walks them one by one.
   - *Aufgabe 2*: picture description across four prompts.
   - *Aufgabe 3*: role-play across four steps.
-  - *Aufgabe 4*: extra practice, **Freies Gespräch** — open-ended A1 conversation with a fixed opener. Not part of the scored exam.
+  - *Aufgabe 4*: extra practice, **Gesprächstraining** — open-ended A1 conversation with partner-style replies and rotating everyday A1 situations. Not part of the scored exam.
 
 ### AI features (require the Node server)
 
@@ -100,7 +100,7 @@ The browser app itself runs in any modern browser; the AI features need the Node
     node server.mjs
     ```
 
-4. Open `http://localhost:8096/?v=50`.
+4. Open `http://localhost:8096/?v=58`.
 
 No dependencies are installed; the server uses only Node's standard library. A plain `python3 -m http.server` will still load the site, but every AI feature (speaking tutor, writing checker, vocab translator, TTS) will fail because there is no `/api/*` route.
 

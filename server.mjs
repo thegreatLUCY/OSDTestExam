@@ -77,7 +77,7 @@ Reply with ONLY a JSON object, no markdown, in exactly this shape:
   "corrected": "the student's sentence(s) rewritten in correct, simple A1 German. Keep it short and natural.",
   "mistakes": ["one short, kind note per mistake, in English, e.g. 'Use \"bin\" not \"ist\" with ich.' If there are no mistakes, return an empty array."],
   "translation": "the corrected German translated into simple English",
-  "nextQuestion": "one new, very simple A1 German question to keep the conversation going, related to the task",
+  "nextQuestion": "in chat mode: one very short A1 partner reply plus one new A1 question. In guided mode: one very simple question related to the task.",
   "sentences": "<integer: your best estimate of how many distinct sentences/utterances the student produced. Two short statements count as 2. If the transcript is empty, return 0.>",
   "grammarOk": "<boolean: true if the German is basically correct at A1 level (small slips are fine), false if there are clear A1 mistakes that hurt understanding.>",
   "onTopic": "<boolean: if the user message mentions a topic card, true when the student's words clearly relate to that topic; otherwise true.>"
@@ -86,6 +86,11 @@ Reply with ONLY a JSON object, no markdown, in exactly this shape:
 Rules:
 - Stay at A1: short sentences, common words, present tense, no complex grammar terms.
 - Be warm and positive. Praise effort.
+- In chat mode, behave like a real conversation partner: briefly react to what the student said, then ask exactly ONE new question.
+- If the student says or implies "und du?", first answer their "Und du?" in one short A1 sentence, then ask your new question.
+- In chat mode, do not repeat the previous question, and do not keep asking only name/origin questions.
+- In chat mode, use everyday A1 situations: hobbies, sport, supermarket prices, ordering food/drinks, asking directions, asking for help, appointments, family, work/course, housing, transport, shopping, health, invitations, inviting a friend to a birthday party, no-smoking signs/rules, weather, simple plans.
+- Keep nextQuestion natural and short, for example: "Ich spiele gern Fußball. Und du, machst du gern Sport?" or "Die Milch kostet zwei Euro. Brauchst du noch etwas?"
 - If the transcript is empty or not German, gently say so inside "mistakes" and give an easy nextQuestion to try again.
 - Always include sentences, grammarOk, onTopic even in chat mode (use sensible values).
 - Output valid JSON only. No backticks, no extra text.`;
@@ -159,7 +164,7 @@ async function transcribeAudio(apiKey, audioBase64, format) {
 // ---------------------------------------------------------------------------
 // Step 2: send the transcript to the Gemini tutor -> get structured feedback.
 // ---------------------------------------------------------------------------
-async function getTutorFeedback(apiKey, { transcript, taskTitle, taskPrompt, mode, cardTopic, previousQuestion }) {
+async function getTutorFeedback(apiKey, { transcript, taskTitle, taskPrompt, mode, cardTopic, previousQuestion, chatSituation }) {
   // Build the context we hand the tutor. Guided mode focuses the correction on
   // one specific topic card; chat mode keeps a back-and-forth going.
   let userContent =
@@ -170,6 +175,11 @@ async function getTutorFeedback(apiKey, { transcript, taskTitle, taskPrompt, mod
   }
   if (mode === "chat" && previousQuestion) {
     userContent += `You previously asked: "${previousQuestion}". The student is answering that question.\n`;
+  }
+  if (mode === "chat") {
+    userContent +=
+      `For your nextQuestion, continue the conversation inside this A1 situation: "${chatSituation || "simple everyday conversation"}".\n` +
+      `The nextQuestion must contain a short partner reply/reaction and then exactly one question. Avoid repeating the previous question.\n`;
   }
   userContent += `\nStudent said (transcript): "${transcript}"`;
 
@@ -187,7 +197,7 @@ async function getTutorFeedback(apiKey, { transcript, taskTitle, taskPrompt, mod
       ],
       // Ask the API to guarantee a JSON object back when the model supports it.
       response_format: { type: "json_object" },
-      temperature: 0.4
+      temperature: mode === "chat" ? 0.65 : 0.4
     })
   });
 
@@ -265,7 +275,8 @@ async function handleSpeakingFeedback(req, res) {
     taskPrompt = "",
     mode = "guided",
     cardTopic = "",
-    previousQuestion = ""
+    previousQuestion = "",
+    chatSituation = ""
   } = body;
   if (!audio || typeof audio !== "string") {
     sendJson(res, 400, { error: "No audio was received. Please record again." });
@@ -287,7 +298,7 @@ async function handleSpeakingFeedback(req, res) {
     }
 
     // 2) text -> friendly A1 correction
-    const feedback = await getTutorFeedback(apiKey, { transcript, taskTitle, taskPrompt, mode, cardTopic, previousQuestion });
+    const feedback = await getTutorFeedback(apiKey, { transcript, taskTitle, taskPrompt, mode, cardTopic, previousQuestion, chatSituation });
     sendJson(res, 200, { transcript, ...feedback });
   } catch (error) {
     // Log the full error in the terminal for debugging; send a short message to the browser.
@@ -300,7 +311,7 @@ async function handleSpeakingFeedback(req, res) {
 // Writing checker (Schreiben Aufgabe 2). Text-only -> we only call the chat
 // model (no Whisper), so this is much cheaper than the speaking endpoint.
 // The model decides, for each checklist item (Anrede, Grund, Tag/Uhrzeit,
-// Frage, Gruß), whether it's clearly covered in the student's email.
+// Frage, Gruß), whether it's clearly covered in the student's email/letter.
 // ---------------------------------------------------------------------------
 const WRITING_SYSTEM_PROMPT = `You check an A1 German text written for the OSD Zertifikat A1 exam, Schreiben Aufgabe 2. The text is either a short personal e-mail or a short formal letter (Brief), at least 30 words long. You are warm and encouraging but precise.
 
@@ -331,11 +342,13 @@ Rules:
 - The corrected version stays at A1 level (short sentences, common words) and must use correct German capitalization.
 - Output valid JSON only.`;
 
-async function getWritingFeedback(apiKey, { emailText, prompt, checklist }) {
+async function getWritingFeedback(apiKey, { emailText, prompt, checklist, format, register }) {
   const userContent =
-    `Email task: ${prompt}\n` +
+    `Writing task: ${prompt}\n` +
+    `Expected format: ${format || "E-Mail or Brief"}\n` +
+    `Expected register: ${register || "choose based on the situation"}\n` +
     `Checklist items (in order): ${JSON.stringify(checklist)}\n\n` +
-    `Student's email:\n"""\n${emailText}\n"""`;
+    `Student's text:\n"""\n${emailText}\n"""`;
 
   const response = await fetch(`${OPENROUTER_BASE_URL}/chat/completions`, {
     method: "POST",
@@ -411,9 +424,9 @@ async function handleWritingFeedback(req, res) {
   try { body = await readJsonBody(req); }
   catch (error) { sendJson(res, 400, { error: error.message }); return; }
 
-  const { emailText = "", prompt = "", checklist = [] } = body;
+  const { emailText = "", prompt = "", checklist = [], format = "", register = "" } = body;
   if (typeof emailText !== "string" || !emailText.trim()) {
-    sendJson(res, 400, { error: "Please write your email first." });
+    sendJson(res, 400, { error: "Please write your text first." });
     return;
   }
   if (!Array.isArray(checklist) || !checklist.length) {
@@ -422,7 +435,7 @@ async function handleWritingFeedback(req, res) {
   }
 
   try {
-    const feedback = await getWritingFeedback(apiKey, { emailText, prompt, checklist });
+    const feedback = await getWritingFeedback(apiKey, { emailText, prompt, checklist, format, register });
     // Deterministic word count (we don't trust the model to count). Browser
     // shows this prominently as a pass/fail indicator alongside the checklist.
     const wordCount = countWordsServer(emailText);
@@ -673,6 +686,7 @@ async function handleSpeakingScore(req, res) {
 // ---------------------------------------------------------------------------
 const TTS_MODEL = process.env.OPENROUTER_TTS_MODEL || "openai/gpt-4o-mini-tts-2025-12-15";
 const TTS_VOICE = process.env.OPENROUTER_TTS_VOICE || "nova";
+const TTS_SPEED = Number(process.env.OPENROUTER_TTS_SPEED || 0.9);
 
 async function handleTtsWord(req, res) {
   const apiKey = process.env.OPENROUTER_API_KEY;
@@ -701,6 +715,7 @@ async function handleTtsWord(req, res) {
         input: word,
         voice: TTS_VOICE,
         response_format: "mp3",
+        speed: Number.isFinite(TTS_SPEED) ? TTS_SPEED : 0.9,
         // Slow, clear German pronunciation for a vocab card.
         instructions: "Speak this German word slowly and clearly, with standard German pronunciation, as if teaching an A1 learner."
       })
@@ -842,7 +857,7 @@ const server = createServer((req, res) => {
 await loadDotEnv();
 server.listen(PORT, () => {
   const hasKey = Boolean(process.env.OPENROUTER_API_KEY);
-  console.log(`OSD ZA1 trainer running at http://localhost:${PORT}/?v=48`);
+  console.log(`OSD ZA1 trainer running at http://localhost:${PORT}/?v=58`);
   console.log(`Speaking tutor API: POST /api/speaking-feedback`);
   console.log(`Writing tutor API:  POST /api/writing-feedback`);
   console.log(`Translate API:      POST /api/translate-word`);

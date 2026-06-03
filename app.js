@@ -663,7 +663,7 @@ const practiceExams = [
       emailPrompt:
         "Ihre Nachbarin schreibt Ihnen. Antworten Sie und schreiben Sie circa 30 Wörter: warum Sie schreiben, wann Sie Zeit haben, und fragen Sie, ob sie kommen kann.",
       checklist: ["Anrede", "Grund genannt", "Tag/Uhrzeit genannt", "Frage am Ende", "Gruß"],
-      sample: "Liebe Frau Weber,\nich bin Ihr neuer Nachbar Omar. Ich wohne jetzt in Wohnung 5 im ersten Stock. Ich möchte Sie gern zu Kaffee und Kuchen einladen. Am Samstag um 16 Uhr habe ich Zeit. Können Sie kommen? Ich freue mich sehr.\nViele Grüße\nOmar"
+      sample: "Liebe Frau Weber,\nich bin Omar. Ich bin Ihr neuer Nachbar und wohne in Wohnung 5. Ich möchte Sie am Samstag um 16 Uhr zu Kaffee und Kuchen einladen. Können Sie kommen?\nViele Grüße\nOmar"
     }),
     speaking: practiceSpeaking([
       "Sie sind am Bahnhof. Fragen Sie nach einer Fahrkarte nach Salzburg, der Uhrzeit und dem Preis.",
@@ -865,7 +865,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie sind krank und können morgen nicht arbeiten. Schreiben Sie Ihrem Chef circa 30 Wörter: Sie sind krank, Sie gehen zum Arzt, Sie kommen am Freitag wieder.",
       checklist: ["Anrede", "Grund (krank)", "Arzt genannt", "Rückkehr genannt", "Gruß"],
-      sample: "Sehr geehrter Herr Berger,\nich bin heute Morgen krank geworden und kann morgen leider nicht ins Büro kommen. Ich habe Fieber und Halsschmerzen. Morgen früh gehe ich zum Arzt. Am Freitag komme ich wieder zur Arbeit. Vielen Dank für Ihr Verständnis.\nMit freundlichen Grüßen\nLena Ali"
+      sample: "Sehr geehrter Herr Berger,\nich bin krank und kann morgen leider nicht arbeiten. Ich habe Fieber. Morgen gehe ich zum Arzt. Am Freitag komme ich wieder ins Büro.\nMit freundlichen Grüßen\nLena Ali"
     }),
     speaking: practiceSpeaking([
       "Sie rufen beim Arzt an. Fragen Sie nach einem Termin und sagen Sie, was weh tut.",
@@ -1049,7 +1049,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie laden einen Freund zu Ihrem Geburtstag ein. Schreiben Sie circa 30 Wörter: wann die Party ist, wo sie ist, was er mitbringen soll.",
       checklist: ["Anrede", "Tag und Uhrzeit", "Ort", "Bitte etwas mitbringen", "Gruß"],
-      sample: "Lieber Ben,\nich feiere am Samstag um 17 Uhr meinen Geburtstag im Jugendzentrum Nord. Es kommen viele Freunde aus dem Deutschkurs. Bitte bring etwas zu trinken mit. Wir essen, tanzen und haben viel Spaß. Ich freue mich sehr auf dich!\nViele Grüße\nJulia"
+      sample: "Lieber Ben,\nich feiere am Samstag um 17 Uhr Geburtstag. Die Party ist im Jugendzentrum Nord. Bitte bring etwas zu trinken mit. Hast du Zeit? Ich freue mich auf dich!\nViele Grüße\nJulia"
     }),
     speaking: practiceSpeaking([
       "Sie möchten ein Hotelzimmer reservieren. Fragen Sie nach Preis, Frühstück und Anreisezeit.",
@@ -1233,7 +1233,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie können morgen nicht zum Deutschkurs kommen. Schreiben Sie circa 30 Wörter: warum nicht, wann Sie wieder kommen, und fragen Sie nach den Hausaufgaben.",
       checklist: ["Anrede", "Grund", "Rückkehr genannt", "Frage nach Hausaufgaben", "Gruß"],
-      sample: "Sehr geehrte Frau Novak,\nleider kann ich morgen nicht zum Deutschkurs kommen. Ich habe einen wichtigen Termin im Krankenhaus. Am Mittwoch bin ich wieder im Kurs. Können Sie mir bitte sagen, welche Hausaufgaben wir machen müssen? Vielen Dank im Voraus.\nViele Grüße\nSamir Youssef"
+      sample: "Sehr geehrte Frau Novak,\nleider kann ich morgen nicht zum Deutschkurs kommen. Ich habe einen Termin im Krankenhaus. Am Mittwoch bin ich wieder da. Können Sie mir bitte die Hausaufgaben schicken?\nViele Grüße\nSamir Youssef"
     }),
     speaking: practiceSpeaking([
       "Sie sind im Handyshop. Fragen Sie nach einer SIM-Karte, Internet und dem Preis.",
@@ -1417,7 +1417,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie möchten Ihrer Freundin schreiben, dass Sie am Samstag in die Stadt gehen. Schreiben Sie circa 30 Wörter: wohin Sie gehen, wann Sie Zeit haben, und fragen Sie, ob sie mitkommen möchte.",
       checklist: ["Anrede", "Ort genannt", "Tag/Uhrzeit genannt", "Frage", "Gruß"],
-      sample: "Liebe Sara,\nam Samstag gehe ich in die Stadt. Ich muss bei der Post ein Paket abholen und dann auf die Bank. Um 10 Uhr habe ich Zeit. Wir können danach zusammen einen Kaffee trinken. Möchtest du mitkommen? Bitte sag mir Bescheid.\nLiebe Grüße\nNadia"
+      sample: "Liebe Sara,\nam Samstag gehe ich in die Stadt. Ich muss zur Post und zur Bank. Um 10 Uhr habe ich Zeit. Möchtest du mitkommen? Danach können wir Kaffee trinken.\nLiebe Grüße\nNadia"
     }),
     speaking: practiceSpeaking([
       "Sie sind bei der Post. Fragen Sie nach einem Paket, dem Preis und den Öffnungszeiten.",
@@ -1601,7 +1601,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie möchten Ihre Mitgliedschaft im Sportstudio ändern. Schreiben Sie einen Brief von mindestens 30 Wörtern an das Studio: erklären Sie, warum Sie schreiben, was Sie ändern möchten, ab wann, und bitten Sie um eine schriftliche Bestätigung.",
       checklist: ["Formelle Anrede", "Grund / Anliegen", "Änderung beschrieben", "Bitte um Bestätigung", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\nich bin seit Januar Mitglied in Ihrem Sportstudio. Ich möchte meine Mitgliedschaft ab dem 1. März auf das kleine Paket ändern, weil ich weniger Zeit für Sport habe. Bitte schicken Sie mir eine schriftliche Bestätigung. Vielen Dank im Voraus.\nMit freundlichen Grüßen,\nBilal Aydin",
+      sample: "Sehr geehrte Damen und Herren,\nich möchte meine Mitgliedschaft ändern. Ab dem 1. März möchte ich das kleine Paket. Ich habe wenig Zeit für Sport. Bitte schicken Sie mir eine Bestätigung.\nMit freundlichen Grüßen\nBilal Aydin",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -1786,7 +1786,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie bewerben sich für eine Stelle als Bürokraft. Schreiben Sie einen Brief von mindestens 30 Wörtern: stellen Sie sich kurz vor, sagen Sie, wann Sie arbeiten können, warum Sie sich bewerben, und fragen Sie nach einem Vorstellungstermin.",
       checklist: ["Formelle Anrede", "Person vorgestellt", "Arbeitszeit genannt", "Frage nach Vorstellungstermin", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\nich heiße Maria Lopez und bewerbe mich für die Stelle als Bürokraft. Ich habe schon zwei Jahre Berufserfahrung im Büro und arbeite gerne mit Menschen. Ich kann ab Montag, dem 1. April, am Vormittag arbeiten. Wann haben Sie einen Termin für ein Vorstellungsgespräch?\nMit freundlichen Grüßen,\nMaria Lopez",
+      sample: "Sehr geehrte Damen und Herren,\nich heiße Maria Lopez. Ich bewerbe mich für die Stelle als Bürokraft. Ich kann ab Montag am Vormittag arbeiten. Haben Sie einen Termin für ein Gespräch?\nMit freundlichen Grüßen\nMaria Lopez",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -1971,7 +1971,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie möchten einen Deutschkurs besuchen. Schreiben Sie einen Brief von mindestens 30 Wörtern an die Sprachschule: wer Sie sind, welchen Kurs Sie möchten, wann Sie Zeit haben, und fragen Sie nach Preis und Beginn.",
       checklist: ["Formelle Anrede", "Person vorgestellt", "Kurs gewünscht", "Frage nach Preis / Beginn", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\nich heiße Anton Klein und möchte einen Deutschkurs auf Niveau A1 besuchen. Ich habe am Abend Zeit, von Montag bis Donnerstag ab 18 Uhr. Wann beginnt der nächste Kurs? Wie viel kostet der Kurs pro Monat? Ich freue mich auf Ihre Antwort.\nMit freundlichen Grüßen,\nAnton Klein",
+      sample: "Sehr geehrte Damen und Herren,\nich heiße Anton Klein. Ich möchte einen Deutschkurs A1 besuchen. Ich habe am Abend Zeit. Wann beginnt der Kurs? Wie viel kostet er?\nMit freundlichen Grüßen\nAnton Klein",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -2156,7 +2156,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie haben Ihre Tasche im Bus verloren. Schreiben Sie einen Brief von mindestens 30 Wörtern an das Fundbüro: was Sie verloren haben, wann und wo das war, wie die Tasche aussieht, und fragen Sie, wann Sie sie abholen können.",
       checklist: ["Formelle Anrede", "Sache beschrieben", "Zeit und Ort genannt", "Frage nach Abholung", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\ngestern habe ich im Bus der Linie 13 meine schwarze Tasche verloren. Die Tasche ist klein und hat einen langen Riemen. In der Tasche sind meine Schlüssel und ein Buch. Wann und wo kann ich die Tasche abholen?\nMit freundlichen Grüßen,\nLina Farah",
+      sample: "Sehr geehrte Damen und Herren,\nich habe gestern im Bus 13 meine schwarze Tasche verloren. In der Tasche sind Schlüssel und ein Buch. Wann kann ich die Tasche abholen?\nMit freundlichen Grüßen\nLina Farah",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -2341,7 +2341,7 @@ const practiceExams = [
       ],
       emailPrompt: "Ihr Zug hat Verspätung und Sie kommen später ins Hotel. Schreiben Sie einen Brief von mindestens 30 Wörtern an das Hotel: warum Sie später kommen, wann Sie ungefähr ankommen, was Sie wegen des Schlüssels brauchen, und bitten Sie um eine Bestätigung.",
       checklist: ["Formelle Anrede", "Grund genannt", "Ankunftszeit genannt", "Bitte zum Schlüssel", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\nmein Zug aus Wien hat heute leider zwei Stunden Verspätung. Ich komme erst gegen 23 Uhr in Ihrem Hotel an. Bitte legen Sie den Zimmerschlüssel an der Rezeption für mich bereit. Können Sie mir das kurz schriftlich bestätigen?\nMit freundlichen Grüßen,\nDavid Novak",
+      sample: "Sehr geehrte Damen und Herren,\nmein Zug hat heute Verspätung. Ich komme erst um 23 Uhr im Hotel an. Bitte legen Sie den Schlüssel an die Rezeption. Können Sie mir das bestätigen?\nMit freundlichen Grüßen\nDavid Novak",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -2526,7 +2526,7 @@ const practiceExams = [
       ],
       emailPrompt: "Ihre Nachbarn sind sehr laut. Schreiben Sie einen Brief von mindestens 30 Wörtern an die Hausverwaltung: was das Problem ist, wann es passiert, was Sie schon versucht haben, und bitten Sie um Hilfe.",
       checklist: ["Formelle Anrede", "Problem beschrieben", "Zeit genannt", "Bitte um Hilfe", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\nich wohne in Wohnung 12 im zweiten Stock. Meine Nachbarn hören jeden Abend nach 22 Uhr sehr laute Musik. Ich habe sie schon zweimal höflich gebeten, leiser zu sein, aber es ändert sich nichts. Bitte helfen Sie mir.\nMit freundlichen Grüßen,\nNora Klein",
+      sample: "Sehr geehrte Damen und Herren,\nich wohne in Wohnung 12. Meine Nachbarn hören jeden Abend nach 22 Uhr laute Musik. Ich habe schon freundlich gefragt. Bitte helfen Sie mir.\nMit freundlichen Grüßen\nNora Klein",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -2711,7 +2711,7 @@ const practiceExams = [
       ],
       emailPrompt: "Sie haben eine neue Adresse. Schreiben Sie einen Brief von mindestens 30 Wörtern an Ihre Versicherung: wer Sie sind, Ihre alte und neue Adresse, ab wann die neue Adresse gilt, und bitten Sie um eine schriftliche Bestätigung.",
       checklist: ["Formelle Anrede", "Person vorgestellt", "Alte und neue Adresse", "Datum ab wann", "Formeller Gruß + Name"],
-      sample: "Sehr geehrte Damen und Herren,\nmein Name ist Sami Yildiz, meine Versicherungsnummer ist 12 345 678. Ich bin umgezogen. Meine alte Adresse war Lindenstraße 4 in Wien. Ab dem 1. Mai wohne ich in der Marktgasse 9 in Graz. Bitte schicken Sie mir eine Bestätigung.\nMit freundlichen Grüßen,\nSami Yildiz",
+      sample: "Sehr geehrte Damen und Herren,\nich heiße Sami Yildiz. Ich habe eine neue Adresse. Meine alte Adresse war Lindenstraße 4 in Wien. Ab dem 1. Mai wohne ich in der Marktgasse 9 in Graz. Bitte schicken Sie mir eine Bestätigung.\nMit freundlichen Grüßen\nSami Yildiz",
       textTitle: "Aufgabe 2: Brief"
     }),
     speaking: practiceSpeaking([
@@ -2723,7 +2723,7 @@ const practiceExams = [
   })
 ];
 
-function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample, textTitle = "Aufgabe 2: Persönliches E-Mail" }) {
+function practiceWriting({ formPrompt, fields, emailPrompt, checklist, sample, textTitle = "Aufgabe 2: E-Mail" }) {
   return {
     minutes: 20,
     tasks: [
@@ -2821,13 +2821,14 @@ function practiceSpeaking([roleText, pictureText], images = {}) {
       },
       {
         // Extra practice, NOT part of the official ÖSD exam. A free A1 conversation
-        // with the AI tutor (chat mode). It opens with a fixed question, then the
-        // tutor invents the next question after each of your answers.
-        title: "Aufgabe 4: Freies Gespräch (Extra-Übung)",
-        prompt: "Sprechen Sie frei mit dem KI-Tutor. Er stellt einfache Fragen (A1) und korrigiert Ihre Antworten. Diese Aufgabe ist kein Teil der echten Prüfung.",
+        // with the AI tutor (chat mode). It opens with a fixed question, then
+        // follows a rotating set of A1 everyday situations so the questions stay
+        // useful and do not loop around the same personal-info pattern.
+        title: "Aufgabe 4: Gesprächstraining (Extra-Übung)",
+        prompt: "Führen Sie ein kurzes Gespräch mit dem KI-Tutor. Antworten Sie mit einfachen A1-Sätzen. Sie können am Ende auch „Und du?“ sagen. Diese Aufgabe ist kein Teil der echten Prüfung.",
         mode: "chat",
-        opener: "Hallo! Wie heißen Sie und woher kommen Sie?",
-        model: "Tipp: Antworten Sie in einfachen, kurzen Sätzen. Beispiel: „Ich heiße … Ich komme aus … Ich wohne in …“"
+        opener: "Hallo! Ich bin dein Gesprächspartner. Wie heißt du und wo wohnst du?",
+        model: "Tipp: Antworten Sie mit 2-3 einfachen Sätzen. Beispiel: „Ich heiße … Ich wohne in … Und du?“"
       }
     ]
   };
@@ -2852,6 +2853,132 @@ const speakingCardProgress = {};
 // Free-chat loop (Aufgabe 4): remembers the tutor's last question so the next
 // answer is corrected in context. Keyed by recordId.
 const chatPrevQuestion = {};
+// Rotating A1 situations for Aufgabe 4. The visible button list lets the learner
+// jump to any situation; after that, the tutor continues through this sequence.
+const A1_CHAT_SITUATIONS = [
+  {
+    title: "Kennenlernen",
+    opener: "Hallo! Ich bin dein Gesprächspartner. Wie heißt du und wo wohnst du?",
+    detail: "Name, Alter, Herkunft, Wohnort, Adresse, Telefonnummer, einfache Rückfragen"
+  },
+  {
+    title: "Hobbys",
+    opener: "Was machst du gern in deiner Freizeit?",
+    detail: "Musik, Lesen, Kochen, Freunde treffen, Filme, Wochenende, wie oft"
+  },
+  {
+    title: "Sport",
+    opener: "Machst du gern Sport? Welchen Sport magst du?",
+    detail: "Fußball, Schwimmen, Fitnessstudio, Fahrrad, Spaziergang, Training, gesund"
+  },
+  {
+    title: "Supermarkt",
+    opener: "Du bist im Supermarkt. Was kaufst du gern ein?",
+    detail: "Preis fragen, Obst, Brot, Milch, ein Kilo, Tasche, Kasse, bar oder Karte"
+  },
+  {
+    title: "Café / Restaurant",
+    opener: "Du bist im Café. Was möchtest du trinken oder essen?",
+    detail: "bestellen, Speisekarte, Wasser, Kaffee, Rechnung, Tisch reservieren"
+  },
+  {
+    title: "Wegbeschreibung",
+    opener: "Du bist neu in der Stadt. Wohin möchtest du gehen?",
+    detail: "nach dem Weg fragen, Bahnhof, Apotheke, Supermarkt, links, rechts, geradeaus"
+  },
+  {
+    title: "Um Hilfe bitten",
+    opener: "Brauchst du manchmal Hilfe? Wobei brauchst du Hilfe?",
+    detail: "Formular, Handy, Tasche tragen, langsam sprechen, wiederholen, Tür öffnen"
+  },
+  {
+    title: "Termin",
+    opener: "Wann hast du diese Woche Zeit?",
+    detail: "Arzt, Deutschkurs, Büro, Tag, Uhrzeit, Termin machen, Termin absagen"
+  },
+  {
+    title: "Familie",
+    opener: "Erzähl kurz von deiner Familie. Ist deine Familie groß oder klein?",
+    detail: "Eltern, Geschwister, Kinder, verheiratet, wohnen zusammen, besuchen"
+  },
+  {
+    title: "Arbeit / Kurs",
+    opener: "Arbeitest du oder lernst du? Was machst du?",
+    detail: "Beruf, Firma, Büro, Arbeitszeit, Deutschkurs, Raum, Hausaufgaben"
+  },
+  {
+    title: "Wohnen",
+    opener: "Wie wohnst du? Wohnst du allein oder mit Familie?",
+    detail: "Wohnung, Zimmer, Miete, Adresse, Nachbarn, Schlüssel, Reparatur"
+  },
+  {
+    title: "Verkehr",
+    opener: "Fährst du oft mit Bus, U-Bahn oder Zug?",
+    detail: "Ticket, Haltestelle, Gleis, Verspätung, Abfahrt, Ankunft, Preis"
+  },
+  {
+    title: "Kleidung kaufen",
+    opener: "Du kaufst Kleidung. Welche Farbe und Größe brauchst du?",
+    detail: "Größe, Farbe, Hose, Jacke, Schuhe, anprobieren, Preis, bezahlen"
+  },
+  {
+    title: "Gesundheit",
+    opener: "Wie geht es dir heute? Tut dir etwas weh?",
+    detail: "Kopfweh, Fieber, Apotheke, Arzttermin, Tabletten, krank, gesund"
+  },
+  {
+    title: "Einladung",
+    opener: "Möchtest du jemanden einladen? Wohin möchtet ihr gehen?",
+    detail: "Kino, Kaffee, Spaziergang, mitkommen, Zeit haben, Treffpunkt"
+  },
+  {
+    title: "Geburtstag",
+    opener: "Du hast Geburtstag. Wen möchtest du einladen?",
+    detail: "Freund einladen, Party, Datum, Uhrzeit, Ort, Geschenk, etwas mitbringen"
+  },
+  {
+    title: "Regeln / Rauchen verboten",
+    opener: "Du siehst ein Schild: Rauchen verboten. Was sagst du?",
+    detail: "nicht rauchen, leise sein, Handy aus, hier verboten, draußen erlaubt, höflich bitten"
+  },
+  {
+    title: "Post / Bank / Amt",
+    opener: "Du musst etwas erledigen. Gehst du zur Post, zur Bank oder zum Amt?",
+    detail: "Paket schicken, Konto, Formular, Ausweis, Adresse anmelden, Öffnungszeiten"
+  },
+  {
+    title: "Schule / Kinder",
+    opener: "Lernst du Deutsch in einem Kurs? Wann ist dein Kurs?",
+    detail: "Kurs, Schule, Kindergarten, Kinderbetreuung, Lehrer, Hausaufgaben, Raum"
+  },
+  {
+    title: "Tagesablauf",
+    opener: "Was machst du morgens zuerst?",
+    detail: "aufstehen, frühstücken, arbeiten, lernen, einkaufen, schlafen, Uhrzeiten"
+  },
+  {
+    title: "Wetter / Pläne",
+    opener: "Wie ist das Wetter heute? Was machst du am Wochenende?",
+    detail: "warm, kalt, Regen, Sonne, Wochenende, Park, zu Hause bleiben"
+  },
+  {
+    title: "Hotel / Reise",
+    opener: "Du bist auf Reise. Was brauchst du im Hotel?",
+    detail: "Zimmer, Frühstück, Schlüssel, Ankunft, Koffer, Stadtplan, bezahlen"
+  },
+  {
+    title: "Telefon / Online",
+    opener: "Benutzt du oft dein Handy? Wofür brauchst du es?",
+    detail: "anrufen, Nachricht schreiben, Online-Termin, E-Mail, App, WLAN"
+  },
+  {
+    title: "Höflich sprechen",
+    opener: "Wie fragst du höflich, wenn du etwas nicht verstehst?",
+    detail: "bitte, danke, Entschuldigung, langsam sprechen, wiederholen, kein Problem"
+  }
+];
+const chatTurnIndex = {};
+const chatPromptSituationIndex = {};
 
 const app = document.querySelector("#app");
 const examSelect = document.querySelector("#examSelect");
@@ -3190,6 +3317,17 @@ function makeSpeakerButton(word) {
     speakWord(word);
   });
   return btn;
+}
+
+function renderSpeakerButtonHtml(text, action = "speak-chat-prompt") {
+  return `
+    <button type="button" class="speaker-btn" data-action="${action}" data-speak-text="${escapeAttr(text)}" title="Aussprechen" aria-label="Aussprechen">
+      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+        <path d="M8 1.5L4.2 4.5H1.5v7h2.7L8 14.5z" fill="currentColor"/>
+        <path d="M10.2 5.2a3.2 3.2 0 0 1 0 5.6M11.8 2.8a6 6 0 0 1 0 10.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  `;
 }
 
 // ----- Translate mode toggle ------------------------------------------------
@@ -3742,7 +3880,7 @@ function renderOverview(exam) {
         <div class="skill-grid">
           <div class="skill"><strong>Lesen · 25 min · 30 P.</strong><p>A1: 5 Situationen → 6 Anzeigen. A2: 3 Texte, 6× JA/NEIN. A3: 5 Texte → 6 Bilder.</p></div>
           <div class="skill"><strong>Hören · ca. 25 min · 30 P.</strong><p>A1: 5 Hörtexte → 6 Fotos. A2: Notizblatt (2×). A3: 5 Kurzinterviews.</p></div>
-          <div class="skill"><strong>Schreiben · 20 min</strong><p>A1: Formular (5 P., automatisch korrigiert). A2: persönliches E-Mail, ca. 30 Wörter (10 P.).</p></div>
+          <div class="skill"><strong>Schreiben · 20 min</strong><p>A1: Formular (5 P., automatisch korrigiert). A2: E-Mail oder Brief, ca. 30 Wörter (10 P.).</p></div>
           <div class="skill"><strong>Sprechen · ca. 10 min · 25 P.</strong><p>Sich vorstellen (4 Themen), ein Bild beschreiben, Rollenspiel zur Bildsituation.</p></div>
         </div>
       </div>
@@ -3890,8 +4028,200 @@ function renderFeedback(question, task, value) {
 
 function renderWriting(exam) {
   app.innerHTML = `
-    ${renderPageHead("Schreiben", "Aufgabe 1: Formular ausfüllen (5 Punkte, automatisch korrigiert). Aufgabe 2: persönliches E-Mail oder Brief, mindestens 30 Wörter (10 Punkte, Selbstkontrolle).", exam.writing.minutes)}
+    ${renderPageHead("Schreiben", "Aufgabe 1: Formular ausfüllen (5 Punkte, automatisch korrigiert). Aufgabe 2: E-Mail oder Brief, mindestens 30 Wörter (10 Punkte, Selbstkontrolle).", exam.writing.minutes)}
     ${exam.writing.tasks.map((task, index) => task.type === "form" ? renderFormTask(task, index) : renderTextTask(task, index)).join("")}
+  `;
+}
+
+const WRITING_SENTENCE_BANKS = {
+  informalEmail: {
+    label: "Persönliches E-Mail",
+    register: "informell",
+    note: "Für Freunde, Freundinnen und Personen mit „du“.",
+    groups: [
+      ["Anrede", ["Liebe Sara,", "Lieber Ben,", "Hallo Anna,"]],
+      ["Start", ["vielen Dank für dein E-Mail.", "ich schreibe dir, weil ...", "ich möchte dich einladen."]],
+      ["Grund", ["Leider kann ich nicht kommen.", "Ich bin krank.", "Ich habe am Samstag Zeit.", "Ich möchte dich sehen.", "Ich habe ein kleines Problem.", "Ich brauche deine Hilfe."]],
+      ["Zeit / Ort", ["Am Samstag um 16 Uhr habe ich Zeit.", "Wir treffen uns vor dem Bahnhof.", "Die Party ist bei mir zu Hause."]],
+      ["Frage / Bitte", ["Hast du Zeit?", "Möchtest du mitkommen?", "Kannst du bitte etwas mitbringen?", "Kannst du mir bitte antworten?", "Passt dir das?", "Bitte sag mir Bescheid."]],
+      ["Gruß", ["Viele Grüße", "Liebe Grüße", "Bis bald"]]
+    ]
+  },
+  politeEmail: {
+    label: "Höfliches E-Mail",
+    register: "formell / höflich",
+    note: "Für Chef, Kursleitung, Nachbarn oder Personen mit „Sie“.",
+    groups: [
+      ["Anrede", ["Sehr geehrter Herr Berger,", "Sehr geehrte Frau Novak,", "Liebe Frau Weber,"]],
+      ["Start", ["ich schreibe Ihnen, weil ...", "leider kann ich morgen nicht kommen.", "ich habe eine Frage."]],
+      ["Grund", ["Ich bin krank.", "Ich gehe morgen zum Arzt.", "Ich habe einen wichtigen Termin.", "Ich kann leider nicht kommen.", "Ich habe ein Problem.", "Ich brauche Ihre Hilfe."]],
+      ["Zeit / Ort", ["Am Freitag komme ich wieder.", "Am Samstag um 16 Uhr habe ich Zeit.", "Ich bin am Mittwoch wieder im Kurs."]],
+      ["Frage / Bitte", ["Können Sie mir bitte antworten?", "Können Sie mir bitte die Hausaufgaben schicken?", "Können Sie kommen?", "Können Sie mir bitte helfen?", "Ist das möglich?", "Bitte sagen Sie mir Bescheid."]],
+      ["Gruß", ["Mit freundlichen Grüßen", "Viele Grüße", "Vielen Dank"]]
+    ]
+  },
+  formalLetter: {
+    label: "Formeller Brief",
+    register: "formell",
+    note: "Für Firmen, Ämter, Hotels, Versicherungen und offizielle Stellen.",
+    groups: [
+      ["Anrede", ["Sehr geehrte Damen und Herren,", "Sehr geehrte Frau Müller,", "Sehr geehrter Herr Müller,"]],
+      ["Start", ["ich schreibe Ihnen, weil ...", "ich möchte ...", "ich habe eine Frage zu ..."]],
+      ["Information", ["Mein Name ist ...", "Meine Adresse ist ...", "Der Termin ist am ..."]],
+      ["Grund / Problem", ["Ich habe meine Tasche verloren.", "Mein Zug hat Verspätung.", "Ich habe eine neue Adresse.", "Ich habe ein Problem.", "Ich brauche Ihre Hilfe.", "Der Termin passt mir leider nicht."]],
+      ["Bitte / Frage", ["Bitte schicken Sie mir eine Bestätigung.", "Können Sie mir bitte helfen?", "Ich freue mich auf Ihre Antwort.", "Können Sie mir bitte antworten?", "Können Sie mir bitte Informationen schicken?", "Bitte rufen Sie mich an."]],
+      ["Gruß", ["Mit freundlichen Grüßen", "(Name)"]]
+    ]
+  }
+};
+
+const WRITING_CONTEXT_SENTENCES = {
+  "exam-1": {
+    reason: ["Ich bin Ihr neuer Nachbar.", "Ich möchte Sie kennenlernen.", "Ich möchte Sie zu Kaffee und Kuchen einladen."],
+    request: ["Können Sie am Samstag kommen?", "Passt Ihnen 16 Uhr?", "Bitte sagen Sie mir Bescheid."]
+  },
+  "exam-2": {
+    reason: ["Ich bin krank und kann morgen nicht arbeiten.", "Ich habe Fieber.", "Morgen gehe ich zum Arzt."],
+    request: ["Soll ich Ihnen eine Bestätigung schicken?", "Können Sie mir bitte antworten?", "Am Freitag komme ich wieder ins Büro."]
+  },
+  "exam-3": {
+    reason: ["Ich feiere am Samstag Geburtstag.", "Die Party ist im Jugendzentrum Nord.", "Es kommen Freunde aus dem Deutschkurs."],
+    request: ["Bitte bring etwas zu trinken mit.", "Kommst du zur Party?", "Hast du am Samstag Zeit?"]
+  },
+  "exam-4": {
+    reason: ["Ich kann morgen nicht zum Deutschkurs kommen.", "Ich habe einen Termin im Krankenhaus.", "Am Mittwoch bin ich wieder im Kurs."],
+    request: ["Können Sie mir bitte die Hausaufgaben schicken?", "Was machen wir morgen im Kurs?", "Vielen Dank für Ihre Hilfe."]
+  },
+  "exam-5": {
+    reason: ["Ich gehe am Samstag in die Stadt.", "Ich muss zur Post und zur Bank.", "Danach möchte ich Kaffee trinken."],
+    request: ["Möchtest du mitkommen?", "Hast du um 10 Uhr Zeit?", "Bitte sag mir Bescheid."]
+  },
+  "exam-6": {
+    reason: ["Ich habe wenig Zeit für Sport.", "Ich möchte ab dem 1. März das kleine Paket.", "Meine Mitgliedschaft ist zu teuer."],
+    request: ["Bitte ändern Sie meine Mitgliedschaft.", "Bitte schicken Sie mir eine Bestätigung.", "Können Sie mir bitte den neuen Preis schreiben?"]
+  },
+  "exam-7": {
+    reason: ["Ich bewerbe mich für die Stelle als Bürokraft.", "Ich arbeite gern im Büro.", "Ich kann am Vormittag arbeiten."],
+    request: ["Haben Sie einen Termin für ein Gespräch?", "Wann kann ich mich vorstellen?", "Können Sie mir bitte antworten?"]
+  },
+  "exam-8": {
+    reason: ["Ich möchte Deutsch A1 lernen.", "Ich habe am Abend Zeit.", "Ich brauche den Kurs für die Arbeit."],
+    request: ["Wann beginnt der Kurs?", "Wie viel kostet der Kurs?", "Können Sie mir bitte Informationen schicken?"]
+  },
+  "exam-9": {
+    reason: ["Ich habe meine Tasche im Bus verloren.", "Die Tasche ist schwarz und klein.", "In der Tasche sind Schlüssel und ein Buch."],
+    request: ["Haben Sie meine Tasche gefunden?", "Wann kann ich die Tasche abholen?", "Können Sie mich bitte anrufen?"]
+  },
+  "exam-10": {
+    reason: ["Mein Zug hat Verspätung.", "Ich komme erst um 23 Uhr im Hotel an.", "Ich brauche den Zimmerschlüssel spät."],
+    request: ["Bitte legen Sie den Schlüssel an die Rezeption.", "Können Sie mir das bestätigen?", "Ist die Rezeption um 23 Uhr offen?"]
+  },
+  "exam-11": {
+    reason: ["Meine Nachbarn sind jeden Abend laut.", "Die Musik ist nach 22 Uhr sehr laut.", "Ich kann nachts nicht schlafen."],
+    request: ["Können Sie mir bitte helfen?", "Bitte sprechen Sie mit meinen Nachbarn.", "Was kann ich machen?"]
+  },
+  "exam-12": {
+    reason: ["Ich habe eine neue Adresse.", "Ab dem 1. Mai wohne ich in Graz.", "Meine alte Adresse ist Lindenstraße 4."],
+    request: ["Bitte ändern Sie meine Adresse.", "Bitte schicken Sie mir eine Bestätigung.", "Brauchen Sie noch Informationen?"]
+  }
+};
+
+function writingProfile(task) {
+  const text = `${task.title || ""} ${task.prompt || ""} ${(task.checklist || []).join(" ")}`.toLowerCase();
+  const isLetter = text.includes("brief") || text.includes("formelle anrede") || text.includes("formeller gruß");
+  if (isLetter) return { kind: "formalLetter", format: "Brief", register: "formell" };
+  const informal = /\bfreund\b|\bfreundin\b|\bfreunden\b|lieber|liebe sara|lieber ben|du\b|dich\b|dein\b/.test(text);
+  if (informal) return { kind: "informalEmail", format: "E-Mail", register: "informell" };
+  return { kind: "politeEmail", format: "E-Mail", register: "formell / höflich" };
+}
+
+function writingChecklistQuestion(item) {
+  const lower = item.toLowerCase();
+  if (lower.includes("anrede")) return "Passt die Anrede zur Person?";
+  if (lower.includes("gruß")) return "Gibt es einen passenden Schluss?";
+  if (lower.includes("frage") || lower.includes("bitte") || lower.includes("bestätigung") || lower.includes("abholung")) return "Stelle ich klar eine Frage oder Bitte?";
+  if (lower.includes("tag") || lower.includes("uhr") || lower.includes("zeit") || lower.includes("termin") || lower.includes("datum") || lower.includes("rückkehr") || lower.includes("ab wann")) return "Nenne ich Tag, Uhrzeit, Datum oder Termin?";
+  if (lower.includes("ort") || lower.includes("adresse") || lower.includes("raum")) return "Nenne ich Ort, Adresse oder Raum?";
+  if (lower.includes("grund") || lower.includes("problem") || lower.includes("sache") || lower.includes("person") || lower.includes("kurs") || lower.includes("änderung")) return "Sage ich klar, warum ich schreibe?";
+  return "Ist dieser Punkt klar im Text?";
+}
+
+function writingSentenceItem(sentence, contextual = false) {
+  if (typeof sentence === "string") return { text: sentence, contextual };
+  return {
+    text: sentence?.text || "",
+    contextual: Boolean(sentence?.contextual || contextual)
+  };
+}
+
+function writingGroupsForTask(bank) {
+  const context = WRITING_CONTEXT_SENTENCES[currentExam().id] || {};
+  return bank.groups.map(([title, sentences]) => {
+    const additions =
+      title === "Grund" || title === "Grund / Problem"
+        ? context.reason || []
+        : title === "Frage / Bitte" || title === "Bitte / Frage"
+          ? context.request || []
+          : [];
+    const contextualSentences = additions.slice(0, 2);
+    return [
+      title,
+      [
+        ...sentences.map((sentence) => writingSentenceItem(sentence)),
+        ...contextualSentences.map((sentence) => writingSentenceItem(sentence, true))
+      ]
+    ];
+  });
+}
+
+function writingTrainerColumns(groups) {
+  const byTitle = new Map(groups);
+  const pick = (titles) => titles.map((title) => {
+    const sentences = byTitle.get(title);
+    return sentences ? [title, sentences] : null;
+  }).filter(Boolean);
+  return [
+    pick(["Anrede", "Start", "Gruß"]),
+    pick(["Information", "Grund", "Grund / Problem", "Zeit / Ort"]),
+    pick(["Frage / Bitte", "Bitte / Frage"])
+  ].filter((column) => column.length);
+}
+
+function renderWritingTrainer(task, textKey) {
+  const profile = writingProfile(task);
+  const bank = WRITING_SENTENCE_BANKS[profile.kind];
+  if (!bank) return "";
+  const columns = writingTrainerColumns(writingGroupsForTask(bank));
+  return `
+    <section class="writing-trainer">
+      <div class="writing-trainer-head">
+        <div>
+          <span class="eyebrow">Schreiben-Trainer</span>
+          <h3>${bank.label}</h3>
+          <p>${bank.note}</p>
+        </div>
+        <span class="tag">${profile.register}</span>
+      </div>
+      <div class="writing-bank-grid">
+        ${columns.map((column) => `
+          <div class="writing-bank-column">
+            ${column.map(([title, sentences]) => `
+              <div class="writing-bank-group">
+                <strong>${title}</strong>
+                <div class="writing-bank-buttons">
+                  ${sentences.map((sentence) => `
+                    <button type="button" class="${sentence.contextual ? "context-sentence" : ""}" data-action="insert-writing-sentence" data-key="${escapeAttr(textKey)}" data-sentence="${escapeAttr(sentence.text)}">
+                      ${sentence.contextual ? `<span class="writing-context-label">Aufgabe</span>` : ""}
+                      <span>${escapeHtml(sentence.text)}</span>
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `).join("")}
+      </div>
+    </section>
   `;
 }
 
@@ -3949,6 +4279,7 @@ function renderTextTask(task, index) {
         </div>
         <span class="tag gold">10 Punkte</span>
       </div>
+      ${!currentExam().official ? renderWritingTrainer(task, textKey) : ""}
       <textarea class="writing-input" data-key="${textKey}" placeholder="Schreiben Sie hier Ihre Antwort ...">${escapeHtml(state.writing[textKey] || "")}</textarea>
       <div class="word-count">${words} Wörter ${task.minWords ? `/ Ziel ${task.minWords}+` : ""}</div>
       <div class="check-list">
@@ -3957,7 +4288,7 @@ function renderTextTask(task, index) {
           return `
             <label class="check-row">
               <input class="check-input" type="checkbox" data-key="${key}" ${state.checks[key] ? "checked" : ""}>
-              <span>${item}</span>
+              <span><strong>${escapeHtml(item)}</strong><small>${escapeHtml(writingChecklistQuestion(item))}</small></span>
             </label>
           `;
         }).join("")}
@@ -3976,7 +4307,7 @@ function renderWritingAiPanel(textIndex) {
     <div class="ai-writing" data-writing-feedback="${textIndex}">
       <div class="action-row">
         <button class="ghost-btn" type="button" data-action="check-email" data-text-index="${textIndex}">KI-Korrektur holen</button>
-        <span class="muted">Die KI prüft Ihre E-Mail und sagt, welche Punkte aus der Liste enthalten sind.</span>
+        <span class="muted">Die KI prüft Ihre E-Mail / Ihren Brief und sagt, welche Punkte aus der Liste enthalten sind.</span>
       </div>
       <div class="ai-writing-status hidden" data-writing-status="${textIndex}"></div>
       <div class="ai-writing-result hidden" data-writing-result="${textIndex}"></div>
@@ -4214,17 +4545,63 @@ function isSpeakingTaskScored(recordId, task) {
   return true;
 }
 
+function normalizedChatIndex(index) {
+  const total = A1_CHAT_SITUATIONS.length;
+  return ((Number(index) || 0) % total + total) % total;
+}
+
+function chatSituationAt(index) {
+  return A1_CHAT_SITUATIONS[normalizedChatIndex(index)];
+}
+
+function chatSituationInstruction(index) {
+  const situation = chatSituationAt(index);
+  return `${situation.title}: ${situation.detail}`;
+}
+
+function chatNextSituationIndex(recordId) {
+  return normalizedChatIndex(chatTurnIndex[recordId] ?? 1);
+}
+
+function chatPromptIndex(recordId) {
+  return normalizedChatIndex(chatPromptSituationIndex[recordId] ?? 0);
+}
+
+function setChatSituation(recordId, index) {
+  const idx = normalizedChatIndex(index);
+  chatPromptSituationIndex[recordId] = idx;
+  chatTurnIndex[recordId] = normalizedChatIndex(idx + 1);
+  chatPrevQuestion[recordId] = chatSituationAt(idx).opener;
+}
+
+function renderChatSituationPicker(recordId) {
+  const activeIndex = chatPromptIndex(recordId);
+  return `
+    <div class="chat-situation-picker" aria-label="Gesprächsthema wählen">
+      <p class="ai-current-label">Thema wählen</p>
+      <div class="chat-situation-list">
+        ${A1_CHAT_SITUATIONS.map((situation, index) => `
+          <button type="button" class="chat-situation-btn ${index === activeIndex ? "active" : ""}" data-action="choose-chat-situation" data-record="${recordId}" data-chat-index="${index}">
+            ${escapeHtml(situation.title)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
 // The "what to do now" prompt. In guided mode it names the current card and
 // shows progress (e.g. "Karte 3 / 12"); when the cards run out it shows a
 // "done" message with a restart button. Chat mode (Aufgabe 4) shows a hint.
 function renderCurrentCard(recordId, task) {
   if (task.mode === "chat") {
     // Before the first answer, show the fixed opener; afterwards, the tutor's
-    // latest question.
+    // latest short partner reply + question.
     const question = chatPrevQuestion[recordId] || task.opener || "";
-    return question
-      ? `<p class="ai-current-label">Frage</p><p class="ai-current-card">„${escapeHtml(question)}“</p>`
+    const prompt = question
+      ? `<div class="ai-current-label-row"><p class="ai-current-label">KI sagt</p>${renderSpeakerButtonHtml(question)}</div><p class="ai-current-card">„${escapeHtml(question)}“</p>`
       : `<p class="muted">Starten Sie das Gespräch: Stellen Sie sich kurz vor.</p>`;
+    return `${prompt}${renderChatSituationPicker(recordId)}`;
   }
   const cards = activeCardsFor(recordId, task);
   if (!cards.length) return "";
@@ -4315,6 +4692,8 @@ async function requestSpeakingFeedback(recordId, blob) {
   const cards = task.mode === "chat" ? [] : activeCardsFor(recordId, task);
   const isChat = task.mode === "chat";
   const idx = currentCardIndex(recordId);
+  const nextChatIndex = isChat ? chatNextSituationIndex(recordId) : 0;
+  const chatSituation = isChat ? chatSituationInstruction(nextChatIndex) : "";
 
   // Guided mode: if every card is already done, nudge the learner to restart
   // instead of sending another recording.
@@ -4345,7 +4724,10 @@ async function requestSpeakingFeedback(recordId, blob) {
         cardTopic: !isChat ? cards[idx] || "" : "",
         // In chat mode we send the previous question (or the fixed opener on the
         // first turn) so the correction is judged in context.
-        previousQuestion: isChat ? chatPrevQuestion[recordId] || task.opener || "" : ""
+        previousQuestion: isChat ? chatPrevQuestion[recordId] || task.opener || "" : "",
+        // In chat mode we also send the target situation for the next turn. This
+        // keeps Aufgabe 4 varied while staying inside A1 everyday situations.
+        chatSituation
       })
     });
 
@@ -4362,6 +4744,8 @@ async function requestSpeakingFeedback(recordId, blob) {
     if (isChat) {
       // Remember the new question so the next answer is corrected in context.
       chatPrevQuestion[recordId] = data.nextQuestion || "";
+      chatPromptSituationIndex[recordId] = nextChatIndex;
+      chatTurnIndex[recordId] = normalizedChatIndex(nextChatIndex + 1);
       updateCurrentCardDisplay(recordId);
     } else {
       // Save the transcript so partial progress survives navigation.
@@ -4469,13 +4853,14 @@ async function requestWritingFeedback(textIndex) {
 
   const task = currentExam().writing?.tasks?.[textIndex];
   if (!task || task.type !== "text") return;
+  const profile = writingProfile(task);
 
   const textKey = keyFor("writing", `text-${textIndex}`);
   const emailText = (state.writing[textKey] || "").trim();
   if (!emailText) {
     statusEl.classList.remove("hidden");
     statusEl.classList.add("error");
-    statusEl.textContent = "Bitte schreiben Sie zuerst Ihre E-Mail.";
+    statusEl.textContent = "Bitte schreiben Sie zuerst Ihre E-Mail / Ihren Brief.";
     resultEl.classList.add("hidden");
     return;
   }
@@ -4492,7 +4877,9 @@ async function requestWritingFeedback(textIndex) {
       body: JSON.stringify({
         emailText,
         prompt: task.prompt || "",
-        checklist: task.checklist || []
+        checklist: task.checklist || [],
+        format: profile.format,
+        register: profile.register
       })
     });
     const data = await response.json();
@@ -4607,6 +4994,17 @@ function showWritingFeedback(resultEl, data) {
   }
 
   resultEl.classList.remove("hidden");
+}
+
+function insertWritingSentence(key, sentence) {
+  if (!key || !sentence) return;
+  const current = state.writing[key] || "";
+  state.writing[key] = current.trim()
+    ? `${current.trimEnd()}\n${sentence}`
+    : sentence;
+  saveState();
+  render();
+  showToast("Satz eingefügt.");
 }
 
 // Grade the just-recorded card from criteria the tutor returned, update the
@@ -4793,6 +5191,12 @@ app.addEventListener("click", (event) => {
     render();
   }
   if (action.dataset.action === "check-email") requestWritingFeedback(Number(action.dataset.textIndex));
+  if (action.dataset.action === "insert-writing-sentence") insertWritingSentence(action.dataset.key, action.dataset.sentence);
+  if (action.dataset.action === "speak-chat-prompt") speakWord(action.dataset.speakText || "");
+  if (action.dataset.action === "choose-chat-situation") {
+    setChatSituation(action.dataset.record, Number(action.dataset.chatIndex));
+    updateCurrentCardDisplay(action.dataset.record);
+  }
   if (action.dataset.action === "start-record") startRecording(action.dataset.record);
   if (action.dataset.action === "stop-record") stopRecording();
   if (action.dataset.action === "restart-cards") {
@@ -4895,6 +5299,8 @@ function resetExamProgress(examId) {
   // In-memory recording session state.
   prune(speakingCardProgress);
   prune(chatPrevQuestion);
+  prune(chatTurnIndex);
+  prune(chatPromptSituationIndex);
 }
 
 document.addEventListener("change", (event) => {
